@@ -22,8 +22,7 @@ public class JJPlatformApplication {
 	private static Logger log = LoggerFactory.getLogger(JJPlatformApplication.class);
 
     public static void main(String[] args) {
-    	log.info("####################[JJPlatformApplication]####################");
-//		System.setProperty("spring.profiles.active", active);
+    	log.info("####################[ JJPlatformApplication Start ]####################");
         SpringApplication.run(JJPlatformApplication.class, args);
     }
 }
