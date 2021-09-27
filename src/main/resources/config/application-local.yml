@@ -1,15 +1,14 @@
 spring:
   datasource:
      # mariaDB
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/jjplatform?serverTimezone=UTC&characterEncoding=UTF-8
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jjplatform?serverTimezone=UTC&characterEncoding=UTF-8
     # mssqlDB
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://127.0.0.1:1433;databaseName=jjplatform
     type: com.zaxxer.hikari.HikariDataSource
-#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-#    url: jdbc:sqlserver://127.0.0.1:1433;databaseName=jjplatform
     username: jjplatform
     password: akfls5315!@
-
   hikari:
       pool-name: JJPLATFormHikariCP
       maximum-pool-size: 2
@@ -18,3 +17,36 @@ spring:
       validation-timeout: 10000
       max-lifetime: 1800000
       connection-test-query: SELECT 1
+
+thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+    # excluded-view-names:
+    # template-resolver-order:
+    # view-names:
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  # model 프로퍼티 camel case 설정
+  config-location: classpath:mybatis-config.xml
+#  configuration:
+#    map-underscore-to-camel-case: true
+  # 패키지 명을 생략할 수 있도록 alias 설정
+  type-aliases-package: com.jjplatform.admin.vo
+
+# mapper 로그레벨 설정      
+logging:
+  level:
+    root: INFO
+    com.jjplatform.admin.dao: debug
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    com.zaxxer.hikari.HikariConfig: DEBUG 
+    com.zaxxer.hikari: TRACE      

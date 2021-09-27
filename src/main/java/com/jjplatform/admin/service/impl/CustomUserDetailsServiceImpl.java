@@ -25,7 +25,6 @@ public class CustomUserDetailsServiceImpl {
 		}
 		
 		return new CustomUserDetails(userAuthes);
-//        return userAuthDAO.loadUserByUsername(username);
     }
 
 }

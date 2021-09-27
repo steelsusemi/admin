@@ -3,22 +3,6 @@ server:
 
 spring:
   profiles:
-    active: local
-  datasource:
-     # mariaDB
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/jjplatform?serverTimezone=UTC&characterEncoding=UTF-8
-    # mssqlDB
-    type: com.zaxxer.hikari.HikariDataSource
-#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-#    url: jdbc:sqlserver://127.0.0.1:1433;databaseName=jjplatform
-    username: jjplatform
-    password: akfls5315!@
-    
----
-
-spring:
-  profiles:
     active: dev
   datasource:
      # mariaDB
@@ -28,22 +12,6 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
 #    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 #    url: jdbc:sqlserver://127.0.0.1:1432;databaseName=jjplatform
-    username: jjplatform
-    password: akfls5315!@
-    
----
-  
-spring:
-  profiles:
-    active: prod
-  datasource:
-     # mariaDB
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/jjplatform?serverTimezone=UTC&characterEncoding=UTF-8
-    # mssqlDB
-    type: com.zaxxer.hikari.HikariDataSource
-#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-#    url: jdbc:sqlserver://127.0.0.1:1431;databaseName=jjplatform
     username: jjplatform
     password: akfls5315!@
 
