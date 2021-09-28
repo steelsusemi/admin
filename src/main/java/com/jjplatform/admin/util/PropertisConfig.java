@@ -22,11 +22,12 @@ public class PropertisConfig {
 		log.info("####################[PropertisConfig]####################");
 		
 		PropertySourcesPlaceholderConfigurer propertiesBean = new PropertySourcesPlaceholderConfigurer();
-		log.info("activeProfiles :: "+activeProfiles);
 		String profiles = StringUtils.isEmpty(activeProfiles) ?  "local" : activeProfiles; 
-		log.info("profiles :: "+profiles);
 		
-		System.setProperty("spring.profiles.active", profiles);
+		log.info("## activeProfiles :: "+activeProfiles);
+		log.info("## profiles :: "+profiles);
+		
+//		System.setProperty("spring.profiles.active", profiles);
 		Resource[] resources = new ClassPathResource[]{
 				new ClassPathResource("config/application-"+profiles+".yml")
 //			  , new ClassPathResource("config/application-service-"+profiles+".yml")
