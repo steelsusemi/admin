@@ -6,6 +6,9 @@ spring:
     active: local
   application:
     name: admin
+  devtools:
+    livereload:
+      enabled: true
     
   thymeleaf:
     cache: false
@@ -31,14 +34,14 @@ mybatis:
   type-aliases-package: com.jjplatform.admin.vo
 
 # mapper 로그레벨 설정      
-logging:
-  level:
-    root: INFO
-    com.jjplatform.admin.dao: INFO
-    org.springframework.web: INFO
-    org.springframework.security: INFO
-    com.zaxxer.hikari.HikariConfig: INFO 
-    com.zaxxer.hikari: TRACE
+#logging:
+#  level:
+#    root: INFO
+#    com.jjplatform.admin.dao: INFO
+#    org.springframework.web: INFO
+#    org.springframework.security: INFO
+#    com.zaxxer.hikari.HikariConfig: INFO 
+#    com.zaxxer.hikari: TRACE
   
 jasypt:
   encryptor:

@@ -18,7 +18,7 @@ public class CustomUserDetailsServiceImpl {
  
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	List<UserVo> userAuthes = userAuthDAO.loadUserByUsername(username);
-		System.out.println("userAuthes size : "+userAuthes.size());
+//		System.out.println("userAuthes size : "+userAuthes.size());
 		
 		if(userAuthes.size() == 0) {
 			throw new UsernameNotFoundException("User "+username+" Not Found!");

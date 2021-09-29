@@ -21,31 +21,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private LoggingAccessDeniedHandler accessDeniedHandler;
     
     @Override
-    public void configure(WebSecurity web) { // 4
+    public void configure(WebSecurity web) { 
       web.ignoring().antMatchers( "/", "/css/**", "/js/**", "/img/**", "/webjars/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                    .antMatchers("/user/**").hasRole("USER")
-                    .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                    .defaultSuccessUrl("/user")
-                .and()
-                .logout()
-                    .invalidateHttpSession(true)
-                    .clearAuthentication(true)
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login?logout")
-                    .permitAll()
-                .and()
-                .exceptionHandling()
-                    .accessDeniedHandler(accessDeniedHandler);
+            .authorizeRequests()
+                .antMatchers("/user/**").hasRole("USER")
+                .anyRequest().authenticated()
+            .and()
+            .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/user")
+            .and()
+            .logout()
+	            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+	            .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true) 	/*세션 삭제*/ 
+                .deleteCookies("JSESSIONID") 	/*쿠키 제거*/ 
+                .clearAuthentication(true) 		/*권한정보 제거*/
+                .permitAll()
+            .and()
+            .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler)
+            .and().sessionManagement() 
+            	.maximumSessions(1) 				/* session 허용 갯수 */ 
+            	.expiredUrl("/login"); 				/* session 만료시 이동 페이지*/ 
+//            	.maxSessionsPreventsLogin(true); 	/* 동일한 사용자 로그인시 x, false 일 경우 기존 사용자 */
     }
 
     /**
