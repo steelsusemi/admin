@@ -1,13 +1,16 @@
+server:
+  port: 8080
+  
 spring:
   datasource:
      # mariaDB
-    driver-class-name: org.mariadb.jdbc.Driver
+#    driver-class-name: org.mariadb.jdbc.Driver
 #    url: jdbc:mysql://127.0.0.1:3306/jjplatform?serverTimezone=UTC&characterEncoding=UTF-8
-    url: ENC(GBwofgLMHoSsQnpZibur3tWzVF5kKKVNwhx6a1pJKPwjwWg/XcqjPoN6rGmMXJMVOmN7n0mjC1dX34hWNt4ZYvhCzQnBk2luFYJ7IMmqxwo7sh76mt26WV3ogj9z8nhv)
+#    url: ENC(GBwofgLMHoSsQnpZibur3tWzVF5kKKVNwhx6a1pJKPwjwWg/XcqjPoN6rGmMXJMVOmN7n0mjC1dX34hWNt4ZYvhCzQnBk2luFYJ7IMmqxwo7sh76mt26WV3ogj9z8nhv)
     # mssqlDB
-#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 #    url: jdbc:sqlserver://127.0.0.1:1433;databaseName=jjplatform
-#    url: ENC(MmiTiP44lIRwwPxqvvoKIm1obI3cZp1miD4IpMy2QcclrnvULLoqmtMmrqgJgjttKl28jdqPSh/goaACkoobjQ==)
+    url: ENC(MmiTiP44lIRwwPxqvvoKIm1obI3cZp1miD4IpMy2QcclrnvULLoqmtMmrqgJgjttKl28jdqPSh/goaACkoobjQ==)
 #    username: jjplatform
 #    password: akfls5315!@
     username: ENC(KuzxL5DMolNzLk5xgLqjjfpPLf5HZPpf)
@@ -24,10 +27,11 @@ spring:
 
 # mapper 로그레벨 설정      
 logging:
-  level:
-    root: INFO
-    com.jjplatform.admin.dao: DEBUG
-    org.springframework.web: INFO
-    org.springframework.security: INFO
-    com.zaxxer.hikari.HikariConfig: INFO 
-    com.zaxxer.hikari: TRACE      
+  config: classpath:config/logback-spring.xml
+#  level:
+#    root: INFO
+#    com.jjplatform.admin.dao: DEBUG
+#    org.springframework.web: INFO
+#    org.springframework.security: INFO
+#    com.zaxxer.hikari.HikariConfig: INFO 
+#    com.zaxxer.hikari: TRACE      

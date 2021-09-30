@@ -19,13 +19,14 @@ public class LoginController {
 
     @GetMapping("/user")
     public String userIndex() {
+    	System.out.println("######################################");
         return "user/main";
     }
 
     @GetMapping("/login")
     public String login() {
         return "login";
-    }
+    } 
     
     @GetMapping("/logout")
     public String loout(HttpServletRequest request, HttpServletResponse response) throws Exception {

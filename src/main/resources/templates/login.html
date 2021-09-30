@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{fragments/layout}">
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
     <title>Login</title>
 </head>
-<body>
-<div layout:fragment="content" th:remove="tag">
-
+<body class="login_align">
+<div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <h1>Login page</h1>
@@ -70,7 +72,6 @@
     </div>
 
     <p><a href="/" th:href="@{/}">Back to home page</a></p>
-
 </div>
 </body>
 </html>

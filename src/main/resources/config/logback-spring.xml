@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration scan="true" scanPeriod="30 seconds">
     <!-- Spring-boot 기본 logback 설정 -->
-    <!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <!-- <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
-    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" /> -->
 
     <!-- 변수 지정 -->
     <property name="LOG_DIR" value="C:/logs" />
-    <property name="LOG_PATH_NAME" value="${LOG_DIR}/CommercePlatformMobileWeb.log" />
+    <property name="LOG_PATH_NAME" value="${LOG_DIR}/server_local.log" />
 
     <!-- FILE Appender -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -29,26 +29,33 @@
         </layout>
     </appender>
 
-    <!-- TRACE > DEBUG > INFO > WARN > ERROR, 대소문자 구분 안함 -->
-    <!-- profile 을 읽어서 appender 을 설정할수 있다.(phase별 파일을 안만들어도 됨) -->
+    <!-- log4jdbc-log4j2 -->
+    <!-- <logger name="jdbc.sqlonly"        level="debug"/>
+    <logger name="jdbc.sqltiming"      level="ERROR"/>
+    <logger name="jdbc.audit"          level="ERROR"/>
+    <logger name="jdbc.resultset"      level="ERROR"/>
+    <logger name="jdbc.resultsettable" level="ERROR"/>
+    <logger name="jdbc.connection"     level="ERROR"/> -->
+    
+    <logger name="com.jjplatform.admin.dao" level="debug"/>
+    <logger name="com.jjplatform.admin" level="info"/>
+    <logger name="org.springframework.security" level="info"/>
+    
+    <!-- TRACE > DEBUG > INFO > WARN > ERROR, 대소문자 구분 안함
+    profile 을 읽어서 appender 을 설정할수 있다.(phase별 파일을 안만들어도 됨) -->
     <springProfile name="local,dev">
-        <root level="debug">
+        <root level="info">
             <appender-ref ref="FILE" />
             <appender-ref ref="STDOUT" />
         </root>
     </springProfile>
-    <springProfile name="product">
+    <springProfile name="prod">
         <root level="INFO">
             <appender-ref ref="FILE" />
             <appender-ref ref="STDOUT" />
         </root>
     </springProfile>
-
-    <!-- log4jdbc-log4j2 -->
-    <logger name="jdbc.sqlonly"        level="debug"/>
-    <logger name="jdbc.sqltiming"      level="ERROR"/>
-    <logger name="jdbc.audit"          level="ERROR"/>
-    <logger name="jdbc.resultset"      level="ERROR"/>
-    <logger name="jdbc.resultsettable" level="ERROR"/>
-    <logger name="jdbc.connection"     level="ERROR"/>
+    
+    <!-- <include resource="classpath:/logging/base.xml"/>
+    <logger name="org.springframework.web" level="info"/> -->
 </configuration>

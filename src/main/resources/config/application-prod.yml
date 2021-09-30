@@ -1,20 +1,18 @@
-server:
-  port: 8080
-
 spring:
-  profiles:
-    active: prod
   datasource:
      # mariaDB
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/jjplatform?serverTimezone=UTC&characterEncoding=UTF-8
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jjplatform?serverTimezone=UTC&characterEncoding=UTF-8
+#    url: ENC(GBwofgLMHoSsQnpZibur3tWzVF5kKKVNwhx6a1pJKPwjwWg/XcqjPoN6rGmMXJMVOmN7n0mjC1dX34hWNt4ZYvhCzQnBk2luFYJ7IMmqxwo7sh76mt26WV3ogj9z8nhv)
     # mssqlDB
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    url: jdbc:sqlserver://127.0.0.1:1433;databaseName=jjplatform
+    url: ENC(MmiTiP44lIRwwPxqvvoKIm1obI3cZp1miD4IpMy2QcclrnvULLoqmtMmrqgJgjttKl28jdqPSh/goaACkoobjQ==)
+#    username: jjplatform
+#    password: akfls5315!@
+    username: ENC(KuzxL5DMolNzLk5xgLqjjfpPLf5HZPpf)
+    password: ENC(vHZy9JLKQMM+JE7US6T1YlQykSg6B+K6)
     type: com.zaxxer.hikari.HikariDataSource
-#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-#    url: jdbc:sqlserver://127.0.0.1:1431;databaseName=jjplatform
-    username: jjplatform
-    password: akfls5315!@
-
   hikari:
       pool-name: JJPLATFormHikariCP
       maximum-pool-size: 2
@@ -23,36 +21,14 @@ spring:
       validation-timeout: 10000
       max-lifetime: 1800000
       connection-test-query: SELECT 1
-      
-#  thymeleaf:
-#    cache: false
-#    check-template: true
-#    check-template-location: true
-#    content-type: text/html
-#    enabled: true
-#    encoding: UTF-8
-#    mode: HTML
-#    prefix: classpath:/templates/
-#    suffix: .html
-#    # excluded-view-names:
-#    # template-resolver-order:
-#    # view-names:
-#
-#mybatis:
-#  mapper-locations: classpath:mapper/**/*.xml
-#  # model 프로퍼티 camel case 설정
-#  config-location: classpath:mybatis-config.xml
-##  configuration:
-##    map-underscore-to-camel-case: true
-#  # 패키지 명을 생략할 수 있도록 alias 설정
-#  type-aliases-package: com.jjplatform.admin.vo
-#
-## mapper 로그레벨 설정      
-#logging:
+
+# mapper 로그레벨 설정      
+logging:
+  config: classpath:config/logback-spring.xml
 #  level:
 #    root: INFO
-#    com.jjplatform.admin.dao: debug
+#    com.jjplatform.admin.dao: DEBUG
 #    org.springframework.web: INFO
 #    org.springframework.security: INFO
-#    com.zaxxer.hikari.HikariConfig: DEBUG 
-#    com.zaxxer.hikari: TRACE
+#    com.zaxxer.hikari.HikariConfig: INFO 
+#    com.zaxxer.hikari: TRACE      

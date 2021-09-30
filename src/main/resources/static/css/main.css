@@ -1,5 +1,6 @@
 h1 {
     color: #78ab46;
+    text-align: center;
 }
 
 footer {
@@ -12,4 +13,9 @@ footer {
 
 footer p {
     padding: 15px;
+}
+
+
+.login_align {
+    padding-top: 90px;
 }
