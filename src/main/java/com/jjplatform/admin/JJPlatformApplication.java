@@ -15,7 +15,7 @@ import org.springframework.context.annotation.PropertySource;
 @SpringBootApplication(scanBasePackages={"com.jjplatform", "com.jjplatform.admin"})
 @PropertySource({ "classpath:/config/application.yml"
 //				, "classpath:/config/application.properties"
-//				, "classpath:/config/application-"+"${spring.profiles.active}"+".yml"
+				, "classpath:/config/application-"+"${spring.profiles.active}"+".yml"
 //				, "classpath:/config/application-service-${spring.profiles.active}.yml"
 //				, "classpath:/config/application-core-${spring.profiles.active}.yml"
 				})
