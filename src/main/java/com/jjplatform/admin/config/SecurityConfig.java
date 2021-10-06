@@ -1,5 +1,6 @@
 package com.jjplatform.admin.config;
 
+import org.aopalliance.intercept.Interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 @EnableWebSecurity
 @Configuration //이 클래스를 통해 bean 등록이나 각종 설정을 하겠다는 표시
@@ -22,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     public void configure(WebSecurity web) { 
-      web.ignoring().antMatchers( "/", "/css/**", "/js/**", "/img/**", "/webjars/**");
+      web.ignoring().antMatchers("/", "/css/**", "/js/**", "/img/**", "/webjars/**");
     }
 
     @Override
@@ -35,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/user")
+                .defaultSuccessUrl("/main")
             .and()
             .logout()
 	            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

@@ -1,6 +1,8 @@
 package com.jjplatform.admin.config;
 
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.jjplatform.admin.comm.vo.CustomUserDetails;
 import com.jjplatform.admin.service.impl.CustomUserDetailsServiceImpl;
-import com.jjplatform.admin.vo.CustomUserDetails;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	private static Logger log = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
@@ -42,6 +44,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
      
         UsernamePasswordAuthenticationToken authenticationToken  = new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());
         log.info("UsernamePasswordAuthenticationToken => " + authenticationToken);
+        
         return authenticationToken;
     }
 
