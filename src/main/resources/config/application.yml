@@ -1,12 +1,12 @@
 server:
   servlet:
-    session:
-      timeout: 5m     
-      cookie:
-        max-age: 5m   
-        name: SID
-        http-only: true
-        secure: true
+#    session:
+#      timeout: 5m     
+#      cookie:
+#        max-age: 5m   
+#        name: SID
+#        http-only: true
+#        secure: true
  
 spring:
   application:

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +26,7 @@ public class LoginController {
     }
 
 	@GetMapping("/main")
-    public String main(HttpServletRequest request, HttpServletResponse respose, Authentication authentication) throws Exception {
+    public String main(HttpServletRequest request, HttpServletResponse respose, Authentication authentication) throws IOException {
     	log.info("###################[ Main Page 이동]###################");
     	log.info("authentication : " + authentication);
     	if (authentication != null) {
@@ -47,7 +46,7 @@ public class LoginController {
 			log.info("ID정보 : " + userVo); 
 			if(userVo == null && request.getRequestURI().equals("/main")) {
 				sessInfo.setAttribute("userInfo", userDetails.getUserVo().get(0));
-				sessInfo.setMaxInactiveInterval(10);  // 60초
+				sessInfo.setMaxInactiveInterval(30);  // 60초
 //				sessInfo.invalidate();
 			}
 			

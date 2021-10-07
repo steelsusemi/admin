@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,18 +15,19 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jjplatform.admin.vo.UserVo;
-
 public class LoggerInterceptor implements HandlerInterceptor{
 	private static final Logger log = LoggerFactory.getLogger(LoggerInterceptor.class);
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//		UserVo userInfo = (UserVo) request.getSession().getAttribute("userInfo");
-//    	if(userInfo == null && !request.getRequestURI().equals("/main")) {
-//    		request.getSession().invalidate();
-//    		response.sendRedirect("/login");
-//    	}
+	   HttpSession sessInfo = request.getSession();
+	   log.info("sessInfo >> "+sessInfo+" : "+sessInfo.getAttribute("userInfo"));
+	   
+	   if(sessInfo == null) {
+		  request.getSession().invalidate();
+		  response.sendRedirect("/login");
+       }
+	   
 	   log.info("=====================LoggerInterceptor Start=====================");
 	   log.info("Around LocalDate.now() >> "+ LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
 	   log.info("Around LocalDateTime.now() >> "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
