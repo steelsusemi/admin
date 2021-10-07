@@ -53,5 +53,8 @@ mybatis:
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
-    password: ztxHSTBWuMmdi/Eu9yN1vzGAUEOD5JZPq2ayFr5lzwI=
-    algorithm: PBEWithMD5AndDES
+#    password: JJPlatfrom_20211007
+    password: AUPtH1EvaZFrQ4O/Ntz4uFSg6c12GsbKMwKPrK+PW/iH0ibCsy4M/sZYpev9EAG83dz0syVyKS1g27GitqkGjQ==
+    algorithm: PBEWithHmacSHA512AndAES_256
+    provider-name: SunJCE
+    string-output-type: AES256

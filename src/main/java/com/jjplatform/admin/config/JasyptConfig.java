@@ -3,8 +3,6 @@ package com.jjplatform.admin.config;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,13 +15,18 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JasyptConfig {
-	private static Logger log = LoggerFactory.getLogger(JasyptConfig.class);
 	
 	@Value("${jasypt.encryptor.password}")
     private String encryptKey;
 	
 	@Value("${jasypt.encryptor.algorithm}")
     private String algorithm;
+	
+	@Value("${jasypt.encryptor.provider-name}")
+    private String providerName;
+	
+	@Value("${jasypt.encryptor.string-output-type}")
+    private String stringOutputType;
 
     @Bean("jasyptStringEncryptor")
     public StringEncryptor stringEncryptor() {
@@ -33,10 +36,10 @@ public class JasyptConfig {
         config.setAlgorithm(algorithm);
         config.setKeyObtentionIterations("1000");
         config.setPoolSize("1");
-        config.setProviderName("SunJCE");
+        config.setProviderName(providerName);
         config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
-//        config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator");
-        config.setStringOutputType("base64");
+        config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator");
+        config.setStringOutputType(stringOutputType);
         encryptor.setConfig(config);
         return encryptor;
     }
