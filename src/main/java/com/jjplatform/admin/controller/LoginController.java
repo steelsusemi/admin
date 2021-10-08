@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
+import com.jjplatform.admin.exception.CustomException;
+import com.jjplatform.admin.exception.ErrorCode;
 import com.jjplatform.admin.vo.UserVo;
 
 @Controller
@@ -25,9 +27,14 @@ public class LoginController {
         return "index";
     }
 
+	@SuppressWarnings("unused")
 	@GetMapping("/main")
     public String main(HttpServletRequest request, HttpServletResponse respose, Authentication authentication) throws IOException {
     	log.info("###################[ Main Page 이동]###################");
+    	if(true) {
+    		throw new CustomException(ErrorCode.TEMPORARY_SERVER_ERROR);
+    	}
+    	
     	log.info("authentication : " + authentication);
     	if (authentication != null) {
 			log.info("타입정보 : " + authentication.getClass());

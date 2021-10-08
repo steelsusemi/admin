@@ -20,4 +20,23 @@ public class WebConfigure implements WebMvcConfigurer{
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LoggerInterceptor()).excludePathPatterns(EXCEPT_URL);
 	}
+	
+//	@Bean
+//    public LocaleResolver localeResolver() {
+////        // 세션을 사용한 예제
+////		SessionLocaleResolver resolver = new SessionLocaleResolver();
+////		resolver.setDefaultLocale(Locale.KOREAN);
+//		
+//        // 쿠키를 사용한 예제
+//		CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+//        localeResolver.setCookieName("lang");
+//        return localeResolver;
+//    }
+//
+//    @Bean
+//    public LocaleChangeInterceptor localeChangeInterceptor() {
+//        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+//        lci.setParamName("lang");
+//        return lci;
+//    }
 }

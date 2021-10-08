@@ -8,7 +8,7 @@
 
     <!-- 변수 지정 -->
     <property name="LOG_DIR" value="C:/logs" />
-    <property name="LOG_PATH_NAME" value="${LOG_DIR}/server_local.log" />
+    <property name="LOG_PATH_NAME" value="${LOG_DIR}/server_${spring.profiles.active}.log" />
 
     <!-- FILE Appender -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -37,7 +37,6 @@
     <logger name="jdbc.resultsettable" level="ERROR"/>
     <logger name="jdbc.connection"     level="ERROR"/>
     
-    <!-- <logger name="com.jjplatform.admin.dao" level="debug"/> -->
     <logger name="com.jjplatform.admin" level="info"/>
     <logger name="org.springframework.security" level="info"/>
     

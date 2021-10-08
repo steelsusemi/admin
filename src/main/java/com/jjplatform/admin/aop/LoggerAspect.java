@@ -55,7 +55,7 @@ public class LoggerAspect implements HandlerInterceptor{
        }catch (Exception e) {
            log.error("=====================LoggerAspect Around Exception=====================");
            log.error(e.toString());
-           return null;
+           throw e;
        }
    }
  
