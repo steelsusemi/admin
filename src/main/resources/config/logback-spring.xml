@@ -30,14 +30,14 @@
     </appender>
 
     <!-- log4jdbc-log4j2 -->
-    <!-- <logger name="jdbc.sqlonly"        level="debug"/>
+    <logger name="jdbc.sqlonly"        level="info"/>
     <logger name="jdbc.sqltiming"      level="ERROR"/>
     <logger name="jdbc.audit"          level="ERROR"/>
     <logger name="jdbc.resultset"      level="ERROR"/>
     <logger name="jdbc.resultsettable" level="ERROR"/>
-    <logger name="jdbc.connection"     level="ERROR"/> -->
+    <logger name="jdbc.connection"     level="ERROR"/>
     
-    <logger name="com.jjplatform.admin.dao" level="debug"/>
+    <!-- <logger name="com.jjplatform.admin.dao" level="debug"/> -->
     <logger name="com.jjplatform.admin" level="info"/>
     <logger name="org.springframework.security" level="info"/>
     

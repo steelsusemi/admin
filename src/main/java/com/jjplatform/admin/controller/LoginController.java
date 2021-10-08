@@ -37,6 +37,7 @@ public class LoginController {
 			log.info("세션ID : " + web.getSessionId());
 			log.info("접속IP : " + web.getRemoteAddress());
 
+			
 			// UsernamePasswordAuthenticationToken에 넣었던 UserDetails 객체 반환
 			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 			log.info("ID정보 : " + userDetails.getUserVo().get(0).getUserId()); 

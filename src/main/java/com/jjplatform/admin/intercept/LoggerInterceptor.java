@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoggerInterceptor implements HandlerInterceptor{
 	private static final Logger log = LoggerFactory.getLogger(LoggerInterceptor.class);
 	
+	@SuppressWarnings("unused")
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 	   HttpSession sessInfo = request.getSession();
