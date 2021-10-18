@@ -5,10 +5,43 @@
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" /> -->
-
+	
+	 <!-- The rendering class that the color log depends on -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    
+	<!-- Color log format -->
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern> -->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </layout>
+    </appender>
+    
     <!-- 변수 지정 -->
     <property name="LOG_DIR" value="C:/logs" />
+    <property name="DB_LOG_DIR" value="config" />
     <property name="LOG_PATH_NAME" value="${LOG_DIR}/server_${spring.profiles.active}.log" />
+    
+    <!-- 서버에따른 yml 조회 -->
+    <property resource="${DB_LOG_DIR}/application-${spring.profiles.active}.yml" />
+
+    <springProperty scope="context" name="dbUrl" source="spring.datasource.url"/>
+    <springProperty scope="context" name="dbUsername" source="spring.datasource.username"/>
+    <springProperty scope="context" name="dbPassword" source="spring.datasource.password"/>
+
+    <!-- <appender name="MyDbAppender" class="ch.qos.logback.classic.db.DBAppender"> -->
+    <appender name="MyDbAppender" class="com.jjplatform.admin.log.LogDBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>net.sf.log4jdbc.sql.jdbcapi.DriverSpy</driverClass>
+            <url>${dbUrl}</url>
+            <user>${dbUsername}</user>
+            <password>${dbPassword}</password>
+        </connectionSource>
+    </appender>
 
     <!-- FILE Appender -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -21,12 +54,6 @@
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
         </encoder>
-    </appender>
-
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
-        </layout>
     </appender>
 
     <!-- log4jdbc-log4j2 -->
@@ -46,12 +73,14 @@
         <root level="info">
             <appender-ref ref="FILE" />
             <appender-ref ref="STDOUT" />
+            <appender-ref ref="MyDbAppender" />
         </root>
     </springProfile>
     <springProfile name="prod">
         <root level="INFO">
             <appender-ref ref="FILE" />
             <appender-ref ref="STDOUT" />
+            <appender-ref ref="MyDbAppender" />
         </root>
     </springProfile>
     

@@ -12,10 +12,10 @@ spring:
 #    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     url: jdbc:log4jdbc:sqlserver://127.0.0.1:1433;databaseName=jjplatform
 #    url: ENC(1hfdcXlYudTCXN4vFQjOZVLDvbejQcLb7Hje4wJ/Q5P/BfOQifMxloSm/uLduUT1AgmotA5M0lmJNbYL6n8IBAAw/8Bg7atzZskZH8xjgLq8kPshEBJQ1hkEOVh8b+wb)
-#    username: jjplatform
-#    password: akfls5315!@
-    username: ENC(1khpix9dD+YIZethFw0X13K4ZtpHIF3UPbJ3+vtm7YnaULX6pD1/C336mftKNFET)
-    password: ENC(aaArq4TXfNLXQyLISVOfWpX+JEFySuWCwwayiESoTBLyL2F4NT2FkzbA+0rpnZjh)
+    username: jjplatform
+    password: akfls5315!@
+#    username: ENC(1khpix9dD+YIZethFw0X13K4ZtpHIF3UPbJ3+vtm7YnaULX6pD1/C336mftKNFET)
+#    password: ENC(aaArq4TXfNLXQyLISVOfWpX+JEFySuWCwwayiESoTBLyL2F4NT2FkzbA+0rpnZjh)
     type: com.zaxxer.hikari.HikariDataSource
   hikari:
       pool-name: JJPLATFormHikariCP

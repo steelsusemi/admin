@@ -11,7 +11,7 @@
            , USER_ROLE B
         <where>
         	AND A.USER_ID = B.USER_ID
-            AND A.USER_ID = #{username}
+            AND A.USER_ID = #{username}//
         </where>
         <!-- <if test="limit != null and offset != null">
             LIMIT #{limit}

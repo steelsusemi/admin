@@ -36,7 +36,6 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 	  }
 	  
 	  //요 밑으로 쭉쭉 추가적인 ExceptionHandler들을 추가해서 처리합니다
-	  
 	  /* Custom Error Handler */
 	  @org.springframework.web.bind.annotation.ExceptionHandler(value = CustomException.class)
 	  @ResponseStatus(value = HttpStatus.BAD_REQUEST)

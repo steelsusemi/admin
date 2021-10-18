@@ -31,9 +31,9 @@ public class LoginController {
 	@GetMapping("/main")
     public String main(HttpServletRequest request, HttpServletResponse respose, Authentication authentication) throws IOException {
     	log.info("###################[ Main Page 이동]###################");
-    	if(true) {
-    		throw new CustomException(ErrorCode.TEMPORARY_SERVER_ERROR);
-    	}
+//    	if(true) {
+//    		throw new CustomException(ErrorCode.TEMPORARY_SERVER_ERROR);
+//    	}
     	
     	log.info("authentication : " + authentication);
     	if (authentication != null) {
