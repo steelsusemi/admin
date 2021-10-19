@@ -53,7 +53,7 @@ public class LoggerInterceptor implements HandlerInterceptor{
 	
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object object, @Nullable Exception arg3) throws Exception {
-		log.info("=====================LoggerInterceptor afterCompletion Logging Start====================="+ arg3.getMessage());
+		log.info("=====================LoggerInterceptor afterCompletion Logging Start=====================");
         log.info("=====================LoggerInterceptorafterCompletion Logging END=====================");
 	}
 }

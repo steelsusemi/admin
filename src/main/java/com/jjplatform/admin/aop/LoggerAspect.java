@@ -24,7 +24,7 @@ public class LoggerAspect implements HandlerInterceptor{
      *   @GetMapping 설정된 메소드 또는 클래스 설정
      *   GetMapping 노테이션이 설정된 특정 클래스/메소드에만 LoggerAspect가 적용됨.
      */
-    @Pointcut("within(com.jjplatform.admin.controller.*)")
+    @Pointcut("within(com.jjplatform.admin.**.*)")
     public void GetMapping(){ } 
     		
     /**
@@ -53,7 +53,7 @@ public class LoggerAspect implements HandlerInterceptor{
 		   log.info("=====================LoggerAspect TEST  : Around Logging END=====================");
 		   return result;
        }catch (Exception e) {
-           log.error("=====================LoggerAspect Around Exception=====================");
+//           log.error("=====================LoggerAspect Around Exception=====================");
            log.error(e.toString());
            throw e;
        }

@@ -55,32 +55,57 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
         </encoder>
     </appender>
+    
+    <!--에러 일 경우 파일에 로그를 남깁니다--> 
+    <appender name="Error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${LOG_DIR}/error/server-error.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n
+            </Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/error/back/server-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+    </appender>
 
     <!-- log4jdbc-log4j2 -->
-    <logger name="jdbc.sqlonly"        level="info"/>
-    <logger name="jdbc.sqltiming"      level="ERROR"/>
-    <logger name="jdbc.audit"          level="ERROR"/>
-    <logger name="jdbc.resultset"      level="ERROR"/>
-    <logger name="jdbc.resultsettable" level="ERROR"/>
-    <logger name="jdbc.connection"     level="ERROR"/>
+    <logger name="jdbc.sqlonly"        level="INFO" additivity="false"/>
+    <logger name="jdbc.sqltiming"      level="OFF" additivity="false"/>
+    <logger name="jdbc.audit"          level="OFF" additivity="false"/>
+    <logger name="jdbc.resultset"      level="OFF" additivity="false"/>
+    <logger name="jdbc.resultsettable" level="OFF" additivity="false"/>
+    <logger name="jdbc.connection"     level="OFF" additivity="false"/>
     
-    <logger name="com.jjplatform.admin" level="info"/>
-    <logger name="org.springframework.security" level="info"/>
+    <logger name="com.jjplatform.admin" level="INFO"></logger>
+    <logger name="org.springframework.security" level="INFO"></logger>
+    
+    <logger name="com.jjplatform.admin" level="ERROR" additivity="false">
+    	<appender-ref ref="MyDbAppender" />
+    </logger>
     
     <!-- TRACE > DEBUG > INFO > WARN > ERROR, 대소문자 구분 안함
     profile 을 읽어서 appender 을 설정할수 있다.(phase별 파일을 안만들어도 됨) -->
     <springProfile name="local,dev">
-        <root level="info">
+        <root level="INFO"  additivity="false">
             <appender-ref ref="FILE" />
             <appender-ref ref="STDOUT" />
-            <appender-ref ref="MyDbAppender" />
+            <!-- <appender-ref ref="MyDbAppender" /> -->
         </root>
     </springProfile>
-    <springProfile name="prod">
+    <springProfile name="prod"  additivity="false">
         <root level="INFO">
             <appender-ref ref="FILE" />
             <appender-ref ref="STDOUT" />
-            <appender-ref ref="MyDbAppender" />
+            <!-- <appender-ref ref="MyDbAppender" /> -->
         </root>
     </springProfile>
     
