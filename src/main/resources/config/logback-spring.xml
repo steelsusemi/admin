@@ -28,6 +28,7 @@
     
     <!-- 서버에따른 yml 조회 -->
     <property resource="${DB_LOG_DIR}/application-${spring.profiles.active}.yml" />
+    <logger name="com.ulisesbocchio.jasyptspringboot" level="ALL"/>
 
     <springProperty scope="context" name="dbUrl" source="spring.datasource.url"/>
     <springProperty scope="context" name="dbUsername" source="spring.datasource.username"/>

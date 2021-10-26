@@ -13,7 +13,6 @@
  */
 package com.jjplatform.admin.log;
 
-import static ch.qos.logback.core.db.DBHelper.closeStatement;
 
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -21,7 +20,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import ch.qos.logback.classic.db.DBHelper;
 import ch.qos.logback.classic.db.names.ColumnName;
@@ -29,14 +27,9 @@ import ch.qos.logback.classic.db.names.DBNameResolver;
 import ch.qos.logback.classic.db.names.DefaultDBNameResolver;
 import ch.qos.logback.classic.db.names.TableName;
 import ch.qos.logback.classic.spi.*;
-import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.db.DBAppenderBase;
 /**
- * The DBAppender inserts logging events into three database tables in a format
- * independent of the Java programming language.
- *
- * For more information about this appender, please refer to the online manual
- * at http://logback.qos.ch/manual/appenders.html#DBAppender
+ * 오류시 로그 저장
  *
  * @author Ceki G&uuml;lc&uuml;
  * @author Ray DeCampo
@@ -105,7 +98,8 @@ public class LogDBAppender extends DBAppenderBase<ILoggingEvent> {
         }
     }
  
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     protected void secondarySubAppend(ILoggingEvent event, Connection connection, long eventId) throws Throwable {
         Map<String, String> mergedMap = mergePropertyMaps(event);
        //insertProperties(mergedMap, connection, eventId);
