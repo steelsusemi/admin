@@ -1,7 +1,5 @@
 package com.jjplatform.admin.service.impl;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,9 @@ public class CustomUserDetailsServiceImpl {
     private UserAuthDAO userAuthDAO;
  
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    	List<UserVo> userAuthes = userAuthDAO.loadUserByUsername(username);
+    	UserVo userAuthes = (UserVo) userAuthDAO.loadUserByUsername(username);
 		
-		if(userAuthes.size() == 0) {
+		if(userAuthes == null) {
 			throw new UsernameNotFoundException("User "+username+" Not Found!");
 		}
 		

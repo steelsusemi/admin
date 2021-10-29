@@ -3,12 +3,28 @@ h1 {
     text-align: center;
 }
 
+header {
+    position: fixed;
+    top: 0;
+    z-index: 1028;
+}
+
+.left {
+	position: fixed;
+    top: 0;
+    z-index: 1028;
+}
+
+.layout_content {
+    top: 200;
+}
+
 footer {
     position: fixed;
-    height: 50px;
+    height: 35px;
     bottom: 0;
-    width: 100%;
-    background-color: #ccc
+    width: 89%;
+    background-color: #cccc
 }
 
 footer p {
@@ -19,3 +35,6 @@ footer p {
 .login_align {
     padding-top: 90px;
 }
+
+.header, .footer { overflow: hidden; position: fixed; }
+.page-content { overflow: auto; }

@@ -89,9 +89,9 @@
     <logger name="com.jjplatform.admin" level="INFO"></logger>
     <logger name="org.springframework.security" level="INFO"></logger>
     
-    <logger name="com.jjplatform.admin" level="ERROR" additivity="false">
+    <!-- <logger name="com.jjplatform.admin" level="Error" additivity="false">
     	<appender-ref ref="MyDbAppender" />
-    </logger>
+    </logger> -->
     
     <!-- TRACE > DEBUG > INFO > WARN > ERROR, 대소문자 구분 안함
     profile 을 읽어서 appender 을 설정할수 있다.(phase별 파일을 안만들어도 됨) -->
@@ -99,7 +99,7 @@
         <root level="INFO"  additivity="false">
             <appender-ref ref="FILE" />
             <appender-ref ref="STDOUT" />
-            <!-- <appender-ref ref="MyDbAppender" /> -->
+            <appender-ref ref="MyDbAppender" />
         </root>
     </springProfile>
     <springProfile name="prod"  additivity="false">

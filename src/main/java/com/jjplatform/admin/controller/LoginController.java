@@ -24,10 +24,9 @@ public class LoginController {
 
     @GetMapping("/")
     public String root() {
-        return "index";
+        return "login";
     }
 
-	@SuppressWarnings("unused")
 	@GetMapping("/main")
     public String main(HttpServletRequest request, HttpServletResponse respose, Authentication authentication) throws IOException {
     	log.info("###################[ Main Page 이동]###################");
@@ -47,14 +46,15 @@ public class LoginController {
 			
 			// UsernamePasswordAuthenticationToken에 넣었던 UserDetails 객체 반환
 			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-			log.info("ID정보 : " + userDetails.getUserVo().get(0).getUserId()); 
+//			log.info("ID정보 : " + userDetails.getUserVo().get(0).getUserId()); 
+			log.info("ID정보 : " + userDetails.getUserVo().getUserId()); 
 			
 			HttpSession sessInfo = request.getSession();
 			UserVo userVo = (UserVo) sessInfo.getAttribute("userInfo");
 			log.info("ID정보 : " + userVo); 
 			if(userVo == null && request.getRequestURI().equals("/main")) {
-				sessInfo.setAttribute("userInfo", userDetails.getUserVo().get(0));
-				sessInfo.setMaxInactiveInterval(30);  // 60초
+				sessInfo.setAttribute("userInfo", userDetails.getUserVo());
+				sessInfo.setMaxInactiveInterval(300);  // 60초
 //				sessInfo.invalidate();
 			}
 			

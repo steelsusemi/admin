@@ -16,10 +16,10 @@ import lombok.Data;
 @SuppressWarnings("serial")
 public class CustomUserDetails implements UserDetails {
 	
-	private List<UserVo> userVo;
+	private UserVo userVo;
 	private boolean enabled;
 	
-	public CustomUserDetails(List<UserVo> userAuthes) {
+	public CustomUserDetails(UserVo userAuthes) {
 		this.userVo = userAuthes;
 	}
 	
@@ -28,9 +28,11 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
         
-        for(int x=0; x<userVo.size(); x++) {
-        	roles.add(new SimpleGrantedAuthority(userVo.get(x).getUserRole()));
-		}
+//        for(int x=0; x<userVo.size(); x++) {
+//        	roles.add(new SimpleGrantedAuthority(userVo.get(x).getUserRole()));
+//		}
+        
+        roles.add(new SimpleGrantedAuthority(userVo.getUserRole()));
         
         return roles;
     }
@@ -38,13 +40,13 @@ public class CustomUserDetails implements UserDetails {
     @Override
 	public String getPassword() { //유저 비밀번호
 
-		return userVo.get(0).getUserPass();
+		return userVo.getUserPass();
 	}
 
 	@Override
 	public String getUsername() {// 유저 이름 혹은 아이디
 
-		return userVo.get(0).getUserNm();
+		return userVo.getUserNm();
 	}
  
     // 계정이 만료되지 않았는 지 리턴한다. (true: 만료안됨)

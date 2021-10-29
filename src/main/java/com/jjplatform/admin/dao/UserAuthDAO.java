@@ -1,7 +1,5 @@
 package com.jjplatform.admin.dao;
 
-import java.util.List;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,7 +14,7 @@ public class UserAuthDAO {
 	@Autowired
     private SqlSessionTemplate sqlSession;
  
-    public List<UserVo> loadUserByUsername(String username) {
-        return sqlSession.selectList(NAME_SPACE + "selectUserById", username);
+    public UserVo loadUserByUsername(String username) {
+        return sqlSession.selectOne(NAME_SPACE + "selectUserById", username);
     }
 }
