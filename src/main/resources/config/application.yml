@@ -11,12 +11,18 @@ server:
 spring:
   application:
     name: admin
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**/*.css,/**/*.js
   devtools: 
     restart:
       enabled: true
     livereload:
       enabled: true
-     
+      
   thymeleaf:
     cache: false
     check-template: true

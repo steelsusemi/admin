@@ -5,7 +5,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8"/>
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	    <meta name="viewport" content="width=device-width, initial-scale=1"/><!-- Bootstrap -->
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="icon" th:href="@{images/favicon.ico}" type="image/ico" />
 	   
 		<!-- Bootstrap -->
 	    <link rel="stylesheet" type="text/css" th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}"/>
@@ -58,7 +59,7 @@
                            placeholder="Password">
 		             </div>
 		             <div>
-		               <a class="btn btn-default submit" th:onclick="javascript:document.loginForm.submit();">Log in</a>
+		               <a class="btn btn-default submit" th:onclick="javascript:document.loginForm.submit();"  href="#">Log in</a>
 		               <!-- <input type="submit"
                                    name="login-submit"
                                    id="login-submit"
@@ -70,15 +71,15 @@
 		             <div class="clearfix"></div>
 		
 		             <div class="separator">
-			               <p class="change_link">New to site?
+			               <!-- <p class="change_link">New to site?
 			                 <a href="#signup" class="to_register"> Create Account </a>
 			               </p>
 			
 			               <div class="clearfix"></div>
-			               <br />
+			               <br /> -->
 			
 			               <div>
-			                 <h1><i class="fa fa-paw"></i> J.J.PlatForm!</h1>
+			                 <h1><i class="fa fa-shield"></i> J.J.PlatForm!</h1>
 			                 <p>©2021 All Rights Reserved. J.J.PlatForm! template. Privacy and Terms</p>
 			               </div>
 		               </div>
@@ -115,8 +116,8 @@
 	               <br />
 	
 	               <div>
-	                 <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-	                 <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+	                 <h1><i class="fa fa-shield"></i> J.J.PlatForm!</h1>
+	                 <p>©2016 All Rights Reserved. J.J.PlatForm! is a Bootstrap 3 template. Privacy and Terms</p>
 	               </div>
 	             </div>
 	           </form>

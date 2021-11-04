@@ -11,11 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
-import com.jjplatform.admin.exception.CustomException;
-import com.jjplatform.admin.exception.ErrorCode;
 import com.jjplatform.admin.vo.UserVo;
 
 @Controller
@@ -28,7 +27,7 @@ public class LoginController {
     }
 
 	@GetMapping("/main")
-    public String main(HttpServletRequest request, HttpServletResponse respose, Authentication authentication) throws IOException {
+    public String main(HttpServletRequest request, HttpServletResponse respose, Authentication authentication, Model model) throws IOException {
     	log.info("###################[ Main Page 이동]###################");
 //    	if(true) {
 //    		throw new CustomException(ErrorCode.TEMPORARY_SERVER_ERROR);
@@ -70,8 +69,7 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String login(HttpServletRequest request) {
-    	log.info("session => " + request.getSession());
+    public String login(HttpServletRequest request, Model model) {
         return "login";
     } 
     
