@@ -19,16 +19,25 @@
     <link rel="stylesheet" type="text/css" th:href="@{/vendors/animate.css/animate.min.css}"/>
     
     <!-- iCheck -->
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/iCheck/skins/flat/green.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/vendors/iCheck/skins/flat/green.css}"/>
     <!-- bootstrap-progressbar -->
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}"/>
     <!-- JQVMap -->
     <link rel="stylesheet" type="text/css" th:href="@{/vendors/jqvmap/dist/jqvmap.min.css}"/>
     <!-- bootstrap-daterangepicker -->
-    <link rel="stylesheet" type="text/css" th:href="@{/vendors/bootstrap-daterangepicker/daterangepicker.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/vendors/bootstrap-daterangepicker/daterangepicker.css}"/>
 
     <!-- Custom Theme Style -->
     <link rel="stylesheet" type="text/css" th:href="@{/build/css/custom.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}"/>
+    <!-- vue js -->
+    <script type="text/javascript" th:src="@{/vue/vue.js}"></script>
 
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">J.J.PlatForm</title>
 </head>
@@ -46,7 +55,8 @@
 		    </section>
 		    <footer layout:fragment="footer">
 		    	<th:block th:replace="fragments/footer :: footer"/>
-		    </footer> 
+            </footer>
+            <!-- <th:block th:replace="fragments/footer :: footer"/> -->
 		    <!-- <th:block th:replace="fragments/left_menu :: left"/>
 		    <th:block th:replace="fragments/header :: header"/>
 		    <section class="" layout:fragment="content">

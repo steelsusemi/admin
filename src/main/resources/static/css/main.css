@@ -6,7 +6,7 @@ h1 {
 header {
     position: fixed;
     top: 0;
-    z-index: 1028;
+    z-index: 1;
 }
 
 .left {
@@ -19,13 +19,13 @@ header {
     top: 200;
 }
 
-footer {
+/* footer {
     position: fixed;
     height: 35px;
     bottom: 0;
     width: 89%;
     background-color: #cccc
-}
+} */
 
 footer p {
     padding: 15px;

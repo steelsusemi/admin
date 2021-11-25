@@ -2,16 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-	<meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <!-- 개발버전, 도움되는 콘솔 경고를 포함. -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 	<title>left</title>
 </head>
 <body>      
 <th:block th:fragment="left">
     <!-- left navigation -->
-    <div class="col-md-3 left_col">
+    <div class="col-md-3 left_col" id="app">
        <div class="left_col scroll-view">
          <div class="navbar nav_title" style="border: 0;">
-           <a href="#" onclick="location.reload();" class="site_title"><i class="fa fa-shield"></i> <span>J.J.PlatForm</span></a>
+           <a href="#" onclick="location.reload();" class="site_title"><i class="fa fa-laptop"></i> <span>J.J.PlatForm</span></a>
          </div>
 
          <div class="clearfix"></div>
@@ -35,11 +38,9 @@
            <div class="menu_section">
              <h3><span sec:authentication="Authorities"></span></h3>
              <ul class="nav side-menu">
-               <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+               <li v-for="menu in menuList"><a><i class="fa fa-home"></i> {{ menu.menuNm }} <span class="fa fa-chevron-down"></span></a>
                  <ul class="nav child_menu">
-                   <li><a href="index.html">Dashboard</a></li>
-                   <li><a href="index2.html">Dashboard2</a></li>
-                   <li><a href="index3.html">Dashboard3</a></li>
+                   <li v-for="sub in menu.subMenu"><a :href="sub.menuId">{{ sub.menuNm }}</a></li>
                  </ul>
                </li>
                <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
@@ -67,8 +68,8 @@
                </li>
                <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                  <ul class="nav child_menu">
-                   <li><a href="tables.html">Tables</a></li>
-                   <li><a href="tables_dynamic.html">Table Dynamic</a></li>
+                   <li><a th:href="@{/board}">Tables</a></li>
+                   <li><a th:href="@{/menuList}">Table Dynamic</a></li>
                  </ul>
                </li>
                <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
@@ -152,6 +153,22 @@
          <!-- /menu footer buttons -->
        </div>
      </div>
+     <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          menuList: [
+            {menuId: "home", menuNm: "Home", level: 1
+              , subMenu: [
+                    {menuId: "main", menuNm: "Dashboard", level: 2}
+                  , {menuId: "main2", menuNm: "Dashboard2", level: 2}
+                  , {menuId: "main3", menuNm: "Dashboard3", level: 2}
+                ]
+            }
+          ]
+        }
+      });
+    </script>
 </th:block>
 </body>
 </html>

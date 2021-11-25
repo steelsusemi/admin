@@ -21,7 +21,7 @@
        &copy; J.J.PlatForm.com - Admin Template by <a th:href="@{/}">Home</a>
        <span sec:authorize="isAuthenticated()" style="display: inline-block;">
            <!-- | User: <span sec:authentication="Principal.userVo.userId"></span> | -->
-           | Roles: <span sec:authentication="Authorities"></span>
+           <!-- | Roles: <span sec:authentication="Authorities"></span> -->
        </span>
     </div>
     <div class="clearfix"></div>
@@ -70,6 +70,26 @@
     <!-- Custom Theme Scripts -->
     <script type="text/javascript" th:src="@{/build/js/custom.min.js}"></script>
 
+    <!-- vue js -->
+    <!-- <script type="text/javascript" th:src="@{/vue/vue.js}"></script> -->
+    
+    <!-- Datatables -->
+    <script type="text/javascript" th:src="@{/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jszip/dist/jszip.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/pdfmake/build/pdfmake.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/pdfmake/build/vfs_fonts.js}"></script>
+    
 </th:block>
 </body>
 </html>

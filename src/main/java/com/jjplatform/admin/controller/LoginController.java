@@ -23,7 +23,7 @@ public class LoginController {
 
     @GetMapping("/")
     public String root() {
-        return "login";
+        return "user/login";
     }
 
 	@GetMapping("/main")
@@ -65,27 +65,47 @@ public class LoginController {
 //    		
 //    	}
     	
-        return "user/main";
+        return "main/main";
     }
 
     @GetMapping("/login")
     public String login(HttpServletRequest request, Model model) {
-        return "login";
+        return "user/login";
     } 
     
     @GetMapping("/logout")
     public String loout() throws Exception {
-//    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();                                                                                                                                                                                                                                                                                                                                                                                                                              
 //    	if (auth != null) {
 //    		new SecurityContextLogoutHandler().logout(request, response, auth);
 //    	}
 
-        return "login";
+        return "user/login";
     }
 
     @GetMapping("/error")
     public String accessDenied() {
         return "error/access-denied";
+    }
+    
+    @GetMapping("/board")
+    public String board() {
+        return "board/board";
+    }
+    
+    @GetMapping("/menuList")
+    public String menuList() {
+        return "com/menuList";
+    }
+    
+    @GetMapping("/main2")
+    public String main2(){
+    	return "main/main2";
+    }
+    
+    @GetMapping("/main3")
+    public String main3(){
+    	return "main/main3";
     }
 
 }
