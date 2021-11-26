@@ -98,6 +98,11 @@ public class LoginController {
         return "com/menuList";
     }
     
+    @GetMapping("/main1")
+    public String main1(){
+    	return "main/main1";
+    }
+    
     @GetMapping("/main2")
     public String main2(){
     	return "main/main2";

@@ -1,7 +1,7 @@
-<!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+<th:block th:fragment="headFragment">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -36,34 +36,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}"/>
+    
     <!-- vue js -->
-    <script type="text/javascript" th:src="@{/vue/vue.js}"></script>
-
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">J.J.PlatForm</title>
+	<script type="text/javascript" th:src="@{/vue/vue.js}"></script>
+</th:block>		
 </head>
-<body class="nav-md">
-	<div class="container body">
-		<div class="main_container">
-			<section class="left" layout:fragment="left">
-				<th:block th:replace="fragments/left_menu :: left"/>
-			</section>
-			<header layout:fragment="header">
-		    	<th:block th:replace="fragments/header :: header"/>
-		    </header>
-		    <section class="layout_content" layout:fragment="content">
-		    	<th:block layout:fragment="content"/>
-		    </section>
-		    <footer layout:fragment="footer">
-		    	<th:block th:replace="fragments/footer :: footer"/>
-            </footer>
-            <!-- <th:block th:replace="fragments/footer :: footer"/> -->
-		    <!-- <th:block th:replace="fragments/left_menu :: left"/>
-		    <th:block th:replace="fragments/header :: header"/>
-		    <section class="" layout:fragment="content">
-		    	<th:block layout:fragment="content"/>
-		    </section>
-		    <th:block th:replace="fragments/footer :: footer"/> -->
-    	</div>
-    </div>
-</body>
 </html>

@@ -1,33 +1,10 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<title>footer</title>
 </head>
-<th:block th:fragment="footer">
-   <!-- <div class="container">
-       <p>
-           &copy; J.J.PlatForm.com
-           <span sec:authorize="isAuthenticated()" style="display: inline-block;">
-               | Logged user: <span sec:authentication="name"></span> |
-               Roles: <span sec:authentication="authorities[0]"></span> |
-               <a th:href="@{/logout}">Sign Out</a>
-           </span>
-       </p>
-   </div> -->
-   <div class="pull-right">
-       &copy; J.J.PlatForm.com - Admin Template by <a th:href="@{/}">Home</a>
-       <span sec:authorize="isAuthenticated()" style="display: inline-block;">
-           <!-- | User: <span sec:authentication="Principal.userVo.userId"></span> | -->
-           <!-- | Roles: <span sec:authentication="Authorities"></span> -->
-       </span>
-    </div>
-    <div class="clearfix"></div>
-
-    <!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js/}"></script>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script> -->
-    
+<th:block th:fragment="scriptFragment">
     <!-- jQuery -->
     <script type="text/javascript" th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
     <!-- Bootstrap -->
@@ -88,6 +65,5 @@
     <script type="text/javascript" th:src="@{/vendors/jszip/dist/jszip.min.js}"></script>
     <script type="text/javascript" th:src="@{/vendors/pdfmake/build/pdfmake.min.js}"></script>
     <script type="text/javascript" th:src="@{/vendors/pdfmake/build/vfs_fonts.js}"></script>
-    
 </th:block>
 </html>

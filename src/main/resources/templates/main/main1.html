@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{layouts/layout}">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>main</title>
+    <th:block th:replace="fragments/script :: scriptFragment">
 </head>
 <div layout:fragment="content" th:remove="tag">
 	<!-- page content -->
-     <div class="right_col" role="main" style="margin-top:30px;">
        <!-- top tiles -->
        <div class="row" style="display: inline-block;" >
        <div class="tile_count">
@@ -686,7 +685,6 @@
            </div>
          </div>
        </div>
-     </div>
      <!-- /page content -->
    </div>
 </html>

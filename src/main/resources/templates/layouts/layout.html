@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-- [head] ?˜?—­ ?‹œ?ž‘ -->
+    <head th:replace="fragments/head :: headFragment">
+        <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">J.J.PlatForm</title>
+    </head>
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<section class="left" layout:fragment="left">
+				<th:block th:replace="fragments/left_menu :: left"/>
+			</section>
+			<header layout:fragment="header">
+		    	<th:block th:replace="fragments/header :: header"/>
+		    </header>
+		    <section class="layout_content" layout:fragment="content">
+		    	<th:block layout:fragment="content"/>
+            </section>
+		    <footer layout:fragment="footer">
+		    	<th:block th:replace="fragments/footer :: footer"/>
+            </footer>
+		    <!-- <th:block th:replace="fragments/left_menu :: left"/>
+		    <th:block th:replace="fragments/header :: header"/>
+		    <section class="" layout:fragment="content">
+		    	<th:block layout:fragment="content"/>
+		    </section>
+		    <th:block th:replace="fragments/footer :: footer"/> -->
+    	</div>
+    </div>
+</body>
+</html>

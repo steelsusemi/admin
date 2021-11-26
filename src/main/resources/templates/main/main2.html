@@ -1,19 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{fragments/layout}">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>main</title>
-</head>
-<body>
-<!-- <div layout:fragment="content" th:remove="tag">
-    <h1>Hello Main Pages!!</h1>
-    <p><a href="/" th:href="@{/}">Back to home page</a></p>
-</div> -->
+      xmlns:th="http://www.thymeleaf.org">
 <div layout:fragment="content" th:remove="tag">
 	<!-- page content -->
-  <div class="right_col" role="main" style="margin-top:25px;">
     <div class="">
       <div class="row" style="display: inline-block;">
       <div class="top_tiles">
@@ -460,8 +449,6 @@
         </div>
       </div>
     </div>
-  </div>
   <!-- /page content -->
    </div>
-</body>
 </html>
