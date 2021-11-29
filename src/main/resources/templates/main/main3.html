@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/layout}">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>main</title>
 </head>
 <body>
@@ -11,7 +12,8 @@
     <p><a href="/" th:href="@{/}">Back to home page</a></p>
 </div> -->
 <div layout:fragment="content" th:remove="tag">
-	<!-- page content -->
+  <!-- page content -->
+  <div class="right_col" role="main" id= "main" style="margin-top:30px;">
     <div class="row" style="display: inline-block;">
       <div class=" top_tiles" style="margin: 10px 0;">
         <div class="col-md-3 col-sm-3  tile">
@@ -559,7 +561,8 @@
         </div>
       </div>
     </div>
+  </div>
   <!-- /page content -->
-   </div>
+</div>
 </body>
 </html>

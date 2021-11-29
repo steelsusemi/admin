@@ -10,7 +10,7 @@
     <div class="col-md-3 left_col" id="leftMenu">
        <div class="left_col scroll-view">
          <div class="navbar nav_title" style="border: 0;">
-           <a href="#" onclick="location.reload();" class="site_title"><i class="fa fa-laptop"></i> <span>J.J.PlatForm</span></a>
+           <a th:href="@{/}" class="site_title"><i class="fa fa-laptop"></i> <span>J.J.PlatForm</span></a>
          </div>
 
          <div class="clearfix"></div>
@@ -18,7 +18,7 @@
          <!-- menu profile quick info -->
          <div class="profile clearfix">
            <div class="profile_pic">
-             <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+             <img src="/images/img.jpg" alt="..." class="img-circle profile_img">
            </div>
            <div class="profile_info">
              <span>Welcome,</span>
@@ -34,13 +34,13 @@
            <div class="menu_section">
              <h3><span sec:authentication="Authorities"></span></h3>
              <ul class="nav side-menu">
-               <li v-for="menu in menuList"><a><i class="fa fa-home"></i> {{ menu.menuNm }} <span class="fa fa-chevron-down"></span></a>
+               <li v-for="menu in menuList"><a><i class="fa " :class="getClass(menu.menuId)"></i> {{ menu.menuNm }} <span class="fa fa-chevron-down"></span></a>
                  <ul class="nav child_menu">
-                   <!-- <li v-for="sub in menu.subMenu"><a :href="sub.menuId">{{ sub.menuNm }}</a></li> -->
-                   <li v-for="sub in menu.subMenu"><a @click="move(sub.menuId)">{{ sub.menuNm }}</a></li>
+                   <li v-for="sub in menu.subMenu"><a :href="'/com/' + sub.menuId">{{ sub.menuNm }}</a></li>
+                   <!-- <li v-for="sub in menu.subMenu"><a @click="move(sub.menuId)">{{ sub.menuNm }}</a></li> -->
                  </ul>
                </li>
-               <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+               <!-- <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                  <ul class="nav child_menu">
                    <li><a href="form.html">General Form</a></li>
                    <li><a href="form_advanced.html">Advanced Components</a></li>
@@ -125,7 +125,7 @@
                      </li>
                  </ul>
                </li>                  
-               <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page Coming Soon</a></li>
+               <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page Coming Soon</a></li> -->
              </ul>
            </div>
 
@@ -155,44 +155,59 @@
         el: "#leftMenu",
         data: {
           menuList: [
-            {menuId: "home", menuNm: "Home", level: 1
+            {menuId: "USER000M", menuNm: "사용자", level: 1
               , subMenu: [
-                    {menuId: "main1", menuNm: "Dashboard", level: 2}
-                  , {menuId: "main2", menuNm: "Dashboard2", level: 2}
-                  , {menuId: "main3", menuNm: "Dashboard3", level: 2}
+                    {menuId: "USER001M", menuNm: "사용자관리", level: 2}
+                  , {menuId: "USER002M", menuNm: "사용자권한관리", level: 2}
+                ]
+            },
+            {menuId: "SYST000M", menuNm: "시스템", level: 1
+              , subMenu: [
+                    {menuId: "MENU001M", menuNm: "메뉴관리", level: 2}
+                  , {menuId: "MENU002M", menuNm: "메뉴권한관리", level: 2}
                 ]
             }
           ]
+        },
+        computed: {
+          //  getClass(menuId) {
+          //   console.log("111111111 > " + menuId);
+          //   return menuId == 'USER000M' ? 'fa fa-user' : 'fa fa-bars';
+          // }
         },
         methods: {
           move(id){
             // console.log("111111111 > " + id + " : " +$("[role='main']").html());
             // ajax option
 
-            var ajaxOption = {
-                    url : "/"+id,
-                    async : true,
-                    type : "GET",
-                    dataType : "html",
-                    cache : false
-            };
+            // var ajaxOption = {
+            //         url : "/com/"+id,
+            //         async : true,
+            //         type : "GET",
+            //         dataType : "html",
+            //         cache : false
+            // };
 
-            $.ajax(ajaxOption).done(function(data){
+            // $.ajax(ajaxOption).done(function(data){
               // console.log("222222 > " + id + " : " +$("[role='main']").children().html());
                 // Contents 영역 삭제
-                $("[role='main']").children().remove();
+                // $("[role='main']").children().remove();
                 // console.log("333333 > " + id + " : " +data);
                 // Contents 영역 교체
                 // var contents = $("div[role='main']").html(data);
-                $("div[role='main']").html(data);
+                // $("div[role='main']").html(data);
                 // contents.trigger("create");
                 // .on method
-                $(document).on("click", "#id ul li", eventFunction);
-            });
-
+                // $(document).on("click", "div[role='main']", eventFunction);
+            // });
+              window.location.href = "/com/"+id;
+          },
+          getClass(menuId) {
+            // console.log("111111111 > " + menuId);
+            return menuId == 'USER000M' ? 'fa fa-user' : 'fa fa-bars';
           }
-        }
-      });
+        }     
+       });
     </script>
 </th:block>
 </html>

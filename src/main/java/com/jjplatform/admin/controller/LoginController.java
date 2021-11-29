@@ -22,7 +22,11 @@ public class LoginController {
 	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @GetMapping("/")
-    public String root() {
+    public String root(Authentication authentication) {
+    	if (authentication != null) {
+    		return "main/main";
+    	}
+    	
         return "user/login";
     }
 
