@@ -8,15 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.jjplatform.admin.aop.LoggerAspect;
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
-import com.jjplatform.admin.dao.UserAuthDAO;
+import com.jjplatform.admin.dao.CommonDao;
+import com.jjplatform.admin.dao.UserAuthDao;
 import com.jjplatform.admin.vo.UserVo;
 
 @Service("customUserDetailsServiceImpl")
-public class CustomUserDetailsServiceImpl {
-	private static final Logger log = LoggerFactory.getLogger(LoggerAspect.class);
+public class CustomUserDetailsServiceImpl extends CommonDao<Object> {
+	private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsServiceImpl.class);
 	
 	@Autowired
-    private UserAuthDAO userAuthDAO;
+    private UserAuthDao userAuthDAO;
  
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	UserVo userAuthes = (UserVo) userAuthDAO.loadUserByUsername(username);

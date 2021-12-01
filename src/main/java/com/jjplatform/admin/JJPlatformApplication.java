@@ -15,8 +15,8 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import com.ulisesbocchio.jasyptspringboot.environment.StandardEncryptableEnvironment;
 
 @Configuration
-@MapperScan(basePackages = "com.jjplatform.admin") 
-@SpringBootApplication(scanBasePackages={"com.jjplatform.admin"})
+@MapperScan(basePackages = "com.jjplatform.admin.*") 
+@SpringBootApplication(scanBasePackages={"com.jjplatform.admin.*"})
 @PropertySource({ "classpath:/config/application.yml"
 				, "classpath:/config/application-${spring.profiles.active}.yml"
 //				, "classpath:/config/application.properties"

@@ -36,7 +36,7 @@
              <ul class="nav side-menu">
                <li v-for="menu in menuList"><a><i class="fa " :class="getClass(menu.menuId)"></i> {{ menu.menuNm }} <span class="fa fa-chevron-down"></span></a>
                  <ul class="nav child_menu">
-                   <li v-for="sub in menu.subMenu"><a :href="'/com/' + sub.menuId">{{ sub.menuNm }}</a></li>
+                   <li v-for="sub in menu.subMenu"><a :href="sub.menuId">{{ sub.menuNm }}</a></li>
                    <!-- <li v-for="sub in menu.subMenu"><a @click="move(sub.menuId)">{{ sub.menuNm }}</a></li> -->
                  </ul>
                </li>
@@ -155,16 +155,20 @@
         el: "#leftMenu",
         data: {
           menuList: [
-            {menuId: "USER000M", menuNm: "사용자", level: 1
+            {menuId: "SYS000M", menuNm: "시스템", level: 1, useYn: "Y", updId: "user", updDtm: ""
               , subMenu: [
-                    {menuId: "USER001M", menuNm: "사용자관리", level: 2}
-                  , {menuId: "USER002M", menuNm: "사용자권한관리", level: 2}
+                    {menuId: "MNU001M", menuNm: "메뉴관리", level: 2, useYn: "Y", updId: "user", updDtm: ""}
                 ]
             },
-            {menuId: "SYST000M", menuNm: "시스템", level: 1
+            {menuId: "USR000M", menuNm: "사용자", level: 1, useYn: "Y", updId: "user", updDtm: ""
               , subMenu: [
-                    {menuId: "MENU001M", menuNm: "메뉴관리", level: 2}
-                  , {menuId: "MENU002M", menuNm: "메뉴권한관리", level: 2}
+                    {menuId: "USR001M", menuNm: "사용자관리", level: 2, useYn: "Y", updId: "user", updDtm: ""}
+                  , {menuId: "USR002M", menuNm: "사용자권한관리", level: 2, useYn: "Y", updId: "user", updDtm: ""}
+                ]
+            },
+            {menuId: "SVC000M", menuNm: "서비스", level: 1, useYn: "Y", updId: "user", updDtm: ""
+              , subMenu: [
+                    {menuId: "SVC001M", menuNm: "서비스등록", level: 2, useYn: "Y", updId: "user", updDtm: ""}
                 ]
             }
           ]
@@ -204,7 +208,7 @@
           },
           getClass(menuId) {
             // console.log("111111111 > " + menuId);
-            return menuId == 'USER000M' ? 'fa fa-user' : 'fa fa-bars';
+            return menuId == 'USER000M' ? 'fa-user' : menuId == 'SYS000M' ? 'fa-bars' : 'fa-file';
           }
         }     
        });

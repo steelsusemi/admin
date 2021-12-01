@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jjplatform.admin.dao.Svc001Dao">
+
+    <select id="svcList" parameterType="map" resultType="LowerCamelHashMap">
+        SELECT SVC_ID
+        	 , SVC_NM
+        	 , PAK_PATH
+        	 , USE_YN
+        	 , SVC_DAO
+        	 , SVC_XML
+        	 , REG_ID
+        	 , REG_DTM
+        	 , UPD_ID
+        	 , UPD_DTM
+          FROM SVC_MANAGE
+        <where>
+       	<if test="svcId != null and svcId != ''">
+           AND SVC_ID = #{svcId}
+           </if>
+        </where>
+        <!-- <if test="limit != null and offset != null">
+            LIMIT #{limit}
+            OFFSET #{offset}
+        </if> -->
+    </select>
+
+</mapper>

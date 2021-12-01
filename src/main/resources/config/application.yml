@@ -42,7 +42,7 @@ mybatis:
   # model 프로퍼티 camel case 설정
   config-location: classpath:mybatis-config.xml
 #  configuration:
-#  map-underscore-to-camel-case: true
+#    map-underscore-to-camel-case: true
   # 패키지 명을 생략할 수 있도록 alias 설정
   type-aliases-package: com.jjplatform.admin.vo
 

@@ -16,4 +16,7 @@
 		<setting name="callSettersOnNulls" value="false"/>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
+	<typeAliases>
+		<typeAlias type="com.jjplatform.admin.util.LowerCamelHashMap" alias="LowerCamelHashMap" />
+	</typeAliases>
 </configuration>

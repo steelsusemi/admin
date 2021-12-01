@@ -38,14 +38,14 @@ footer p {
 
 .header, .footer { overflow: hidden; position: fixed; }
 .page-content { overflow: auto; }
-.right_col {
+/* .right_col {
     padding: 60px 20px 0;
     margin-left: 230px;
 }
 .clearfix:after {
 	content: "";
 	display: block;
-	height: 4px;
+	height: px;
 	clear: both;
 	visibility: hidden;
-}
+} */

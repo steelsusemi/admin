@@ -7,28 +7,23 @@
         <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">J.J.PlatForm</title>
     </head>
 </head>
-<body class="nav-md">
+<body class="nav-md footer_fixed">
 	<div class="container body">
 		<div class="main_container">
-			<section class="left" layout:fragment="left">
+			<!-- <section class="left" layout:fragment="left">
 				<th:block th:replace="fragments/left_menu :: left"/>
 			</section>
 			<header layout:fragment="header">
 		    	<th:block th:replace="fragments/header :: header"/>
-		    </header>
+			</header> -->
+			<th:block th:replace="fragments/left_menu :: left"/>
+		    <th:block th:replace="fragments/header :: header"/>
 		    <section class="layout_content" layout:fragment="content">
 		    	<th:block layout:fragment="content"/>
             </section>
-		    <!-- <footer layout:fragment="footer">
+		    <footer layout:fragment="footer">
 		    	<th:block th:replace="fragments/footer :: footer"/>
-			</footer> -->
-			<th:block th:replace="fragments/footer :: footer"/>
-		    <!-- <th:block th:replace="fragments/left_menu :: left"/>
-		    <th:block th:replace="fragments/header :: header"/>
-		    <section class="" layout:fragment="content">
-		    	<th:block layout:fragment="content"/>
-		    </section>
-		    <th:block th:replace="fragments/footer :: footer"/> -->
+			</footer>
     	</div>
     </div>
 </body>
