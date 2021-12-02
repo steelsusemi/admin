@@ -29,18 +29,18 @@ public class LoggerInterceptor implements HandlerInterceptor{
 		  response.sendRedirect("/login");
        }
 	   
-	   log.info("=====================LoggerInterceptor Start=====================");
-	   log.info("Around LocalDate.now() >> "+ LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-	   log.info("Around LocalDateTime.now() >> "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-	   log.info("Around LocalDate.now() >> "+ LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
-	   log.info("Around request.getMethod >> "+request.getMethod());
-	   log.info("Around request.getContextPath >> "+request.getContextPath());
-	   log.info("Around request.getRequestURI >> "+request.getRequestURI());
-	   log.info("Around request.getRequestURL >> "+request.getRequestURL());
-	   log.info("Around request.getLocalAddr >> "+request.getLocalAddr());
-	   log.info("Around request.getServerName >> "+request.getServerName());
-	   log.info("Around request.getServletPath >> "+request.getServletPath());
-	   log.info("=====================LoggerInterceptor End=====================");
+//	   log.info("=====================LoggerInterceptor Start=====================");
+//	   log.info("Around LocalDate.now() >> "+ LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+//	   log.info("Around LocalDateTime.now() >> "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+//	   log.info("Around LocalDate.now() >> "+ LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+//	   log.info("Around request.getMethod >> "+request.getMethod());
+//	   log.info("Around request.getContextPath >> "+request.getContextPath());
+//	   log.info("Around request.getRequestURI >> "+request.getRequestURI());
+//	   log.info("Around request.getRequestURL >> "+request.getRequestURL());
+//	   log.info("Around request.getLocalAddr >> "+request.getLocalAddr());
+//	   log.info("Around request.getServerName >> "+request.getServerName());
+//	   log.info("Around request.getServletPath >> "+request.getServletPath());
+//	   log.info("=====================LoggerInterceptor End=====================");
 		
 		return true;
 	}

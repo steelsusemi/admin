@@ -42,14 +42,14 @@ public class LoggerAspect implements HandlerInterceptor{
 //		   log.info("Around request.getContextPath >> "+request.getContextPath());
 //		   log.info("Around request.getRequestURI >> "+request.getRequestURI());
 //		   log.info("Around request.getRequestURL >> "+request.getRequestURL());
-		   log.info("Around joinPoint1 >> "+joinPoint.getSourceLocation());
-		   log.info("Around joinPoint2 >> "+joinPoint.getKind());
-		   log.info("Around joinPoint3 >> "+joinPoint.getArgs());
-		   log.info("Around joinPoint4 >> "+joinPoint.getClass());
-		   log.info("Around joinPoint5 >> "+joinPoint.getSignature());
-		   log.info("Around joinPoint6 >> "+joinPoint.getStaticPart());
-		   log.info("Around joinPoint7 >> "+joinPoint.getTarget());
-		   log.info("Around joinPoint8 >> "+joinPoint.getThis());
+//		   log.info("Around joinPoint1 >> "+joinPoint.getSourceLocation());
+//		   log.info("Around joinPoint2 >> "+joinPoint.getKind());
+//		   log.info("Around joinPoint3 >> "+joinPoint.getArgs());
+//		   log.info("Around joinPoint4 >> "+joinPoint.getClass());
+//		   log.info("Around joinPoint5 >> "+joinPoint.getSignature());
+//		   log.info("Around joinPoint6 >> "+joinPoint.getStaticPart());
+//		   log.info("Around joinPoint7 >> "+joinPoint.getTarget());
+//		   log.info("Around joinPoint8 >> "+joinPoint.getThis());
 		   log.info("=====================LoggerAspect TEST  : Around Logging END=====================");
 		   return result;
        }catch (Exception e) {

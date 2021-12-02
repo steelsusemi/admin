@@ -138,18 +138,18 @@
       el: "#SVC001M",
       data: {
         svcList: [
-          // { svcId: "Mnu001Service", svcNm: "메뉴관리서비스", useYn: "Y", svcDao: "Mnu001DAO", svcXml: "Mnu001", updId: "user", updDtm: "" },
-          // { svcId: "Usr001Service", svcNm: "사용자관리서비스", useYn: "Y", svcDao: "Usr001DAO", svcXml: "Usr001", updId: "user", updDtm: "" },
-          // { svcId: "Usr002Service", svcNm: "사용자권한관리서비스", useYn: "Y", svcDao: "Usr002DAO", svcXml: "Usr002", updId: "user", updDtm: "" },
-          // { svcId: "Svc001Service", svcNm: "서비스등록서비스", useYn: "Y", svcDao: "Svc001DAO", svcXml: "Svc001", updId: "user", updDtm: "" },
-          // { svcId: "Mnu001Service", svcNm: "메뉴관리서비스", useYn: "Y", svcDao: "Mnu001DAO", svcXml: "Mnu001", updId: "user", updDtm: "" },
-          // { svcId: "Usr001Service", svcNm: "사용자관리서비스", useYn: "Y", svcDao: "Usr001DAO", svcXml: "Usr001", updId: "user", updDtm: "" },
-          // { svcId: "Usr002Service", svcNm: "사용자권한관리서비스", useYn: "Y", svcDao: "Usr002DAO", svcXml: "Usr002", updId: "user", updDtm: "" },
-          // { svcId: "Svc001Service", svcNm: "서비스등록서비스", useYn: "Y", svcDao: "Svc001DAO", svcXml: "Svc001", updId: "user", updDtm: "" },
-          // { svcId: "Mnu001Service", svcNm: "메뉴관리서비스", useYn: "Y", svcDao: "Mnu001DAO", svcXml: "Mnu001", updId: "user", updDtm: "" },
-          // { svcId: "Usr001Service", svcNm: "사용자관리서비스", useYn: "Y", svcDao: "Usr001DAO", svcXml: "Usr001", updId: "user", updDtm: "" },
-          // { svcId: "Usr002Service", svcNm: "사용자권한관리서비스", useYn: "Y", svcDao: "Usr002DAO", svcXml: "Usr002", updId: "user", updDtm: "" },
-          // { svcId: "Svc001Service", svcNm: "서비스등록서비스", useYn: "Y", svcDao: "Svc001DAO", svcXml: "Svc001", updId: "user", updDtm: "" }
+          /* { svcId: "Mnu001Service", svcNm: "메뉴관리서비스", useYn: "Y", svcDao: "Mnu001DAO", svcXml: "Mnu001", updId: "user", updDtm: "" },
+          { svcId: "Usr001Service", svcNm: "사용자관리서비스", useYn: "Y", svcDao: "Usr001DAO", svcXml: "Usr001", updId: "user", updDtm: "" },
+          { svcId: "Usr002Service", svcNm: "사용자권한관리서비스", useYn: "Y", svcDao: "Usr002DAO", svcXml: "Usr002", updId: "user", updDtm: "" },
+          { svcId: "Svc001Service", svcNm: "서비스등록서비스", useYn: "Y", svcDao: "Svc001DAO", svcXml: "Svc001", updId: "user", updDtm: "" },
+          { svcId: "Mnu001Service", svcNm: "메뉴관리서비스", useYn: "Y", svcDao: "Mnu001DAO", svcXml: "Mnu001", updId: "user", updDtm: "" },
+          { svcId: "Usr001Service", svcNm: "사용자관리서비스", useYn: "Y", svcDao: "Usr001DAO", svcXml: "Usr001", updId: "user", updDtm: "" },
+          { svcId: "Usr002Service", svcNm: "사용자권한관리서비스", useYn: "Y", svcDao: "Usr002DAO", svcXml: "Usr002", updId: "user", updDtm: "" },
+          { svcId: "Svc001Service", svcNm: "서비스등록서비스", useYn: "Y", svcDao: "Svc001DAO", svcXml: "Svc001", updId: "user", updDtm: "" },
+          { svcId: "Mnu001Service", svcNm: "메뉴관리서비스", useYn: "Y", svcDao: "Mnu001DAO", svcXml: "Mnu001", updId: "user", updDtm: "" },
+          { svcId: "Usr001Service", svcNm: "사용자관리서비스", useYn: "Y", svcDao: "Usr001DAO", svcXml: "Usr001", updId: "user", updDtm: "" },
+          { svcId: "Usr002Service", svcNm: "사용자권한관리서비스", useYn: "Y", svcDao: "Usr002DAO", svcXml: "Usr002", updId: "user", updDtm: "" },
+          { svcId: "Svc001Service", svcNm: "서비스등록서비스", useYn: "Y", svcDao: "Svc001DAO", svcXml: "Svc001", updId: "user", updDtm: "" } */
         ],
         checkVal: [],
         result: [],
@@ -160,19 +160,21 @@
       },
       methods: {
         getSearch() {
-          console.log("111111111 > " + this.svcId);
-          const data = {
-            mnuId: this.mnuId,
-            svcId: this.svcId
-          };
-          axios.post('/jjp/svcList', data, {
-                headers: { "Content-Type": "application/json"}
-              }).then((res) => { 
-                  this.svcList = res.data; 
-                  console.log("222222 > " + this.svcList);
-              }).catch((ex) => { 
-                  console.log("에러", ex); 
-          });
+        	this.svcList = [];
+          	console.log("111111111 > " + this.svcId);
+          	const data = {
+            	mnuId: this.mnuId,
+            	svcId: this.svcId
+          	};
+			axios.post('/jjp/svcList', data, {
+				headers: { "Content-Type": "application/json"}
+	            }).then((res) => { 
+	            	$(".odd").html("");
+	                this.svcList = res.data; 
+	                console.log("222222 > " + this.svcList);
+	            }).catch((ex) => { 
+	                console.log("에러", ex); 
+	        });
 
         }
         // checkVal() {

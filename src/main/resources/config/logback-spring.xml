@@ -99,7 +99,7 @@
         <root level="INFO"  additivity="false">
             <appender-ref ref="FILE" />
             <appender-ref ref="STDOUT" />
-            <appender-ref ref="MyDbAppender" />
+            <!-- <appender-ref ref="MyDbAppender" /> -->
         </root>
     </springProfile>
     <springProfile name="prod"  additivity="false">

@@ -1,5 +1,7 @@
 package com.jjplatform.admin.controller;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jjplatform.admin.config.ApplicationContextProvider;
 import com.jjplatform.admin.service.Svc001Service;
 import com.jjplatform.admin.service.impl.Svc001ServiceImpl;
 
@@ -32,32 +35,22 @@ public class SvcController {
 	@PostMapping("/jjp/{m1}")
     public ResponseEntity<?> getComController(@RequestBody Map param, @PathVariable(value = "m1") String m1) throws Exception {
     	 
-//    	Class svcClass = Class.forName("com.jjplatform.admin.service.impl.Svc001ServiceImpl");
+//    	Class<?> svcClass = Class.forName("com.jjplatform.admin.service.impl.Svc001ServiceImpl");
+//    	Constructor<?> cons = svcClass.getConstructor();
     	List<Map> resultList = new ArrayList();
 		try {
-//			Object svcInstance = svcClass.newInstance();
-//			Method method = svcClass.getDeclaredMethod("svcList", Map.class);
+//			Object svcInstance = cons.newInstance();
+//			Method method = svcClass.getMethod("svcList", new Class[] {Map.class});
 //	    	log.info("path >> " +m1 + " : "+ param + " : "+ svcClass+ " : "+ svcInstance+ " : "+ method);
 //	    	resultList = (List<Map>) method.invoke(svcInstance, param);
 			resultList = svc001Service.svcList(param);
 	    	log.info("resultList >> " + resultList);
+//		} catch (InvocationTargetException e) {
+//		    // Answer:
+//		    e.getCause().printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-    	
-//    	String v1 = "";
-//    	path = path.toUpperCase();
-//    	
-//    	if(path.contains("MNU")) {
-//    		v1 = "sys";
-//    	}else if(path.contains("USR")) {
-//    		v1 = "user";
-//    	}else {
-//    		v1 = path.substring(0, path.length() - 4);
-//    	}
-    	
-//    	log.info("path >> " +m1 + " : "+ param + " : "+ svcClass);
-    	
+		} 
     	return new ResponseEntity<>(resultList, HttpStatus.OK);
     }
 }
