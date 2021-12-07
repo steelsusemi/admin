@@ -31,7 +31,7 @@ public class SvcController {
 	@Autowired
 	private Svc001Service svc001Service;
 	
-    @SuppressWarnings({ "rawtypes", "deprecation", "unchecked" })
+    @SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping("/jjp/{m1}")
     public ResponseEntity<?> getComController(@RequestBody Map param, @PathVariable(value = "m1") String m1) throws Exception {
     	 
@@ -53,4 +53,28 @@ public class SvcController {
 		} 
     	return new ResponseEntity<>(resultList, HttpStatus.OK);
     }
+    
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+   	@PostMapping("/jjp/svcSave")
+    public ResponseEntity<?> svcSave(@RequestBody List<Map> paramList) throws Exception {
+		log.info("paramList >> " + paramList);
+	//       	Class<?> svcClass = Class.forName("com.jjplatform.admin.service.impl.Svc001ServiceImpl");
+	//       	Constructor<?> cons = svcClass.getConstructor();
+	   	List<Map> resultList = new ArrayList();
+		try {
+	//   			Object svcInstance = cons.newInstance();
+	//   			Method method = svcClass.getMethod("svcList", new Class[] {Map.class});
+	//   	    	log.info("path >> " +m1 + " : "+ param + " : "+ svcClass+ " : "+ svcInstance+ " : "+ method);
+	//   	    	resultList = (List<Map>) method.invoke(svcInstance, param);
+	//   			resultList = svc001Service.svcSave(paramList);
+	    	log.info("paramList >> " + paramList);
+	//   		} catch (InvocationTargetException e) {
+	//   		    // Answer:
+	//   		    e.getCause().printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		return new ResponseEntity<>(resultList, HttpStatus.OK);
+   }
 }

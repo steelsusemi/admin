@@ -17,16 +17,16 @@ CREATE TABLE jjplatform.dbo.LOG_INFO (
 
 -- Extended properties
 
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'∑Œ±◊¡§∫∏ ≈◊¿Ã∫Ì', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'º¯π¯', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'SEQ';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'∑Œ±◊ƒ⁄µÂ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'LOG_CODE';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'∑Œ±◊∏ﬁºº¡ˆ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'LOG_MESS';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'µÓ∑œæ∆¿Ãµ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'REG_ID';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'µÓ∑œ¿œΩ√', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'REG_DTM';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'µÓ∑œæ∆¿Ã««', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'REG_IP';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Ω√¿€¿œΩ√', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'STRT_DT';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'¡æ∑·¿œΩ√', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'END_DT';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ø°∑Ø≈¨∑°Ω∫', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'LOG_CLASS';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÔøΩŒ±ÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÃ∫ÔøΩ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÔøΩÔøΩÔøΩÔøΩ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'SEQ';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÔøΩŒ±ÔøΩÔøΩ⁄µÔøΩ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'LOG_CODE';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÔøΩŒ±◊∏ﬁºÔøΩÔøΩÔøΩ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'LOG_MESS';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÔøΩÔøΩœæÔøΩÔøΩÃµÔøΩ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'REG_ID';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÔøΩÔøΩÔøΩÔøΩœΩÔøΩ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'REG_DTM';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÔøΩÔøΩœæÔøΩÔøΩÔøΩÔøΩÔøΩ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'REG_IP';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÔøΩÔøΩÔøΩÔøΩÔøΩœΩÔøΩ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'STRT_DT';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÔøΩÔøΩÔøΩÔøΩÔøΩœΩÔøΩ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'END_DT';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÔøΩÔøΩÔøΩÔøΩ≈¨ÔøΩÔøΩÔøΩÔøΩ', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'LOG_CLASS';
 
 
 
@@ -53,3 +53,41 @@ CREATE TABLE jjplatform.dbo.LOGGING_EVENT (
 	EVENT_ID bigint IDENTITY(1,1) NOT NULL,
 	CONSTRAINT PK__LOGGING___241A510C8B3D5188 PRIMARY KEY (EVENT_ID)
 );
+
+
+
+
+-- Drop table
+
+-- DROP TABLE jjplatform.dbo.SVC_MANAGE;
+
+CREATE TABLE jjplatform.dbo.SVC_MANAGE (
+	SVC_ID varchar(100) COLLATE Korean_Wansung_CI_AS NOT NULL,
+	SVC_NM varchar(200) COLLATE Korean_Wansung_CI_AS NULL,
+	USE_YN varchar(1) COLLATE Korean_Wansung_CI_AS NULL,
+	SVC_DAO varchar(100) COLLATE Korean_Wansung_CI_AS NULL,
+	SVC_XML varchar(100) COLLATE Korean_Wansung_CI_AS NULL,
+	REG_ID varchar(100) COLLATE Korean_Wansung_CI_AS NULL,
+	REG_DTM datetime NULL,
+	UPD_ID varchar(100) COLLATE Korean_Wansung_CI_AS NULL,
+	UPD_DTM datetime NULL,
+	PAK_PATH varchar(200) COLLATE Korean_Wansung_CI_AS NULL,
+	SVC_SEQ numeric(38,0) NOT NULL,
+	CONSTRAINT SVC_MANAGE_PK PRIMARY KEY (SVC_SEQ)
+);
+
+-- Extended properties
+
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÏÑúÎπÑÏä§Îì±Î°ùÍ¥ÄÎ¶¨', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÏÑúÎπÑÏä§ID', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'SVC_ID';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÏÑúÎπÑÏä§Î™Ö', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'SVC_NM';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÏÇ¨Ïö©Ïó¨Î∂Ä', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'USE_YN';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÏÑúÎπÑÏä§DAO', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'SVC_DAO';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÏÑúÎπÑÏä§XML', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'SVC_XML';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Îì±Î°ùÏûê', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'REG_ID';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Îì±Î°ùÏùºÏãú', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'REG_DTM';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÏàòÏ†ïÏûê', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'UPD_ID';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÏàòÏ†ïÏùºÏãú', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'UPD_DTM';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Ìå®ÌÇ§ÏßÄÎ™Ö', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'PAK_PATH';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ÏÑúÎπÑÏä§ÏàúÎ≤à', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'SVC_SEQ';
+

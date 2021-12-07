@@ -41,7 +41,8 @@
 
           <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
             <div class="text-right">
-              <button type="button" class="btn btn-secondary" @click="getSearch">Search</button>
+              <button type="button" class="btn btn-secondary" @click="getSearch">조회</button>
+              <button type="button" class="btn btn-secondary" @click="setSave">저장</button>
             </div>
           </div>
         </div>
@@ -53,16 +54,21 @@
           <div class="x_title">
             <h2>조회</h2>
             <ul class="nav navbar-right panel_toolbox">
-              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a> </li>
-              <li class="dropdown">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              <li><a class="close-link"></a></li>
+              <!-- <li><a class="close-link"><i class="fa fa-plus-square"></i></a> -->
+              <li><button type="button" class="btn btn-secondary" @click="addRow">+</button></li>
+              <li><button type="button" class="btn btn-secondary" @click="deleteRow">-</button></li>
+              <li><button type="button" class="btn btn-secondary">초기화</button></li>
+              <!-- <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
                     class="fa fa-wrench"></i></a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="#">Settings 1</a>
                   <a class="dropdown-item" href="#">Settings 2</a>
                 </div>
-              </li>
-              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li> -->
+              <!-- <li><a class="close-link"><i class="fa fa-close"></i></a> -->
               </li>
             </ul>
             <div class="clearfix"></div>
@@ -74,13 +80,15 @@
                   <!-- <p class="text-muted font-13 m-b-30">
                       DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>
                     </p> -->
-                  <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action"
+                  <!-- <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" -->
+                  <table id="svcMng" class="table table-striped table-bordered"
                     style="width:100%;text-align: center;">
                     <thead>
                       <tr>
-                        <th>
+                        <!-- <th>
                         <th><input type="checkbox" id="check-all"></th>
-                        </th>
+                        </th> -->
+                        <th><input type="checkbox" id="check-all"></th>
                         <th>서비스아이디</th>
                         <th>서비스명</th>
                         <th>패키지경로</th>
@@ -93,15 +101,14 @@
                     </thead>
                     <tbody>
                       <tr v-for="(row, index) in svcList">
-                        <td>
-                        <th><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></th>
-                        </td>
-                        <td>{{ row.svcId }}</td>
-                        <td>{{ row.svcNm }}</td>
-                        <td>{{ row.pakPath }}</td>
-                        <td>{{ row.useYn }}</td>
-                        <td>{{ row.svcDao }}</td>
-                        <td>{{ row.svcXml }}</td>
+                        <td style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
+                        <!-- <input type="checkbox" id="check-all" v-model="checkVal" :value="index"> -->
+                        <td><input type="text" id="svcId" v-model="row.svcId" class="form-control" /></td>
+                        <td><input type="text" id="svcNm" v-model="row.svcNm" class="form-control" /></td>
+                        <td><input type="text" id="pakPath" v-model="row.pakPath" class="form-control" /></td>
+                        <td><input type="text" id="useYn" v-model="row.useYn" class="form-control" /></td>
+                        <td><input type="text" id="svcDao" v-model="row.svcDao" class="form-control" /></td>
+                        <td><input type="text" id="svcXml" v-model="row.svcXml" class="form-control" /></td>
                         <td>{{ row.updId }}</td>
                         <td>{{ row.updDtm }}</td>
                       </tr>
@@ -110,7 +117,7 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-sm-5"></div>
                 <div class="col-sm-7">
                   <div class="dataTables_paginate paging_simple_numbers">
@@ -127,7 +134,7 @@
                     </ul>
                   </div>
                 </div>
-              </div> -->
+              </div>
           </div>
         </div>
       </div>
@@ -159,7 +166,8 @@
       computed: {
       },
       methods: {
-        getSearch() {
+        getSearch: function() {
+        	this.svcList.splice(1,1);
         	this.svcList = [];
           	console.log("111111111 > " + this.svcId);
           	const data = {
@@ -175,7 +183,50 @@
 	            }).catch((ex) => { 
 	                console.log("에러", ex); 
 	        });
-
+        },
+        addRow: function() {
+        	console.log("111111111 > " + this.svcList.length + " : " +this.checkVal);
+        	/* try {
+                this.svcList.splice(this.svcList.length + 1, 0, {});
+            } catch (e) {
+                console.log(e);
+            } */
+        	this.svcList.push(
+        			{ svcSeq: "", svcId: "", svcNm: "", useYn: "", svcDao: "", svcXml: "", updId: "", updDtm: "", rowStatus: "C" }	
+        	)
+        	/* $("#svcMng>tbody").append("<tr>");
+        	$("#svcMng>tbody").append("<td style='vertical-align: middle;'><input type='checkbox' id='check-all' v-model='checkVal'></td>");
+        	$("#svcMng>tbody").append("<td><input type='text' id='svcId' v-model='svcList.svcId' class='form-control' /></td>");
+        	$("#svcMng>tbody").append("<td><input type='text' id='svcNm' v-model='svcList.svcNm' class='form-control' /></td>");
+        	$("#svcMng>tbody").append("<td><input type='text' id='pakPath' v-model='svcList.pakPath' class='form-control' /></td>");
+        	$("#svcMng>tbody").append("<td><input type='text' id='useYn' v-model='svcList.useYn' class='form-control' /></td>");
+        	$("#svcMng>tbody").append("<td><input type='text' id='svcDao' v-model='svcList.svcDao' class='form-control' /></td>");
+        	$("#svcMng>tbody").append("<td><input type='text' id='svcXml' v-model='svcList.svcXml' class='form-control' /></td>");
+        	$("#svcMng>tbody").append("<td></td>");
+        	$("#svcMng>tbody").append("<td></td>");
+        	$("#svcMng>tbody").append("</tr>"); */
+        },
+        deleteRow: function() {
+        	if(this.checkVal.length === 0) alert("삭제할 행을 선택해주세요.");
+        	console.log("33333333333 > " +this.checkVal);
+        	for(var i=0; i < this.checkVal.length; i++) {
+       		  	console.log('array index: ' + this.checkVal[i]);
+       			this.svcList.splice(this.checkVal[i], 1);
+       		}
+        },
+        setSave: function() {
+        	//this.svcList = [];
+          	//console.log("111111111 > " + this.svcList.length + " : " +this.svcList.filter(svcList => svcList.rowStatus === "C") + " : " +this.checkVal);
+          	/* console.log(this.svcList.filter(svcList => svcList.rowStatus === "C")); */
+          	const data = this.svcList.filter(svcList => svcList.rowStatus === "C");
+          	console.log(data);
+			axios.post('/jjp/svcSave', data, {
+				headers: { "Content-Type": "application/json"}
+	        }).then((res) => { 
+	                console.log("222222 > " + res);
+	        }).catch((ex) => { 
+	                console.log("에러", ex); 
+	        });
         }
         // checkVal() {
         //   console.log("11 >> " +this.value);

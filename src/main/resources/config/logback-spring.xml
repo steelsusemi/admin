@@ -79,19 +79,19 @@
     </appender>
 
     <!-- log4jdbc-log4j2 -->
-    <logger name="jdbc.sqlonly"        level="INFO" additivity="false"/>
-    <logger name="jdbc.sqltiming"      level="OFF" additivity="false"/>
-    <logger name="jdbc.audit"          level="OFF" additivity="false"/>
-    <logger name="jdbc.resultset"      level="OFF" additivity="false"/>
-    <logger name="jdbc.resultsettable" level="OFF" additivity="false"/>
-    <logger name="jdbc.connection"     level="OFF" additivity="false"/>
+    <logger name="jdbc.sqlonly"        level="INFO"/>
+    <logger name="jdbc.sqltiming"      level="OFF"/>
+    <logger name="jdbc.audit"          level="OFF"/>
+    <logger name="jdbc.resultset"      level="OFF"/>
+    <logger name="jdbc.resultsettable" level="OFF"/>
+    <logger name="jdbc.connection"     level="OFF"/>
     
     <logger name="com.jjplatform.admin" level="INFO"></logger>
     <logger name="org.springframework.security" level="INFO"></logger>
     
-    <!-- <logger name="com.jjplatform.admin" level="Error" additivity="false">
+    <logger name="com.jjplatform.admin" level="Error" additivity="false">
     	<appender-ref ref="MyDbAppender" />
-    </logger> -->
+    </logger>
     
     <!-- TRACE > DEBUG > INFO > WARN > ERROR, 대소문자 구분 안함
     profile 을 읽어서 appender 을 설정할수 있다.(phase별 파일을 안만들어도 됨) -->
