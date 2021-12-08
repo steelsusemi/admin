@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="30 seconds">
+<configuration scan="true" scanPeriod="10 seconds">
     <!-- Spring-boot 기본 logback 설정 -->
     <!-- <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
@@ -60,7 +60,7 @@
     <!--에러 일 경우 파일에 로그를 남깁니다--> 
     <appender name="Error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>error</level>
+            <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
@@ -86,25 +86,26 @@
     <logger name="jdbc.resultsettable" level="OFF"/>
     <logger name="jdbc.connection"     level="OFF"/>
     
-    <logger name="com.jjplatform.admin" level="INFO"></logger>
-    <logger name="org.springframework.security" level="INFO"></logger>
+    <logger name="com.jjplatform.admin" level="INFO">
+    	<appender-ref ref="FILE" />
+    </logger>
+    <logger name="org.springframework.security" level="INFO">
+    </logger>
     
-    <logger name="com.jjplatform.admin" level="Error" additivity="false">
+    <logger name="com.jjplatform.admin.dao" level="Error"  additivity="false">
     	<appender-ref ref="MyDbAppender" />
     </logger>
     
     <!-- TRACE > DEBUG > INFO > WARN > ERROR, 대소문자 구분 안함
     profile 을 읽어서 appender 을 설정할수 있다.(phase별 파일을 안만들어도 됨) -->
     <springProfile name="local,dev">
-        <root level="INFO"  additivity="false">
-            <appender-ref ref="FILE" />
+        <root level="info"  additivity="false">
             <appender-ref ref="STDOUT" />
-            <!-- <appender-ref ref="MyDbAppender" /> -->
         </root>
     </springProfile>
-    <springProfile name="prod"  additivity="false">
+    <springProfile name="prod" additivity="false">
         <root level="INFO">
-            <appender-ref ref="FILE" />
+            <!-- <appender-ref ref="FILE" /> -->
             <appender-ref ref="STDOUT" />
             <!-- <appender-ref ref="MyDbAppender" /> -->
         </root>

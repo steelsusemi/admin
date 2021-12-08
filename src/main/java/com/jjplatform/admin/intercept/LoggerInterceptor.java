@@ -22,7 +22,7 @@ public class LoggerInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 	   HttpSession sessInfo = request.getSession();
-	   log.info("sessInfo >> "+sessInfo+" : "+sessInfo.getAttribute("userInfo"));
+	   log.info("sessInfo >>>>>>>> "+sessInfo+" : "+sessInfo.getAttribute("userInfo"));
 	   
 	   if(sessInfo == null) {
 		  request.getSession().invalidate();

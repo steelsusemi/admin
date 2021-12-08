@@ -24,4 +24,8 @@ public class CommonDao<T> {
 	public List<T> selectList(String xmlPath, Map param) {
         return sqlSession.selectList(xmlPath, param);
     }
+	
+	public int insert(String xmlPath, List<T> param) {
+        return sqlSession.insert(xmlPath, param);
+    }
 }

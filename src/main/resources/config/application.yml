@@ -1,7 +1,7 @@
 server:
   servlet:
-#    session:
-#      timeout: 5m     
+    session:
+      timeout: 5m     
 #      cookie:
 #        max-age: 5m   
 #        name: SID

@@ -74,6 +74,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(HttpServletRequest request, Model model) {
+    	log.info("login : 2222222222222"); 
         return "user/login";
     } 
     
@@ -89,7 +90,7 @@ public class LoginController {
 
     @GetMapping("/error")
     public String accessDenied() {
-        return "error/access-denied";
+        return "error/page_500";
     }
     
     @GetMapping("/board")

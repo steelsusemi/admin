@@ -26,7 +26,7 @@ import com.jjplatform.admin.service.impl.Svc001ServiceImpl;
 
 @RestController
 public class SvcController {
-	private static final Logger log = LoggerFactory.getLogger(SvcController.class);
+	private final Logger log = LoggerFactory.getLogger(SvcController.class);
 
 	@Autowired
 	private Svc001Service svc001Service;
@@ -55,7 +55,7 @@ public class SvcController {
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
-   	@PostMapping("/jjp/svcSave")
+   	@PostMapping("/svc/svcSave")
     public ResponseEntity<?> svcSave(@RequestBody List<Map> paramList) throws Exception {
 		log.info("paramList >> " + paramList);
 	//       	Class<?> svcClass = Class.forName("com.jjplatform.admin.service.impl.Svc001ServiceImpl");
@@ -66,8 +66,7 @@ public class SvcController {
 	//   			Method method = svcClass.getMethod("svcList", new Class[] {Map.class});
 	//   	    	log.info("path >> " +m1 + " : "+ param + " : "+ svcClass+ " : "+ svcInstance+ " : "+ method);
 	//   	    	resultList = (List<Map>) method.invoke(svcInstance, param);
-	//   			resultList = svc001Service.svcSave(paramList);
-	    	log.info("paramList >> " + paramList);
+	   			int svcSave = svc001Service.svcSave(paramList);
 	//   		} catch (InvocationTargetException e) {
 	//   		    // Answer:
 	//   		    e.getCause().printStackTrace();

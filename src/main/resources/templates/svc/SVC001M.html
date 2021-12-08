@@ -95,13 +95,13 @@
                         <th>사용여부</th>
                         <th>서비스DAO</th>
                         <th>쿼리XML</th>
-                        <th>등록일시</th>
-                        <th>등록자</th>
+                        <th style="width: 100px;">등록자</th>
+                        <th style="width: 150px;">등록일시</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(row, index) in svcList">
-                        <td style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
+                      <tr v-for="(row, index) in svcList" style="height:20px">
+                        <td style="vertical-align: middle;height:20px"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
                         <!-- <input type="checkbox" id="check-all" v-model="checkVal" :value="index"> -->
                         <td><input type="text" id="svcId" v-model="row.svcId" class="form-control" /></td>
                         <td><input type="text" id="svcNm" v-model="row.svcNm" class="form-control" /></td>
@@ -220,10 +220,11 @@
           	/* console.log(this.svcList.filter(svcList => svcList.rowStatus === "C")); */
           	const data = this.svcList.filter(svcList => svcList.rowStatus === "C");
           	console.log(data);
-			axios.post('/jjp/svcSave', data, {
+			axios.post("/svc/svcSave", data, {
 				headers: { "Content-Type": "application/json"}
 	        }).then((res) => { 
 	                console.log("222222 > " + res);
+	                this.getSearch();
 	        }).catch((ex) => { 
 	                console.log("에러", ex); 
 	        });
