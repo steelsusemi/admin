@@ -5,6 +5,11 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>서비스등록</title>
+  <style type="text/css">
+  	.table td {
+	    padding: 0.45rem;
+	}
+  </style>
 </head>
 <div layout:fragment="content" th:remove="tag">
   <!-- page content -->
@@ -101,7 +106,7 @@
                     </thead>
                     <tbody>
                       <tr v-for="(row, index) in svcList" style="height:20px">
-                        <td style="vertical-align: middle;height:20px"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
+                        <td style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
                         <!-- <input type="checkbox" id="check-all" v-model="checkVal" :value="index"> -->
                         <td><input type="text" id="svcId" v-model="row.svcId" class="form-control" /></td>
                         <td><input type="text" id="svcNm" v-model="row.svcNm" class="form-control" /></td>
@@ -109,8 +114,8 @@
                         <td><input type="text" id="useYn" v-model="row.useYn" class="form-control" /></td>
                         <td><input type="text" id="svcDao" v-model="row.svcDao" class="form-control" /></td>
                         <td><input type="text" id="svcXml" v-model="row.svcXml" class="form-control" /></td>
-                        <td>{{ row.updId }}</td>
-                        <td>{{ row.updDtm }}</td>
+                        <td style="vertical-align: middle;">{{ row.updId }}</td>
+                        <td style="vertical-align: middle;">{{ row.updDtm }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -121,8 +126,8 @@
                 <div class="col-sm-5"></div>
                 <div class="col-sm-7">
                   <div class="dataTables_paginate paging_simple_numbers">
-                    <ul class="pagination">
-                      <li class="paginate_button previous disabled">
+                   <ul class="pagination" ref="template" v-html="template">
+                       <!-- <li class="paginate_button previous disabled">
                         <a href="#" aria-controls="datatable-checkbox" data-dt-idx="0" tabindex="0">Previous</a>
                       </li>
                       <li class="paginate_button active">
@@ -130,7 +135,7 @@
                       </li>
                       <li class="paginate_button next disabled">
                         <a href="#" aria-controls="datatable-checkbox" data-dt-idx="2" tabindex="0">Next</a>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
                 </div>
@@ -161,7 +166,22 @@
         checkVal: [],
         result: [],
         mnuId: "SVC001",
-        svcId: ""
+        svcId: "",
+        common: {
+        	totalCount: 0,
+        	pageSize: 10,
+        	navPage: 10,
+        	currentPage: 1
+        },
+        template : ``
+      },
+      mounted() {
+    	 console.log("common >> "+this.common);
+    	 //const pageInfo = this.setPageInfo(this.common);
+    	  
+    	  // 데이터조회
+    	 //this.getSearch(pageInfo);
+    	 
       },
       computed: {
       },
@@ -172,7 +192,9 @@
           	console.log("111111111 > " + this.svcId);
           	const data = {
             	mnuId: this.mnuId,
-            	svcId: this.svcId
+            	svcId: this.svcId,
+            	pageSize: this.common.pageSize,
+            	currentPage: this.common.currentPage
           	};
 			axios.post('/jjp/svcList', data, {
 				headers: { "Content-Type": "application/json"}
@@ -180,17 +202,15 @@
 	            	$(".odd").html("");
 	                this.svcList = res.data; 
 	                console.log("222222 > " + this.svcList);
+	                this.common.totalCount = this.svcList[0].totCnt;
+	                this.pagingNavi(this.common);
 	            }).catch((ex) => { 
 	                console.log("에러", ex); 
 	        });
         },
         addRow: function() {
         	console.log("111111111 > " + this.svcList.length + " : " +this.checkVal);
-        	/* try {
-                this.svcList.splice(this.svcList.length + 1, 0, {});
-            } catch (e) {
-                console.log(e);
-            } */
+
         	this.svcList.push(
         			{ svcSeq: "", svcId: "", svcNm: "", useYn: "", svcDao: "", svcXml: "", updId: "", updDtm: "", rowStatus: "C" }	
         	)
@@ -217,7 +237,6 @@
         setSave: function() {
         	//this.svcList = [];
           	//console.log("111111111 > " + this.svcList.length + " : " +this.svcList.filter(svcList => svcList.rowStatus === "C") + " : " +this.checkVal);
-          	/* console.log(this.svcList.filter(svcList => svcList.rowStatus === "C")); */
           	const data = this.svcList.filter(svcList => svcList.rowStatus === "C");
           	console.log(data);
 			axios.post("/svc/svcSave", data, {
@@ -228,7 +247,75 @@
 	        }).catch((ex) => { 
 	                console.log("에러", ex); 
 	        });
+        },
+        setPageInfo: function(comm){
+        	const pageInfo = {
+        			pageSize: comm.pageSize,
+        			navPage: comm.navPage,
+                	currentPage: comm.currentPage
+        	}
+			return pageInfo;        	
+        },
+        setMove: function(curPage){
+        	console.log("curPage >> " +curPage);
+        	this.common.currentPage = curPage;
+        	this.getSearch();
+        },
+        pagingNavi: function(pageInfo){
+        	const totalPage = Math.ceil(this.common.totalCount / pageInfo.pageSize);	// 총 페이지 수
+        	const pageGroup = Math.ceil(pageInfo.currentPage / pageInfo.navPage);			// 페이지 그룹
+        	
+        	let last = pageGroup * pageInfo.navPage;	// 화면에 보여질 마지막 페이지 번호
+        	if(last > totalPage){
+        		last = totalPage;
+        	}
+        	
+        	const first = last - (pageInfo.navPage - 1) < 0 ? 1 : last - (pageInfo.navPage - 1); // 화면에 보여질 첫번째 페이지 번호
+        	
+        	const forFront = 1;
+        	const prev = first - 1;
+        	const next = last + 1;
+        	const rearMost = totalPage;
+        	
+        	console.log("totalPage >> " +totalPage);
+        	console.log("forFront >> " +forFront);
+        	console.log("first >> " +first);
+        	console.log("prev >> " +prev);
+        	console.log("pageInfo.currentPage >> " +pageInfo.currentPage);
+        	console.log("next >> " +next);
+        	console.log("last >> " +last);
+        	console.log("rearMost >> " +rearMost);
+        	
+        	let innerHtml = "";
+        	const selBoolean = true;
+        	
+        	// 맨앞, 이전 Set
+        	if(prev > 0){
+        		selBoolean ? innerHtml += "<li class='paginate_button previous'><a href='#' @click='setMove("+forFront+")' aria-controls='datatable-checkbox' data-dt-idx='0' tabindex='0'> << </a></li>" : innerHtml += "";
+        		innerHtml += "<li class='paginate_button previous'><a href='#' @click='setMove("+pre+") data-dt-idx='"+pre+"' aria-controls='datatable-checkbox'>Previous</a></li>";
+        	}
+        	
+        	// 페이지 Set
+        	for(let i=first; i<=last; i++){
+	        	if(pageInfo.currentPage === i){
+	        		innerHtml += "<li class='paginate_button active'><a href='javascript:setMove("+i+")' aria-controls='datatable-checkbox' data-dt-idx='"+i+"' tabindex='0'>"+i+"</a></li>";
+	        	}else{
+	        		innerHtml += "<li class='paginate_button'><a href='javascript:setMove("+i+")' aria-controls='datatable-checkbox' data-dt-idx='"+i+"' tabindex='0'>"+i+"</a></li>";
+	        	}
+        	}
+        	
+        	// 다음, 맨뒤 Set
+        	if(pageInfo.currentPage < last || last < totalPage){
+        		innerHtml += "<li class='paginate_button next'><a href='#' @click='setMove("+next+")' data-dt-idx='"+next+"' aria-controls='datatable-checkbox'>Next</a></li>";
+        		selBoolean ? innerHtml += "<li class='paginate_button next'><a href='#' @click='setMove("+rearMost+")' aria-controls='datatable-checkbox' data-dt-idx='"+rearMost+"' tabindex='0'> >> </a></li>" : innerHtml += "";
+        	}
+        	
+        	// 페이지 생성
+        	//$("#pagination").empty();
+        	//$("#pagination").html(innerHtml);
+        	this.template = innerHtml;
         }
+        
         // checkVal() {
         //   console.log("11 >> " +this.value);
         // }

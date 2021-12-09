@@ -23,7 +23,9 @@
 
 	<!-- 서비스조회 -->
     <select id="svcList" parameterType="map" resultType="LowerCamelHashMap">
-        SELECT SVC_SEQ
+        SELECT COUNT(*) OVER() AS TOT_CNT
+	 		 , ROW_NUMBER() OVER(ORDER BY SVC_SEQ ASC) AS RNUM
+        	 , SVC_SEQ
         	 , SVC_ID
         	 , SVC_NM
         	 , PAK_PATH
@@ -41,10 +43,7 @@
            AND (SVC_ID = #{svcId} OR SVC_NM LIKE CONCAT('%',#{svcId}, '%'))
            </if>
         </where>
-        <!-- <if test="limit != null and offset != null">
-            LIMIT #{limit}
-            OFFSET #{offset}
-        </if> -->
+        ORDER BY SVC_SEQ ASC OFFSET #{pageSize} * (#{currentPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY 
     </select>
     
     <!-- 서비스등록 -->
