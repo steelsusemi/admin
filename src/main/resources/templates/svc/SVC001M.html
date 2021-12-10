@@ -7,7 +7,7 @@
   <title>서비스등록</title>
   <style type="text/css">
   	.table td {
-	    padding: 0.45rem;
+	    padding: 0.25rem;
 	}
   </style>
 </head>
@@ -46,7 +46,7 @@
 
           <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
             <div class="text-right">
-              <button type="button" class="btn btn-secondary" @click="getSearch">조회</button>
+              <button type="button" class="btn btn-secondary" @click="selectList">조회</button>
               <button type="button" class="btn btn-secondary" @click="setSave">저장</button>
             </div>
           </div>
@@ -82,17 +82,13 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="card-box table-responsive">
-                  <!-- <p class="text-muted font-13 m-b-30">
-                      DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>
-                    </p> -->
-                  <!-- <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" -->
+                  <div class="col-sm-5">
+                    <div id="datatable-checkbox_info">총건수 : {{svcList.length}}</div>
+                  </div>
                   <table id="svcMng" class="table table-striped table-bordered"
                     style="width:100%;text-align: center;">
                     <thead>
                       <tr>
-                        <!-- <th>
-                        <th><input type="checkbox" id="check-all"></th>
-                        </th> -->
                         <th><input type="checkbox" id="check-all"></th>
                         <th>서비스아이디</th>
                         <th>서비스명</th>
@@ -105,7 +101,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(row, index) in svcList" style="height:20px">
+                      <tr v-for="(row, index) in svcList">
                         <td style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
                         <!-- <input type="checkbox" id="check-all" v-model="checkVal" :value="index"> -->
                         <td><input type="text" id="svcId" v-model="row.svcId" class="form-control" /></td>
@@ -123,11 +119,24 @@
               </div>
             </div>
             <div class="row">
-                <div class="col-sm-5"></div>
-                <div class="col-sm-7">
-                  <div class="dataTables_paginate paging_simple_numbers">
-                   <ul class="pagination" ref="template" v-html="template">
-                       <!-- <li class="paginate_button previous disabled">
+                <div class="col-sm-5">
+					<div class="dataTables_length" style="margin-top: -3px;">
+						<label>Show 
+							<select aria-controls="datatable" class="form-control input-sm" style="width: auto;display: inherit;height: auto;" 
+								@change="changePageSize(selectVal)" v-model="selectVal">
+								<option :value="5">5</option>
+								<option :value="10">10</option>
+								<option :value="25">25</option>
+								<option :value="50">50</option>
+								<option :value="100">100</option>
+							</select>
+						</label>
+					</div> 
+				</div>
+                <div class="col-sm-7" ref="paging">
+                  <!-- <div class="dataTables_paginate paging_simple_numbers">
+                   <ul class="pagination">
+                       <li class="paginate_button previous disabled">
                         <a href="#" aria-controls="datatable-checkbox" data-dt-idx="0" tabindex="0">Previous</a>
                       </li>
                       <li class="paginate_button active">
@@ -135,9 +144,9 @@
                       </li>
                       <li class="paginate_button next disabled">
                         <a href="#" aria-controls="datatable-checkbox" data-dt-idx="2" tabindex="0">Next</a>
-                      </li> -->
+                      </li>
                     </ul>
-                  </div>
+                  </div> -->
                 </div>
               </div>
           </div>
@@ -167,16 +176,11 @@
         result: [],
         mnuId: "SVC001",
         svcId: "",
-        common: {
-        	totalCount: 0,
-        	pageSize: 10,
-        	navPage: 10,
-        	currentPage: 1
-        },
-        template : ``
+        selectVal: "10"
       },
       mounted() {
-    	 console.log("common >> "+this.common);
+    	 console.log("common >> "+pagination.common+" : "+this.svcList.length);
+    	 
     	 //const pageInfo = this.setPageInfo(this.common);
     	  
     	  // 데이터조회
@@ -186,146 +190,90 @@
       computed: {
       },
       methods: {
-        getSearch: function() {
-        	this.svcList.splice(1,1);
-        	this.svcList = [];
-          	console.log("111111111 > " + this.svcId);
-          	const data = {
-            	mnuId: this.mnuId,
-            	svcId: this.svcId,
-            	pageSize: this.common.pageSize,
-            	currentPage: this.common.currentPage
-          	};
-			axios.post('/jjp/svcList', data, {
-				headers: { "Content-Type": "application/json"}
-	            }).then((res) => { 
-	            	$(".odd").html("");
-	                this.svcList = res.data; 
-	                console.log("222222 > " + this.svcList);
-	                this.common.totalCount = this.svcList[0].totCnt;
-	                this.pagingNavi(this.common);
-	            }).catch((ex) => { 
-	                console.log("에러", ex); 
-	        });
-        },
-        addRow: function() {
-        	console.log("111111111 > " + this.svcList.length + " : " +this.checkVal);
-
-        	this.svcList.push(
-        			{ svcSeq: "", svcId: "", svcNm: "", useYn: "", svcDao: "", svcXml: "", updId: "", updDtm: "", rowStatus: "C" }	
-        	)
-        	/* $("#svcMng>tbody").append("<tr>");
-        	$("#svcMng>tbody").append("<td style='vertical-align: middle;'><input type='checkbox' id='check-all' v-model='checkVal'></td>");
-        	$("#svcMng>tbody").append("<td><input type='text' id='svcId' v-model='svcList.svcId' class='form-control' /></td>");
-        	$("#svcMng>tbody").append("<td><input type='text' id='svcNm' v-model='svcList.svcNm' class='form-control' /></td>");
-        	$("#svcMng>tbody").append("<td><input type='text' id='pakPath' v-model='svcList.pakPath' class='form-control' /></td>");
-        	$("#svcMng>tbody").append("<td><input type='text' id='useYn' v-model='svcList.useYn' class='form-control' /></td>");
-        	$("#svcMng>tbody").append("<td><input type='text' id='svcDao' v-model='svcList.svcDao' class='form-control' /></td>");
-        	$("#svcMng>tbody").append("<td><input type='text' id='svcXml' v-model='svcList.svcXml' class='form-control' /></td>");
-        	$("#svcMng>tbody").append("<td></td>");
-        	$("#svcMng>tbody").append("<td></td>");
-        	$("#svcMng>tbody").append("</tr>"); */
-        },
-        deleteRow: function() {
-        	if(this.checkVal.length === 0) alert("삭제할 행을 선택해주세요.");
-        	console.log("33333333333 > " +this.checkVal);
-        	for(var i=0; i < this.checkVal.length; i++) {
-       		  	console.log('array index: ' + this.checkVal[i]);
-       			this.svcList.splice(this.checkVal[i], 1);
-       		}
-        },
-        setSave: function() {
-        	//this.svcList = [];
-          	//console.log("111111111 > " + this.svcList.length + " : " +this.svcList.filter(svcList => svcList.rowStatus === "C") + " : " +this.checkVal);
-          	const data = this.svcList.filter(svcList => svcList.rowStatus === "C");
-          	console.log(data);
-			axios.post("/svc/svcSave", data, {
-				headers: { "Content-Type": "application/json"}
-	        }).then((res) => { 
-	                console.log("222222 > " + res);
-	                this.getSearch();
-	        }).catch((ex) => { 
-	                console.log("에러", ex); 
-	        });
-        },
-        setPageInfo: function(comm){
-        	const pageInfo = {
-        			pageSize: comm.pageSize,
-        			navPage: comm.navPage,
-                	currentPage: comm.currentPage
-        	}
-			return pageInfo;        	
-        },
-        setMove: function(curPage){
-        	console.log("curPage >> " +curPage);
-        	this.common.currentPage = curPage;
-        	this.getSearch();
-        },
-        pagingNavi: function(pageInfo){
-        	const totalPage = Math.ceil(this.common.totalCount / pageInfo.pageSize);	// 총 페이지 수
-        	const pageGroup = Math.ceil(pageInfo.currentPage / pageInfo.navPage);			// 페이지 그룹
-        	
-        	let last = pageGroup * pageInfo.navPage;	// 화면에 보여질 마지막 페이지 번호
-        	if(last > totalPage){
-        		last = totalPage;
-        	}
-        	
-        	const first = last - (pageInfo.navPage - 1) < 0 ? 1 : last - (pageInfo.navPage - 1); // 화면에 보여질 첫번째 페이지 번호
-        	
-        	const forFront = 1;
-        	const prev = first - 1;
-        	const next = last + 1;
-        	const rearMost = totalPage;
-        	
-        	console.log("totalPage >> " +totalPage);
-        	console.log("forFront >> " +forFront);
-        	console.log("first >> " +first);
-        	console.log("prev >> " +prev);
-        	console.log("pageInfo.currentPage >> " +pageInfo.currentPage);
-        	console.log("next >> " +next);
-        	console.log("last >> " +last);
-        	console.log("rearMost >> " +rearMost);
-        	
-        	let innerHtml = "";
-        	const selBoolean = true;
-        	
-        	// 맨앞, 이전 Set
-        	if(prev > 0){
-        		selBoolean ? innerHtml += "<li class='paginate_button previous'><a href='#' @click='setMove("+forFront+")' aria-controls='datatable-checkbox' data-dt-idx='0' tabindex='0'> << </a></li>" : innerHtml += "";
-        		innerHtml += "<li class='paginate_button previous'><a href='#' @click='setMove("+pre+") data-dt-idx='"+pre+"' aria-controls='datatable-checkbox'>Previous</a></li>";
-        	}
-        	
-        	// 페이지 Set
-        	for(let i=first; i<=last; i++){
-	        	if(pageInfo.currentPage === i){
-	        		innerHtml += "<li class='paginate_button active'><a href='javascript:setMove("+i+")' aria-controls='datatable-checkbox' data-dt-idx='"+i+"' tabindex='0'>"+i+"</a></li>";
-	        	}else{
-	        		innerHtml += "<li class='paginate_button'><a href='javascript:setMove("+i+")' aria-controls='datatable-checkbox' data-dt-idx='"+i+"' tabindex='0'>"+i+"</a></li>";
+	    	//  조회 버튼
+	    	selectList: function() {
+	    		pagination.common.currentPage = 1;
+	    		this.getSearch();
+	    	},
+	        getSearch: function() {
+	        	this.svcList.splice(1,1);
+	        	this.svcList = [];
+	          	console.log("111111111 > " + this.svcId);
+	          	const data = {
+	            	mnuId: this.mnuId,
+	            	svcId: this.svcId,
+	            	pageSize: pagination.common.pageSize,
+	            	currentPage: pagination.common.currentPage
+	          	};
+				axios.post('/jjp/svcList', data, {
+					headers: { "Content-Type": "application/json"}
+		            }).then((res) => { 
+		            	$(".odd").html("");
+		                this.svcList = res.data; 
+		                console.log("222222 > " + this.svcList);
+		                pagination.common.totalCount = this.svcList[0].totCnt;
+		                pagination.pagingNavi(pagination.common, this);
+		            }).catch((ex) => { 
+		                console.log("에러", ex); 
+		        });
+	        },
+	        addRow: function() {
+	        	console.log("111111111 > " + this.svcList.length + " : " +this.checkVal);
+	
+	        	this.svcList.push(
+	        			{ svcSeq: "", svcId: "", svcNm: "", useYn: "", svcDao: "", svcXml: "", updId: "", updDtm: "", rowStatus: "C" }	
+	        	)
+	        	/* $("#svcMng>tbody").append("<tr>");
+	        	$("#svcMng>tbody").append("<td style='vertical-align: middle;'><input type='checkbox' id='check-all' v-model='checkVal'></td>");
+	        	$("#svcMng>tbody").append("<td><input type='text' id='svcId' v-model='svcList.svcId' class='form-control' /></td>");
+	        	$("#svcMng>tbody").append("<td><input type='text' id='svcNm' v-model='svcList.svcNm' class='form-control' /></td>");
+	        	$("#svcMng>tbody").append("<td><input type='text' id='pakPath' v-model='svcList.pakPath' class='form-control' /></td>");
+	        	$("#svcMng>tbody").append("<td><input type='text' id='useYn' v-model='svcList.useYn' class='form-control' /></td>");
+	        	$("#svcMng>tbody").append("<td><input type='text' id='svcDao' v-model='svcList.svcDao' class='form-control' /></td>");
+	        	$("#svcMng>tbody").append("<td><input type='text' id='svcXml' v-model='svcList.svcXml' class='form-control' /></td>");
+	        	$("#svcMng>tbody").append("<td></td>");
+	        	$("#svcMng>tbody").append("<td></td>");
+	        	$("#svcMng>tbody").append("</tr>"); */
+	        },
+	        deleteRow: function() {
+	        	if(this.checkVal.length === 0) alert("삭제할 행을 선택해주세요.");
+	        	console.log("33333333333 > " +this.checkVal);
+	        	for(var i=0; i < this.checkVal.length; i++) {
+	       		  	console.log('array index: ' + this.checkVal[i]);
+	       			this.svcList.splice(this.checkVal[i], 1);
+	       		}
+	        },
+	        setSave: function() {
+	        	//this.svcList = [];
+	          	//console.log("111111111 > " + this.svcList.length + " : " +this.svcList.filter(svcList => svcList.rowStatus === "C") + " : " +this.checkVal);
+	          	const data = this.svcList.filter(svcList => svcList.rowStatus === "C");
+	          	console.log(data);
+				axios.post("/svc/svcSave", data, {
+					headers: { "Content-Type": "application/json"}
+		        }).then((res) => { 
+		                console.log("222222 > " + res);
+		                this.getSearch();
+		        }).catch((ex) => { 
+		                console.log("에러", ex); 
+		        });
+	        },
+	        changePageSize: function(val){
+	        	 //console.log("11 >> " +val);
+	        	if(pagination.onChange(val, this.svcList[0].svcSeq)){
+	        		this.getSearch();
 	        	}
-        	}
-        	
-        	// 다음, 맨뒤 Set
-        	if(pageInfo.currentPage < last || last < totalPage){
-        		innerHtml += "<li class='paginate_button next'><a href='#' @click='setMove("+next+")' data-dt-idx='"+next+"' aria-controls='datatable-checkbox'>Next</a></li>";
-        		selBoolean ? innerHtml += "<li class='paginate_button next'><a href='#' @click='setMove("+rearMost+")' aria-controls='datatable-checkbox' data-dt-idx='"+rearMost+"' tabindex='0'> >> </a></li>" : innerHtml += "";
-        	}
-        	
-        	// 페이지 생성
-        	//$("#pagination").empty();
-        	//$("#pagination").html(innerHtml);
-        	this.template = innerHtml;
-        }
-        
-        // checkVal() {
-        //   console.log("11 >> " +this.value);
-        // }
-        // move(id){
-        //     window.location.href = "/com/"+id;
-        // },
-        // getClass(menuId) {
-        //   // console.log("111111111 > " + menuId);
-        //   return menuId == 'USER000M' ? 'fa fa-user' : 'fa fa-bars';
-        // }
+	    	 }
+	        
+	        // checkVal() {
+	        //   console.log("11 >> " +this.value);
+	        // }
+	        // move(id){
+	        //     window.location.href = "/com/"+id;
+	        // },
+	        // getClass(menuId) {
+	        //   // console.log("111111111 > " + menuId);
+	        //   return menuId == 'USER000M' ? 'fa fa-user' : 'fa fa-bars';
+	        // }
       }
     });
   </script>
