@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +32,10 @@ public class CommonUtils {
 	 */
 	public static String getUserId() {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-//		log.info("aaaaaaaaaaaaaaa >> " + request.getSession().getAttribute("userInfo"));
-		UserVo userVo = (UserVo) request.getSession().getAttribute("userInfo");
+		HttpSession sessInfo = request.getSession();
+		log.info("aaaaaaaaaaaaaaa >> " + sessInfo.getAttribute("userInfo"));
+		UserVo userVo = new UserVo();
+		userVo = (UserVo) sessInfo.getAttribute("userInfo");
 		log.info("1111111111111 >> " + userVo+" : "+userVo.getUserId());
 		return userVo.getUserId();
 	}

@@ -10,52 +10,85 @@
 	</sql>
 	
 	<sql id="createParamSql">
-		, '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
+		<!-- , '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
     	, getDate()
     	, '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
-    	, getDate()
+    	, getDate() -->
+    	, '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
+    	, NOW()
+    	, '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
+    	, NOW()
 	</sql>
 	
 	<sql id="updateParamSql">
-		, UPD_ID = '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
-    	, UPD_DTM = getDate()
+		<!-- , UPD_ID = '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
+    	, UPD_DTM = getDate() -->
+    	, UPD_ID = '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
+    	, UPD_DTM = NOW()
 	</sql>
 
 	<!-- 서비스조회 -->
     <select id="svcList" parameterType="map" resultType="LowerCamelHashMap">
-        SELECT COUNT(*) OVER() AS TOT_CNT
-	 		 , ROW_NUMBER() OVER(ORDER BY SVC_SEQ ASC) AS RNUM
-        	 , SVC_SEQ
-        	 , SVC_ID
-        	 , SVC_NM
-        	 , PAK_PATH
-        	 , USE_YN
-        	 , SVC_DAO
-        	 , SVC_XML
-        	 , REG_ID
-        	 , CONVERT(VARCHAR, REG_DTM, 120) AS REG_DTM
-        	 , UPD_ID
-        	 , CONVERT(VARCHAR, UPD_DTM, 120) AS UPD_DTM
-        	 , 'R' AS rowStatus
-          FROM SVC_MANAGE
-        <where>
-       	<if test="svcId != null and svcId != ''">
-           AND (SVC_ID = #{svcId} OR SVC_NM LIKE CONCAT('%',#{svcId}, '%'))
-           </if>
-        </where>
-        ORDER BY SVC_SEQ ASC OFFSET #{pageSize} * (#{currentPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY 
+    	SELECT A.TOT_CNT
+			 , A.RNUM
+			 , A.SVC_SEQ
+			 , A.SVC_ID
+			 , A.SVC_NM
+			 , A.PAK_PATH
+			 , A.USE_YN
+			 , A.SVC_DAO
+			 , A.SVC_XML
+			 , A.REG_ID
+			 , A.REG_DTM
+			 , A.UPD_ID
+			 , A.UPD_DTM
+			 , A.ROW_STATUS
+		  FROM (
+		       SELECT COUNT(*) OVER() AS TOT_CNT
+			 		, ROW_NUMBER() OVER(ORDER BY SVC_SEQ ASC) AS RNUM
+			       	, SVC_SEQ
+			       	, SVC_ID
+			       	, SVC_NM
+			       	, PAK_PATH
+			       	, USE_YN
+			       	, SVC_DAO
+			       	, SVC_XML
+			       	, REG_ID
+			       	<!-- , CONVERT(VARCHAR, REG_DTM, 120) AS REG_DTM -->
+			       	, DATE_FORMAT(REG_DTM, '%Y-%m-%d %T.%s') AS REG_DTM
+			       	, UPD_ID
+			       	<!-- , CONVERT(VARCHAR, UPD_DTM, 120) AS UPD_DTM -->
+			       	, DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T.%s') AS UPD_DTM
+			       	, 'R' AS ROW_STATUS
+		         FROM SVC_MANAGE
+		         <where>
+			       	 <if test="svcId != null and svcId != ''">
+			          AND (SVC_ID = #{svcId} OR SVC_NM LIKE CONCAT('%',#{svcId}, '%'))
+			         </if>
+		         </where>
+        	 <!-- ORDER BY SVC_SEQ ASC OFFSET #{pageSize} * (#{currentPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY --> 
+		   ) A
+		   ORDER BY A.SVC_SEQ ASC limit #{curPage}, #{pageSize}
+    </select>
+    
+    <!-- 순번 조회 -->
+    <select id="selectSvcSeq" resultType="int">
+    	/* svc001Dao.selectSvcSeq: 순번 조회 */
+    	SELECT IFNULL(MAX(SVC_SEQ), 0) + 1 
+	      FROM SVC_MANAGE  ALIAS_FOR_SUBQUERY
     </select>
     
     <!-- 서비스등록 -->
     <insert id="svcSave" parameterType="map">
-    	/* svc001Dao: svcSave 서비스등록*/
-    	<foreach collection="list" item="item" separator=";">   
-    	MERGE 
+    	/* svc001Dao.svcSave: 서비스등록*/
+    	<!-- <foreach collection="list" item="item" separator=";">    -->
+    	<!-- MERGE 
     	 INTO SVC_MANAGE AS A1
 	    USING (
 	    		 SELECT SVC_SEQ
 		    		FROM SVC_MANAGE
 		    	   WHERE SVC_SEQ = CASE WHEN ISNULL(#{item.svcSeq}, '') = '' THEN -999999 ELSE #{item.svcSeq} END
+		    	   WHERE SVC_SEQ = CASE WHEN IFNULL(#{item.svcSeq}, '') = '' THEN -999999 ELSE #{item.svcSeq} END
 		       UNION ALL
 		    	  SELECT -999999
 	    	  ) AS A
@@ -91,7 +124,40 @@
 	    	 	 <include refid="svc001Dao.createParamSql"/>
 	    	 )
 	    	 </foreach>
-	    	 ;
+	    	 ; -->
+	     INSERT 
+	       INTO SVC_MANAGE
+    	 (     SVC_SEQ
+    	   	 , SVC_ID
+    	 	 , SVC_NM
+    	 	 , PAK_PATH
+    	 	 , USE_YN
+    	 	 , SVC_DAO
+    	 	 , SVC_XML
+    	 	 <include refid="svc001Dao.createColSql"/>
+    	 ) 
+    	 VALUES 
+    	<!--  <foreach collection="list" item="item" separator=",">    -->
+    	 (    	 
+    	 	   CASE WHEN IFNULL(#{svcSeq}, '') = '' THEN #{svcSeq} ELSE #{svcSeq} END
+    	 	 , #{svcId}
+    	 	 , #{svcNm}
+    	 	 , #{pakPath}
+    	 	 , #{useYn}
+    	 	 , #{svcDao}
+    	 	 , #{svcXml}
+    	 	 <include refid="svc001Dao.createParamSql"/>
+    	 )
+    	 <!-- </foreach> -->
+    	 ON DUPLICATE KEY UPDATE  
+    	         SVC_ID = VALUES(SVC_ID)
+    	       , SVC_NM = VALUES(SVC_NM)
+    	       , PAK_PATH = VALUES(PAK_PATH)
+    	       , USE_YN = VALUES(USE_YN)
+    	       , SVC_DAO = VALUES(SVC_DAO)
+    	       , SVC_XML = VALUES(SVC_XML)
+    	       <include refid="svc001Dao.updateParamSql"/>
+    	 <!-- </foreach> -->
     </insert>
 
 </mapper>

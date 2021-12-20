@@ -28,4 +28,9 @@ public class CommonDao<T> {
 	public int insert(String xmlPath, List<T> param) {
         return sqlSession.insert(xmlPath, param);
     }
+	
+	@SuppressWarnings("rawtypes")
+	public int insert(String xmlPath, Map param) {
+        return sqlSession.insert(xmlPath, param);
+    }
 }

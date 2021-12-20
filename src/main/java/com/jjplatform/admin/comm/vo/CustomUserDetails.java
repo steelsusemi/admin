@@ -16,7 +16,7 @@ import lombok.Data;
 @SuppressWarnings("serial")
 public class CustomUserDetails implements UserDetails {
 	
-	private UserVo userVo;
+	public UserVo userVo;
 	private boolean enabled;
 	
 	public CustomUserDetails(UserVo userAuthes) {

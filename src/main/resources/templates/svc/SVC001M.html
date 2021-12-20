@@ -64,7 +64,7 @@
               <!-- <li><a class="close-link"><i class="fa fa-plus-square"></i></a> -->
               <li><button type="button" class="btn btn-secondary" @click="addRow">+</button></li>
               <li><button type="button" class="btn btn-secondary" @click="deleteRow">-</button></li>
-              <li><button type="button" class="btn btn-secondary">초기화</button></li>
+              <li><button type="button" class="btn btn-secondary" @click="init()">초기화</button></li>
               <!-- <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
                     class="fa fa-wrench"></i></a>
@@ -89,7 +89,9 @@
                     style="width:100%;text-align: center;">
                     <thead>
                       <tr>
-                        <th><input type="checkbox" id="check-all"></th>
+                      	<th><input type="checkbox" id="check-all"></th>
+                      	<th></th>
+                      	<th>No.</th>
                         <th>서비스아이디</th>
                         <th>서비스명</th>
                         <th>패키지경로</th>
@@ -102,14 +104,16 @@
                     </thead>
                     <tbody>
                       <tr v-for="(row, index) in svcList">
-                        <td style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
+                      	<td style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
+                      	<td style="vertical-align: middle;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
+                      	<td style="vertical-align: middle;">{{ row.svcSeq }}</td>
                         <!-- <input type="checkbox" id="check-all" v-model="checkVal" :value="index"> -->
-                        <td><input type="text" id="svcId" v-model="row.svcId" class="form-control" /></td>
-                        <td><input type="text" id="svcNm" v-model="row.svcNm" class="form-control" /></td>
-                        <td><input type="text" id="pakPath" v-model="row.pakPath" class="form-control" /></td>
-                        <td><input type="text" id="useYn" v-model="row.useYn" class="form-control" /></td>
-                        <td><input type="text" id="svcDao" v-model="row.svcDao" class="form-control" /></td>
-                        <td><input type="text" id="svcXml" v-model="row.svcXml" class="form-control" /></td>
+                        <td><input type="text" id="svcId" v-model="row.svcId" class="form-control" @blur="watch(index)"/></td>
+                        <td><input type="text" id="svcNm" v-model="row.svcNm" class="form-control" @blur="watch(index)"/></td>
+                        <td><input type="text" id="pakPath" v-model="row.pakPath" class="form-control" @blur="watch(index)"/></td>
+                        <td><input type="text" id="useYn" v-model="row.useYn" class="form-control" @blur="watch(index)"/></td>
+                        <td><input type="text" id="svcDao" v-model="row.svcDao" class="form-control" @blur="watch(index)"/></td>
+                        <td><input type="text" id="svcXml" v-model="row.svcXml" class="form-control" @blur="watch(index)"/></td>
                         <td style="vertical-align: middle;">{{ row.updId }}</td>
                         <td style="vertical-align: middle;">{{ row.updDtm }}</td>
                       </tr>
@@ -172,6 +176,7 @@
           { svcId: "Usr002Service", svcNm: "사용자권한관리서비스", useYn: "Y", svcDao: "Usr002DAO", svcXml: "Usr002", updId: "user", updDtm: "" },
           { svcId: "Svc001Service", svcNm: "서비스등록서비스", useYn: "Y", svcDao: "Svc001DAO", svcXml: "Svc001", updId: "user", updDtm: "" } */
         ],
+        svcListCopy: [],
         checkVal: [],
         result: [],
         mnuId: "SVC001",
@@ -192,7 +197,7 @@
       methods: {
 	    	//  조회 버튼
 	    	selectList: function() {
-	    		pagination.common.currentPage = 1;
+	    		pagination.common.curPage = 0;
 	    		this.getSearch();
 	    	},
 	        getSearch: function() {
@@ -203,7 +208,7 @@
 	            	mnuId: this.mnuId,
 	            	svcId: this.svcId,
 	            	pageSize: pagination.common.pageSize,
-	            	currentPage: pagination.common.currentPage
+	            	curPage: pagination.common.curPage
 	          	};
 				axios.post('/jjp/svcList', data, {
 					headers: { "Content-Type": "application/json"}
@@ -211,8 +216,14 @@
 		            	$(".odd").html("");
 		                this.svcList = res.data; 
 		                console.log("222222 > " + this.svcList);
-		                pagination.common.totalCount = this.svcList[0].totCnt;
-		                pagination.pagingNavi(pagination.common, this);
+		                if(this.svcList.length > 0){
+			                pagination.common.totalCount = this.svcList[0].totCnt;
+			                pagination.pagingNavi(pagination.common, this);
+		                }
+		                // this.svcListCopy = res.data; 
+		                const newObj = _.cloneDeep(this.svcList);
+		                this.svcListCopy = newObj; 
+		                console.log("33333333333333333 > " + this.svcListCopy[1].svcNm);
 		            }).catch((ex) => { 
 		                console.log("에러", ex); 
 		        });
@@ -223,17 +234,6 @@
 	        	this.svcList.push(
 	        			{ svcSeq: "", svcId: "", svcNm: "", useYn: "", svcDao: "", svcXml: "", updId: "", updDtm: "", rowStatus: "C" }	
 	        	)
-	        	/* $("#svcMng>tbody").append("<tr>");
-	        	$("#svcMng>tbody").append("<td style='vertical-align: middle;'><input type='checkbox' id='check-all' v-model='checkVal'></td>");
-	        	$("#svcMng>tbody").append("<td><input type='text' id='svcId' v-model='svcList.svcId' class='form-control' /></td>");
-	        	$("#svcMng>tbody").append("<td><input type='text' id='svcNm' v-model='svcList.svcNm' class='form-control' /></td>");
-	        	$("#svcMng>tbody").append("<td><input type='text' id='pakPath' v-model='svcList.pakPath' class='form-control' /></td>");
-	        	$("#svcMng>tbody").append("<td><input type='text' id='useYn' v-model='svcList.useYn' class='form-control' /></td>");
-	        	$("#svcMng>tbody").append("<td><input type='text' id='svcDao' v-model='svcList.svcDao' class='form-control' /></td>");
-	        	$("#svcMng>tbody").append("<td><input type='text' id='svcXml' v-model='svcList.svcXml' class='form-control' /></td>");
-	        	$("#svcMng>tbody").append("<td></td>");
-	        	$("#svcMng>tbody").append("<td></td>");
-	        	$("#svcMng>tbody").append("</tr>"); */
 	        },
 	        deleteRow: function() {
 	        	if(this.checkVal.length === 0) alert("삭제할 행을 선택해주세요.");
@@ -246,7 +246,7 @@
 	        setSave: function() {
 	        	//this.svcList = [];
 	          	//console.log("111111111 > " + this.svcList.length + " : " +this.svcList.filter(svcList => svcList.rowStatus === "C") + " : " +this.checkVal);
-	          	const data = this.svcList.filter(svcList => svcList.rowStatus === "C");
+	          	const data = this.svcList.filter(svcList => svcList.rowStatus === "C" || svcList.rowStatus === "U");
 	          	console.log(data);
 				axios.post("/svc/svcSave", data, {
 					headers: { "Content-Type": "application/json"}
@@ -262,8 +262,42 @@
 	        	if(pagination.onChange(val, this.svcList[0].svcSeq)){
 	        		this.getSearch();
 	        	}
+	    	 },
+	    	 watch: function(idx){
+	    		const frtVal = this.svcListCopy;
+    			const changeVal = this.svcList;
+   	            //console.log("111111111111111111 >> "+frtVal[1].svcNm+" : "+changeVal[1].svcNm);
+   	            //for(var i=0; i<frtVal.length; i++){
+   	            	for(var t=0; t<changeVal.length; t++){
+   	            		if(changeVal[idx].rowStatus != "C" 
+   	            				&& frtVal[idx].svcSeq === changeVal[t].svcSeq){
+   	            			console.log(idx+" : "+frtVal[idx].svcNm+" : "+changeVal[t].svcNm+" : "+frtVal[idx].svcSeq === changeVal[t].svcSeq);
+   	            			if(frtVal[idx].svcId != changeVal[t].svcId){
+   	            				this.svcList[idx].rowStatus = "U";
+	   	            		}else if(frtVal[idx].svcNm != changeVal[t].svcNm){
+   	            				this.svcList[idx].rowStatus = "U";
+	   	            		}else if(frtVal[idx].useYn != changeVal[t].useYn){
+   	            				this.svcList[idx].rowStatus = "U";
+	   	            		}else if(frtVal[idx].svcDao != changeVal[t].svcDao){
+   	            				this.svcList[idx].rowStatus = "U";
+	   	            		}else if(frtVal[idx].svcXml != changeVal[t].svcXml){
+   	            				this.svcList[idx].rowStatus = "U";
+	   	            		}else{
+	   	            			this.svcList[idx].rowStatus = "R";
+	   	            		}
+	   	            	}
+   	            	}
+   	            //}
+	    	 },
+	    	 init: function(){
+	    		 location.reload(true);
 	    	 }
-	        
+	        /* watch: function(event){
+	        	console.log(event.target.value+" : "+event.target._value);
+	        	//console.log(idx+" : "+id+" : "+this.svcListCopy[idx].svcNm+" : "+newVal)
+	        	//const data = this.svcListCopy.filter(svcListCopy => this.svcListCopy[idx].svcNm === newVal);
+	        	//console.log(data)
+	        } */
 	        // checkVal() {
 	        //   console.log("11 >> " +this.value);
 	        // }

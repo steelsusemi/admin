@@ -1,6 +1,7 @@
 package com.jjplatform.admin.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,11 +9,18 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
 import com.jjplatform.admin.vo.UserVo;
@@ -54,10 +62,12 @@ public class LoginController {
 			
 			HttpSession sessInfo = request.getSession();
 			UserVo userVo = (UserVo) sessInfo.getAttribute("userInfo");
-			log.info("ID정보 : " + userVo); 
+			
 			if(userVo == null && request.getRequestURI().equals("/main")) {
+				log.info("userDetails.getUserVo() : " + userDetails.getUserVo()); 
 				sessInfo.setAttribute("userInfo", userDetails.getUserVo());
 				sessInfo.setMaxInactiveInterval(300);  // 60초
+				log.info("ID정보 : " + userVo); 
 //				sessInfo.invalidate();
 			}
 			
@@ -118,4 +128,30 @@ public class LoginController {
     	return "main/main3";
     }
 
+    @GetMapping("/cpbos/doConnVan")
+    public ResponseEntity<?> doConnVan(@RequestParam Map<String, Object> param){
+       ResponseEntity<String> result = null;
+       String url = "https://test.mobilians.co.kr/cp/tradeFileDownload.jsp";
+//       String url = "https://test.mobilians.co.kr/cp/tradeFileDownload.jsp?date=20211209&id=M9999999&dkey=9999&no=90003";
+       try {
+          RestTemplate restTemplate = new RestTemplate();
+//          MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+          UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
+          builder.queryParam("date", "20211209");
+          builder.queryParam("id", "M9999999");
+          builder.queryParam("dkey", "9999");
+          builder.queryParam("no", "90003");
+          
+          HttpHeaders headers = new HttpHeaders();
+          HttpEntity<?> entity = new HttpEntity<>(headers);
+//          HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
+           
+          result = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class);
+          log.info("result => " + result);
+       }catch(Exception e) {
+          e.printStackTrace();
+       }
+       
+       return result;
+    }
 }

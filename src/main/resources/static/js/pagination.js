@@ -6,6 +6,7 @@ const pagination = new Vue({
 		  pageSize: 10,
 		  navPage: 10,
 		  currentPage: 1,
+		  curPage: 0,
 	  },
 	  elId: ``,
 	  selectOk: false  
@@ -14,6 +15,7 @@ const pagination = new Vue({
       setMove: function(curPage){
 //      	console.log("curPage >> " +curPage);
       	this.common.currentPage = curPage;
+      	this.common.curPage = this.common.pageSize * (curPage - 1);
       	this.elId.getSearch();
       },
       pagingNavi: function(pageInfo, el){
@@ -79,8 +81,10 @@ const pagination = new Vue({
       },
       onChange: function(val, firstSeq){
 //		console.log("val > " + val+" : " + firstSeq+" : " + this.common.totalCount+" : " + (firstSeq / val)+" : " + (pagination.common.pageSize > val ? 1 : -1));
-		pagination.common.currentPage = Math.ceil((firstSeq / val));
-		pagination.common.pageSize = val;
+    	this.common.currentPage = Math.ceil((firstSeq / val));
+		this.common.curPage = val * (this.common.currentPage - 1);
+		console.log("val > " + val+" : " + firstSeq+" : " + (firstSeq / val)+" : " + Math.ceil((firstSeq / val)));
+		this.common.pageSize = val;
 		return true;
       }
   }

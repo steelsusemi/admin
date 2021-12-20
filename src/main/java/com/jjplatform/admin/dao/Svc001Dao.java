@@ -20,8 +20,14 @@ public class Svc001Dao extends CommonDao {
         return selectList(NAME_SPACE + "svcList", param);
     }
 
-	public int svcSave(List<Map> paramList) {
+	@SuppressWarnings("unchecked")
+	public int svcSave(Map param) {
 		// TODO Auto-generated method stub
-		return insert(NAME_SPACE + "svcSave", paramList);
+		return insert(NAME_SPACE + "svcSave", param);
+	}
+
+	public int selectSvcSeq() {
+		// TODO Auto-generated method stub
+		return (int) selectOne(NAME_SPACE + "selectSvcSeq", "");
 	}
 }
