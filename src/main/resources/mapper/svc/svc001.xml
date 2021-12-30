@@ -50,7 +50,7 @@
 			       	, SVC_ID
 			       	, SVC_NM
 			       	, PAK_PATH
-			       	, USE_YN
+			       	, CASE WHEN USE_YN != 'Y' THEN 'N' ELSE USE_YN END AS USE_YN
 			       	, SVC_DAO
 			       	, SVC_XML
 			       	, REG_ID

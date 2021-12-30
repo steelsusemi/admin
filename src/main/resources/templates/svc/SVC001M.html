@@ -9,6 +9,25 @@
   	.table td {
 	    padding: 0.25rem;
 	}
+	tbody, thead tr { display: block; }
+ 
+	tbody {
+	    height: 475px;
+	    overflow-y: auto;
+	    overflow-x: hidden;
+	}
+	tbody td, thead th {
+	    width: 200px;
+	}
+	.th_small {
+		width: 50px;
+	}
+	.th_middle {
+		width: 100px;
+	}
+	.th_large {
+		width: 300px;
+	}
   </style>
 </head>
 <div layout:fragment="content" th:remove="tag">
@@ -83,38 +102,37 @@
               <div class="col-sm-12">
                 <div class="card-box table-responsive">
                   <div class="col-sm-5">
-                    <div id="datatable-checkbox_info">총건수 : {{svcList.length}}</div>
+                    <div id="datatable-checkbox_info">총건수 : {{svcList.length}} 건</div>
                   </div>
-                  <table id="svcMng" class="table table-striped table-bordered"
-                    style="width:100%;text-align: center;">
+                  <table id="svcMng" class="table table-striped table-bordered" style="width:100%;text-align: center;">
                     <thead>
                       <tr>
-                      	<th><input type="checkbox" id="check-all"></th>
-                      	<th></th>
-                      	<th>No.</th>
+                      	<th class="th_small"><input type="checkbox" id="check-all"></th>
+                      	<th class="th_small"></th>
+                      	<th class="th_small">No.</th>
                         <th>서비스아이디</th>
                         <th>서비스명</th>
-                        <th>패키지경로</th>
-                        <th>사용여부</th>
+                        <th class="th_large">패키지경로</th>
+                        <th class="th_middle">사용여부</th>
                         <th>서비스DAO</th>
                         <th>쿼리XML</th>
-                        <th style="width: 100px;">등록자</th>
-                        <th style="width: 150px;">등록일시</th>
+                        <th class="th_middle">등록자</th>
+                        <th>등록일시</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="(row, index) in svcList">
-                      	<td style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
-                      	<td style="vertical-align: middle;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
-                      	<td style="vertical-align: middle;">{{ row.svcSeq }}</td>
+                      	<td class="th_small" style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
+                      	<td class="th_small" style="vertical-align: middle;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
+                      	<td class="th_small" style="vertical-align: middle;">{{ row.svcSeq }}</td>
                         <!-- <input type="checkbox" id="check-all" v-model="checkVal" :value="index"> -->
                         <td><input type="text" id="svcId" v-model="row.svcId" class="form-control" @blur="watch(index)"/></td>
                         <td><input type="text" id="svcNm" v-model="row.svcNm" class="form-control" @blur="watch(index)"/></td>
-                        <td><input type="text" id="pakPath" v-model="row.pakPath" class="form-control" @blur="watch(index)"/></td>
-                        <td><input type="text" id="useYn" v-model="row.useYn" class="form-control" @blur="watch(index)"/></td>
+                        <td class="th_large"><input type="text" id="pakPath" v-model="row.pakPath" class="form-control" @blur="watch(index)"/></td>
+                        <td class="th_middle" style="vertical-align: middle;"><input type="checkbox" id="useYn" v-model="row.useYn" @change="watch(index)" true-value="Y" false-value="N"/></td>
                         <td><input type="text" id="svcDao" v-model="row.svcDao" class="form-control" @blur="watch(index)"/></td>
                         <td><input type="text" id="svcXml" v-model="row.svcXml" class="form-control" @blur="watch(index)"/></td>
-                        <td style="vertical-align: middle;">{{ row.updId }}</td>
+                        <td class="th_middle" style="vertical-align: middle;">{{ row.updId }}</td>
                         <td style="vertical-align: middle;">{{ row.updDtm }}</td>
                       </tr>
                     </tbody>
@@ -266,28 +284,26 @@
 	    	 watch: function(idx){
 	    		const frtVal = this.svcListCopy;
     			const changeVal = this.svcList;
-   	            //console.log("111111111111111111 >> "+frtVal[1].svcNm+" : "+changeVal[1].svcNm);
-   	            //for(var i=0; i<frtVal.length; i++){
-   	            	for(var t=0; t<changeVal.length; t++){
-   	            		if(changeVal[idx].rowStatus != "C" 
-   	            				&& frtVal[idx].svcSeq === changeVal[t].svcSeq){
-   	            			console.log(idx+" : "+frtVal[idx].svcNm+" : "+changeVal[t].svcNm+" : "+frtVal[idx].svcSeq === changeVal[t].svcSeq);
-   	            			if(frtVal[idx].svcId != changeVal[t].svcId){
-   	            				this.svcList[idx].rowStatus = "U";
-	   	            		}else if(frtVal[idx].svcNm != changeVal[t].svcNm){
-   	            				this.svcList[idx].rowStatus = "U";
-	   	            		}else if(frtVal[idx].useYn != changeVal[t].useYn){
-   	            				this.svcList[idx].rowStatus = "U";
-	   	            		}else if(frtVal[idx].svcDao != changeVal[t].svcDao){
-   	            				this.svcList[idx].rowStatus = "U";
-	   	            		}else if(frtVal[idx].svcXml != changeVal[t].svcXml){
-   	            				this.svcList[idx].rowStatus = "U";
-	   	            		}else{
-	   	            			this.svcList[idx].rowStatus = "R";
-	   	            		}
-	   	            	}
-   	            	}
-   	            //}
+    			console.log("111111111111111111 >> "+idx+" : "+frtVal[idx].useYn+" : "+changeVal[idx].useYn);
+            	//for(var t=0; t<changeVal.length; t++){
+            		if(changeVal[idx].rowStatus != "C" 
+            				&& frtVal[idx].svcSeq === changeVal[idx].svcSeq){
+            			//console.log(idx+" : "+frtVal[idx].svcNm+" : "+changeVal[idx].svcNm+" : "+frtVal[idx].svcSeq === changeVal[idx].svcSeq);
+            			if(frtVal[idx].svcId != changeVal[idx].svcId){
+            				this.svcList[idx].rowStatus = "U";
+	            		}else if(frtVal[idx].svcNm != changeVal[idx].svcNm){
+            				this.svcList[idx].rowStatus = "U";
+	            		}else if(frtVal[idx].useYn != changeVal[idx].useYn){
+            				this.svcList[idx].rowStatus = "U";
+	            		}else if(frtVal[idx].svcDao != changeVal[idx].svcDao){
+            				this.svcList[idx].rowStatus = "U";
+	            		}else if(frtVal[idx].svcXml != changeVal[idx].svcXml){
+            				this.svcList[idx].rowStatus = "U";
+	            		}else{
+	            			this.svcList[idx].rowStatus = "R";
+	            		}
+	            	}
+            //	}
 	    	 },
 	    	 init: function(){
 	    		 location.reload(true);
