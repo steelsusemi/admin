@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="menu001Dao">
+	<!-- 메뉴조회 -->
+    <select id="menuList" parameterType="map" resultType="LowerCamelHashMap">
+    	SELECT A.TOT_CNT
+			 , A.RNUM
+			 , A.MENU_SEQ
+			 , A.MENU_ID
+			 , A.MENU_NM
+			 , A.USE_YN
+			 , MENU_Lvl1
+	       	 , MENU_Lvl2
+	       	 , MENU_Lvl3
+			 , A.REG_ID
+			 , A.REG_DTM
+			 , A.UPD_ID
+			 , A.UPD_DTM
+			 , A.ROW_STATUS
+		  FROM (
+		       SELECT COUNT(*) OVER() AS TOT_CNT
+			 		, ROW_NUMBER() OVER(ORDER BY MENU_SEQ ASC) AS RNUM
+			       	, MENU_SEQ
+			       	, MENU_ID
+			       	, MENU_NM
+			       	, CASE WHEN USE_YN != 'Y' THEN 'N' ELSE USE_YN END AS USE_YN
+			       	, MENU_Lvl1
+			       	, MENU_Lvl2
+			       	, MENU_Lvl3
+			       	, REG_ID
+			       	, CONVERT(VARCHAR, REG_DTM, 120) AS REG_DTM
+			       <!-- 	, DATE_FORMAT(REG_DTM, '%Y-%m-%d %T.%s') AS REG_DTM -->
+			       	, UPD_ID
+			       	, CONVERT(VARCHAR, UPD_DTM, 120) AS UPD_DTM
+			       	<!-- , DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T.%s') AS UPD_DTM -->
+			       	, 'R' AS ROW_STATUS
+		         FROM MENU_MANAGE
+		         <where>
+			       	 <if test="menuId != null and menuId != ''">
+			          AND (MENU_ID = #{menuId} OR MENU_NM LIKE CONCAT('%',#{menuId}, '%'))
+			         </if>
+			         <if test="useYn != null and useYn != ''">
+			          AND USE_YN = #{useYn})
+			         </if>
+		         </where>
+        	 ORDER BY MENU_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY
+		   ) A
+		   <!-- ORDER BY A.MENU_SEQ ASC limit #{curPage}, #{pageSize} -->
+    </select>
+    
+    <!-- 순번 조회 -->
+    <select id="selectMenuSeq" resultType="int">
+    	/* menu001Dao.selectMenuSeq: 순번 조회 */
+    	<!-- SELECT IFNULL(MAX(MENU_SEQ), 0) + 1 
+	      FROM MENU_MANAGE  ALIAS_FOR_SUBQUERY -->
+    	SELECT ISNULL(MAX(MENU_SEQ), 0) + 1 
+	      FROM MENU_MANAGE
+    </select>
+    
+    <!-- 메뉴등록 -->
+    <insert id="menuSave" parameterType="map">
+    	/* menu001Dao.menuSave: 메뉴등록*/
+    	<!-- <foreach collection="list" item="item" separator=";">    -->
+    	MERGE 
+    	 INTO MENU_MANAGE AS A1
+	    USING (
+	    		 SELECT #{menuSeq} AS MENU_SEQ
+	    	  ) AS A
+	       ON A1.MENU_SEQ = A.MENU_SEQ
+	     WHEN MATCHED THEN
+	    	  UPDATE 
+	    	     SET MENU_ID = #{menuId}
+	    	       , MENU_NM = #{menuNm}
+	    	       , USE_YN = #{useYn}
+	    	       , MENU_LVL1 = #{menuLvl1}
+	    	       , MENU_LVL2 = #{menuLvl2} 
+	    	       , MENU_LVL3 = #{menuLvl3} 
+	    	       <include refid="svc001Dao.updateParamSql"/>
+	    WHEN NOT MATCHED THEN
+	    	 INSERT 
+	    	 (     MENU_SEQ
+	    	   	 , MENU_ID
+	    	 	 , MENU_NM
+	    	 	 , USE_YN
+	    	 	 , MENU_LVL1
+	       	  	 , MENU_LVL2
+	       	  	 , MENU_LVL3
+	    	 	 <include refid="svc001Dao.createColSql"/>
+	    	 ) 
+	    	 VALUES 
+	    	 (	   A.MENU_SEQ
+	    	 	 , #{menuId}
+	    	 	 , #{menuNm}
+	    	 	 , #{useYn}
+	    	 	 , #{menuLvl1}
+	    	 	 , #{menuLvl2}
+	    	 	 , #{menuLvl3}
+	    	 	 <include refid="svc001Dao.createParamSql"/>
+	    	 )
+	    	 ;
+	     <!-- INSERT 
+	       INTO MENU_MANAGE
+    	 (      MENU_SEQ
+    	   	  , MENU_ID
+    	 	  , MENU_NM
+    	 	  , PAK_PATH
+    	 	  , USE_YN
+    	 	  , MENU_Lvl1
+	       	  , MENU_Lvl2
+	       	  , MENU_Lvl3
+    	 	  <include refid="svc001Dao.createColSql"/>
+    	 ) 
+    	 VALUES 
+    	 <foreach collection="list" item="item" separator=",">   
+    	 (    	 
+    	 	    CASE WHEN IFNULL(#{menuSeq}, '') = '' THEN #{menuSeq} ELSE #{menuSeq} END
+    	 	  , #{menuId}
+    	 	  , #{menuNm}
+    	 	  , #{pakPath}
+    	 	  , #{useYn}
+    	 	  , #{menuLvl1}
+    	 	  , #{menuLvl2}
+    	 	  , #{menuLvl3}
+    	 	  <include refid="svc001Dao.createParamSql"/>
+    	 )
+    	 </foreach>
+    	 ON DUPLICATE KEY UPDATE  
+    	         MENU_ID = VALUES(MENU_ID)
+    	       , MENU_NM = VALUES(MENU_NM)
+    	       , PAK_PATH = VALUES(PAK_PATH)
+    	       , USE_YN = VALUES(USE_YN)
+    	       , MENU_Lvl1 = VALUES(MENU_Lvl1)
+	       	   , MENU_Lvl2 = VALUES(MENU_Lvl2)
+	       	   , MENU_Lvl3 = VALUES(MENU_Lvl3)
+    	       <include refid="svc001Dao.updateParamSql"/>
+    	 </foreach> -->
+    </insert>
+
+</mapper>

@@ -44,25 +44,14 @@
         <div class="x_content" style="padding: 0 3px 0px;">
           <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
             <div class="form-group row" style="margin-bottom: 0px;">
-              <label class="col-form-label col-md-3 col-sm-3" for="first-name">서비스 ID/명
-                <!-- <span class="required">*</span> --></label>
+              <label class="col-form-label col-md-3 col-sm-3" for="first-name">서비스 ID / 명<!-- <span class="required">*</span> --></label>
               <div class="col-md-9 col-sm-9 ">
                 <input type="text" id="svcId" required="required" class="form-control" v-model="svcId">
               </div>
             </div>
           </div>
-
-          <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
-            <!-- <div class="form-group row" style="margin-bottom: 0px;">
-              <label class="col-form-label col-md-3 col-sm-3" for="second-name">아이디/명</label>
-              <div class="col-md-9 col-sm-9 ">
-                <input type="text" id="second-name" required="required" class="form-control  ">
-              </div>
-            </div> -->
-          </div>
-
           <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;"></div>
-
+          <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;"></div>
           <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
             <div class="text-right">
               <button type="button" class="btn btn-secondary" @click="selectList">조회</button>
@@ -71,7 +60,6 @@
           </div>
         </div>
       </div>
-
 
       <div class="col-md-12 col-sm-12 " style="padding-right: 5px;padding-left: 5px;">
         <div class="x_panel">
@@ -107,8 +95,8 @@
                   <table id="svcMng" class="table table-striped table-bordered" style="width:100%;text-align: center;">
                     <thead>
                       <tr>
-                      	<th class="th_small"><input type="checkbox" id="check-all"></th>
                       	<th class="th_small"></th>
+                      	<th class="th_small"><input type="checkbox" id="check-all"></th>
                       	<th class="th_small">No.</th>
                         <th>서비스아이디</th>
                         <th>서비스명</th>
@@ -122,8 +110,8 @@
                     </thead>
                     <tbody>
                       <tr v-for="(row, index) in svcList">
-                      	<td class="th_small" style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
                       	<td class="th_small" style="vertical-align: middle;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
+                      	<td class="th_small" style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
                       	<td class="th_small" style="vertical-align: middle;">{{ row.svcSeq }}</td>
                         <!-- <input type="checkbox" id="check-all" v-model="checkVal" :value="index"> -->
                         <td><input type="text" id="svcId" v-model="row.svcId" class="form-control" @blur="watch(index)"/></td>
@@ -155,27 +143,14 @@
 						</label>
 					</div> 
 				</div>
-                <div class="col-sm-7" ref="paging">
-                  <!-- <div class="dataTables_paginate paging_simple_numbers">
-                   <ul class="pagination">
-                       <li class="paginate_button previous disabled">
-                        <a href="#" aria-controls="datatable-checkbox" data-dt-idx="0" tabindex="0">Previous</a>
-                      </li>
-                      <li class="paginate_button active">
-                        <a href="#" aria-controls="datatable-checkbox" data-dt-idx="1" tabindex="0">1</a>
-                      </li>
-                      <li class="paginate_button next disabled">
-                        <a href="#" aria-controls="datatable-checkbox" data-dt-idx="2" tabindex="0">Next</a>
-                      </li>
-                    </ul>
-                  </div> -->
-                </div>
+                <div class="col-sm-7" ref="paging"></div>
               </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  
   <script>
     const SVC001M = new Vue({
       el: "#SVC001M",
@@ -215,7 +190,7 @@
       methods: {
 	    	//  조회 버튼
 	    	selectList: function() {
-	    		pagination.common.curPage = 0;
+	    		pagination.common.curPage = 1;   // mariadb = 0, mssql = 1
 	    		this.getSearch();
 	    	},
 	        getSearch: function() {
@@ -270,7 +245,7 @@
 					headers: { "Content-Type": "application/json"}
 		        }).then((res) => { 
 		                console.log("222222 > " + res);
-		                this.getSearch();
+		                this.selectList();
 		        }).catch((ex) => { 
 		                console.log("에러", ex); 
 		        });
@@ -308,23 +283,7 @@
 	    	 init: function(){
 	    		 location.reload(true);
 	    	 }
-	        /* watch: function(event){
-	        	console.log(event.target.value+" : "+event.target._value);
-	        	//console.log(idx+" : "+id+" : "+this.svcListCopy[idx].svcNm+" : "+newVal)
-	        	//const data = this.svcListCopy.filter(svcListCopy => this.svcListCopy[idx].svcNm === newVal);
-	        	//console.log(data)
-	        } */
-	        // checkVal() {
-	        //   console.log("11 >> " +this.value);
-	        // }
-	        // move(id){
-	        //     window.location.href = "/com/"+id;
-	        // },
-	        // getClass(menuId) {
-	        //   // console.log("111111111 > " + menuId);
-	        //   return menuId == 'USER000M' ? 'fa fa-user' : 'fa fa-bars';
-	        // }
-      }
+      	}
     });
   </script>
 </div>
