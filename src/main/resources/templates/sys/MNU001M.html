@@ -64,7 +64,7 @@
               <label class="col-form-label col-md-3 col-sm-3 label-align" for="second-name">사용여부</label>
               <div class="col-md-9 col-sm-9">
               	<select id="searchUseYn" class="form-control" v-model="searchUseYn">
-					<option v-for="select in useYn" :value="select.value">{{ select.text }}</option>
+					<option v-for="select in useYn" :value="select.code">{{ select.value }}</option>
 				</select>
               </div>
             </div>
@@ -182,9 +182,9 @@
         searchMenuId: "",
         searchUseYn: "",
         useYn: [
-        	 {text: "전체", value: ""}
-        	,{text: "사용", value: "Y"}
-        	,{text: "미사용", value: "N"}
+        	 {value: "전체", code: ""}
+        	,{value: "사용", code: "Y"}
+        	,{value: "미사용", code: "N"}
         ],
         selectVal: "10"
       },
