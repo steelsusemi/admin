@@ -37,11 +37,11 @@
 			       	, 'R' AS ROW_STATUS
 		         FROM MENU_MANAGE
 		         <where>
-			       	 <if test="menuId != null and menuId != ''">
-			          AND (MENU_ID = #{menuId} OR MENU_NM LIKE CONCAT('%',#{menuId}, '%'))
+			       	 <if test="searchMenuId != null and searchMenuId != ''">
+			          AND (MENU_ID = #{searchMenuId} OR MENU_NM LIKE CONCAT('%',#{searchMenuId}, '%'))
 			         </if>
-			         <if test="useYn != null and useYn != ''">
-			          AND USE_YN = #{useYn})
+			         <if test="searchUseYn != null and searchUseYn != ''">
+			          AND USE_YN = #{searchUseYn}
 			         </if>
 		         </where>
         	 ORDER BY MENU_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY
