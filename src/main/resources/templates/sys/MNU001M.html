@@ -104,7 +104,7 @@
                       <thead>
                         <tr>
                           <th class="th_small"></th>
-                          <th class="th_small"><input type="checkbox" id="check-all"></th>
+                          <th class="th_small"><input type="checkbox" id="check-all" v-model="checkVal"></th>
                           <th class="th_small">No.</th>
                           <th class="th_large">메뉴아이디</th>
                           <th class="th_large">메뉴명</th>
@@ -119,14 +119,14 @@
                       <tbody>
                         <tr v-for="(row, index) in menuList">
                           <td class="td_small" style="vertical-align: middle;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
-                          <td class="td_small" style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
-                      	  <td class="td_small" style="vertical-align: middle;">{{ row.svcSeq }}</td>
+                          <td class="td_small" style="vertical-align: middle;"><input type="checkbox" id="check" v-model="checkVal[index]" true-value="Y" false-value="N"></td>
+                      	  <td class="td_small" style="vertical-align: middle;">{{ row.menuSeq }}</td>
                           <td class="td_large"><input type="text" id="menuId" v-model="row.menuId" class="form-control" @blur="watch(index)"/></td>
                           <td class="td_large" style="text-align: left;"><input type="text" id="menuNm" v-model="row.menuNm" class="form-control" @blur="watch(index)"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="useYn" v-model="row.useYn" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl1" v-model="row.menuLvl1" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl2" v-model="row.menuLvl2" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl3" v-model="row.menuLvl3" true-value="Y" false-value="N"/></td>
+                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="useYn" v-model="row.useYn"  @change="watch(index)" true-value="Y" false-value="N"/></td>
+                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl1" v-model="row.menuLvl1"  @change="watch(index)" true-value="Y" false-value="N"/></td>
+                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl2" v-model="row.menuLvl2"  @change="watch(index)" true-value="Y" false-value="N"/></td>
+                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl3" v-model="row.menuLvl3"  @change="watch(index)" true-value="Y" false-value="N"/></td>
                           <td class="td_large" style="vertical-align: middle;">{{ row.updId }}</td>
                           <td class="td_large" style="vertical-align: middle;">{{ row.updDtm }}</td>
                         </tr>
@@ -179,6 +179,7 @@
         checkVal: [],
         result: [],
         mnuId: "MNU001",
+        menuId: "",
         searchMenuId: "",
         searchUseYn: "",
         useYn: [
@@ -199,7 +200,7 @@
 	        getSearch: function() {
 	        	this.menuList.splice(1,1);
 	        	this.menuList = [];
-	          	console.log("111111111 > " + this.svcId);
+	          	console.log("111111111 > " + this.searchMenuId);
 	          	const data = {
 	          		searchMenuId: this.searchMenuId,
 	            	searchUseYn: this.searchUseYn,
@@ -211,7 +212,7 @@
 		            }).then((res) => { 
 		            	$(".odd").html("");
 		                this.menuList = res.data; 
-		                console.log("222222 > " + this.menuList);
+		                console.log("222222 > " + this.menuList+" : "+this.checkVal);
 		                if(this.menuList.length > 0){
 			                pagination.common.totalCount = this.menuList[0].totCnt;
 			                pagination.pagingNavi(pagination.common, this);
@@ -219,7 +220,8 @@
 		                
 		                const newObj = _.cloneDeep(this.menuList);
 		                this.menuListCopy = newObj; 
-		                console.log("33333333333333333 > " + this.menuListCopy[1].svcNm);
+		                this.checkVal = [];
+		                console.log("33333333333333333 > " + this.menuListCopy[1].menuNm+" : "+checkVal);
 		            }).catch((ex) => { 
 		                console.log("에러", ex); 
 		        });
@@ -240,6 +242,7 @@
 	       		}
 	        },
 	        setSave: function() {
+	        	if(this.checkVal.length === 0) alert("저장할 대상을 선택해주세요.");
 	        	//this.menuList = [];
 	          	//console.log("111111111 > " + this.menuList.length + " : " +this.menuList.filter(menuList => menuList.rowStatus === "C") + " : " +this.checkVal);
 	          	const data = this.menuList.filter(menuList => menuList.rowStatus === "C" || menuList.rowStatus === "U");
@@ -255,30 +258,32 @@
 	    	},
 	        changePageSize: function(val){
 	        	 //console.log("11 >> " +val);
-	        	if(pagination.onChange(val, this.menuList[0].svcSeq)){
+	        	if(pagination.onChange(val, this.menuList[0].menuSeq)){
 	        		this.getSearch();
 	        	}
 	    	 },
 	    	 watch: function(idx){
 	    		const frtVal = this.menuListCopy;
 	   			const changeVal = this.menuList;
-	   			console.log("111111111111111111 >> "+idx+" : "+frtVal[idx].useYn+" : "+changeVal[idx].useYn);
+	   			console.log("111111111111111111 >> "+idx+" : "+frtVal[idx].menuLvl2+" : "+changeVal[idx].menuLvl2);
            	//for(var t=0; t<changeVal.length; t++){
            		if(changeVal[idx].rowStatus != "C" 
-           				&& frtVal[idx].svcSeq === changeVal[idx].svcSeq){
-           			//console.log(idx+" : "+frtVal[idx].svcNm+" : "+changeVal[idx].svcNm+" : "+frtVal[idx].svcSeq === changeVal[idx].svcSeq);
-           			if(frtVal[idx].svcId != changeVal[idx].svcId){
+           				&& frtVal[idx].menuSeq === changeVal[idx].menuSeq){
+           			//console.log(idx+" : "+frtVal[idx].menuNm+" : "+changeVal[idx].menuNm+" : "+frtVal[idx].menuSeq === changeVal[idx].menuSeq);
+           			if(frtVal[idx].menuId != changeVal[idx].menuId){
            				this.menuList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].svcNm != changeVal[idx].svcNm){
+	            	}else if(frtVal[idx].menuNm != changeVal[idx].menuNm){
            				this.menuList[idx].rowStatus = "U";
 	            	}else if(frtVal[idx].useYn != changeVal[idx].useYn){
            				this.menuList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].svcDao != changeVal[idx].svcDao){
+	            	}else if(frtVal[idx].menuLvl1 != changeVal[idx].menuLvl1){
            				this.menuList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].svcXml != changeVal[idx].svcXml){
+	            	}else if(frtVal[idx].menuLvl2 != changeVal[idx].menuLvl2){
+           				this.menuList[idx].rowStatus = "U";
+	            	}else if(frtVal[idx].menuLvl3 != changeVal[idx].menuLvl3){
            				this.menuList[idx].rowStatus = "U";
 	            	}else{
-	            			this.menuList[idx].rowStatus = "R";
+	            			this.menuList[idx].rowStatus = "";
 	            	}
            		}
 //	    	}

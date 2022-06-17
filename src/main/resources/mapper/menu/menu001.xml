@@ -25,9 +25,9 @@
 			       	, MENU_ID
 			       	, MENU_NM
 			       	, CASE WHEN USE_YN != 'Y' THEN 'N' ELSE USE_YN END AS USE_YN
-			       	, MENU_Lvl1
-			       	, MENU_Lvl2
-			       	, MENU_Lvl3
+			       	, CASE WHEN MENU_Lvl1 != 'Y' THEN 'N' ELSE MENU_Lvl1 END AS MENU_Lvl1
+			       	, CASE WHEN MENU_Lvl2 != 'Y' THEN 'N' ELSE MENU_Lvl2 END AS MENU_Lvl2
+			       	, CASE WHEN MENU_Lvl3 != 'Y' THEN 'N' ELSE MENU_Lvl3 END AS MENU_Lvl3
 			       	, REG_ID
 			       	, CONVERT(VARCHAR, REG_DTM, 120) AS REG_DTM
 			       <!-- 	, DATE_FORMAT(REG_DTM, '%Y-%m-%d %T.%s') AS REG_DTM -->

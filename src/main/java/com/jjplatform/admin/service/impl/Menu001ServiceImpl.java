@@ -18,7 +18,7 @@ public class Menu001ServiceImpl implements Menu001Service {
 	@Autowired
 	private Menu001Dao menu001Dao;
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	@Override
 	public List<Map> menuList(Map param) throws Exception {
 		return menu001Dao.menuList(param);
