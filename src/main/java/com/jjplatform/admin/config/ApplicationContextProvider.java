@@ -7,14 +7,32 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationContextProvider implements ApplicationContextAware {
-	private static ApplicationContext context;
+	private static ApplicationContext context ;
 
-    public static ApplicationContext getApplicationContext() {
-        return context;
-    }
 
-    @Override
-    public void setApplicationContext(ApplicationContext ac) throws BeansException {
-        context = ac;
-    }
+	/**
+	* WebApplication의  컨텍스트 저장한다.
+	* @param paContext
+	* @throws BeansException
+	**/
+	@Override
+	public void setApplicationContext(ApplicationContext paContext)  throws BeansException {
+		ApplicationContextProvider.context = paContext ;
+	}
+
+	/**
+	*  WebApplication의  컨텍스트를 리턴 한다.
+	* @return  ApplicationContext
+	**/
+	public static ApplicationContext getContext() {
+		return context;
+	}
+
+	/**
+	* WebApplication의  컨텍스트 저장한다.
+	* @param paContext
+	**/
+	public static void setContext(ApplicationContext paContext) {
+		ApplicationContextProvider.context = paContext;
+	}
 }

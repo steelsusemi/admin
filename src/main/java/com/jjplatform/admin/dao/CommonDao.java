@@ -3,34 +3,22 @@ package com.jjplatform.admin.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
-public class CommonDao<T> {
+import com.jjplatform.admin.mapper.CommonMapper;
+
+@SuppressWarnings("rawtypes")
+@Repository
+public class CommonDao extends CommonMapper {
+	private static final Logger log = LoggerFactory.getLogger(CommonDao.class);
 	
-	@Autowired
-    private SqlSessionTemplate sqlSession;
+	private String NAME_SPACE = "commonDao.";
  
-    @SuppressWarnings("rawtypes")
-	public T selectOne(String xmlPath, Map param) {
-        return sqlSession.selectOne(xmlPath, param);
-    }
-    
-	public T selectOne(String xmlPath, String param) {
-        return sqlSession.selectOne(xmlPath, param);
-    }
-    
-	@SuppressWarnings("rawtypes")
-	public List<T> selectList(String xmlPath, Map param) {
-        return sqlSession.selectList(xmlPath, param);
-    }
-	
-	public int insert(String xmlPath, List<T> param) {
-        return sqlSession.insert(xmlPath, param);
-    }
-	
-	@SuppressWarnings("rawtypes")
-	public int insert(String xmlPath, Map param) {
-        return sqlSession.insert(xmlPath, param);
+    @SuppressWarnings({ "unchecked"})
+	public List<Map> selectLeftMenuList(Map param) throws Exception {
+    	log.info("22222222 >> " + param);
+        return selectList(NAME_SPACE + "selectLeftMenuList", param);
     }
 }

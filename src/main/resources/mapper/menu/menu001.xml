@@ -6,6 +6,8 @@
     <select id="menuList" parameterType="map" resultType="LowerCamelHashMap">
     	SELECT A.TOT_CNT
 			 , A.RNUM
+			 , A.COMP_ID
+			 , A.UPPR_MENU_ID
 			 , A.MENU_SEQ
 			 , A.MENU_ID
 			 , A.MENU_NM
@@ -21,6 +23,8 @@
 		  FROM (
 		       SELECT COUNT(*) OVER() AS TOT_CNT
 			 		, ROW_NUMBER() OVER(ORDER BY MENU_SEQ ASC) AS RNUM
+			 		, COMP_ID
+			 		, UPPR_MENU_ID
 			       	, MENU_SEQ
 			       	, MENU_ID
 			       	, MENU_NM
@@ -65,12 +69,15 @@
     	MERGE 
     	 INTO MENU_MANAGE AS A1
 	    USING (
-	    		 SELECT #{menuSeq} AS MENU_SEQ
+	    		 SELECT #{compId} AS COMP_ID
+	    		      , #{upprMenuId} AS UPPR_MENU_ID
+	    		      , #{menuSeq} AS MENU_SEQ
 	    	  ) AS A
 	       ON A1.MENU_SEQ = A.MENU_SEQ
 	     WHEN MATCHED THEN
 	    	  UPDATE 
 	    	     SET MENU_ID = #{menuId}
+	    	       , UPPR_MENU_ID = A.UPPR_MENU_ID
 	    	       , MENU_NM = #{menuNm}
 	    	       , USE_YN = #{useYn}
 	    	       , MENU_LVL1 = #{menuLvl1}
@@ -79,7 +86,9 @@
 	    	       <include refid="svc001Dao.updateParamSql"/>
 	    WHEN NOT MATCHED THEN
 	    	 INSERT 
-	    	 (     MENU_SEQ
+	    	 (     COMP_ID
+			 	 , UPPR_MENU_ID
+	    	 	 , MENU_SEQ
 	    	   	 , MENU_ID
 	    	 	 , MENU_NM
 	    	 	 , USE_YN
@@ -89,7 +98,9 @@
 	    	 	 <include refid="svc001Dao.createColSql"/>
 	    	 ) 
 	    	 VALUES 
-	    	 (	   A.MENU_SEQ
+	    	 (	   A.COMP_ID
+	    	     , A.UPPR_MENU_ID
+	    	     , A.MENU_SEQ
 	    	 	 , #{menuId}
 	    	 	 , #{menuNm}
 	    	 	 , #{useYn}

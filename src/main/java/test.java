@@ -1,6 +1,15 @@
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class test {
 
-	public static void main(String[] args) {
+	@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
+	public static void main(String[] args) throws NoSuchMethodException, SecurityException {
 //    	System.out.println("####################[ JasyptConfig ]####################" + (400 == HttpStatus.BAD_REQUEST.value()) + HttpStatus.BAD_REQUEST.value());
 //    	
 //    	PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
@@ -50,8 +59,65 @@ public class test {
 //        System.out.println("decMssqlDriveClass >> " + decMssqlDriveClass);
 //        System.out.println("decMssqlUrl >> " + decMssqlUrl);
 //        System.out.println("decPassword >> " + decPassword);
+//		Class clazz;
+//		try {
+//			clazz = Class.forName("com.jjplatform.admin.service.CommonService");
+//			Method[] methods = clazz.getDeclaredMethods();
+//		    List<String> actualMethods = getMethodNames(methods);
+//
+////		    assertTrue(actualMethods.containsAll(Arrays.asList("getName","setName", "getSound")));
+////			System.out.println("Constructor: " + constructor.getName());
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-		System.out.println("USER0012M".substring(0, "USER0012M".length() - 5));
+		String TestClass = "com.jjplatform.admin.service.CommonService"; // 원래는 패키지 경로까지 적어야 하나 같은 default 경로라 생략
+		Map rtnMap = new HashMap<>();
+		try {
+            // 이것만 선언할 경우 static만 호출 => 여기서 System.out.println("난 static블럭에 있는 함수"); 호출
+			Class<?> finedClass = Class.forName(TestClass); 
+			System.out.println("Class.forName : " + finedClass.getName());
+			Object classInstance = finedClass.newInstance(); // 클래스의 받아온 정보를 기반으로 객체를 생성 
+			System.out.println("Class Instance : " + classInstance);
+			Method m = finedClass.getMethod("leftMenuList", Map.class); // 메소드 불러오기 
+			System.out.println("Class Method : " + m.getName() + "를 찾았습니다.");
+			m.invoke(classInstance, rtnMap);
+			System.out.println("Class Method : " + m.getName() + "를 호출하였습니다.");
+//			m.invoke(newObj, rtnMap); // 메소드 호출 A 3 출력
+			
+			// testClass.getMethod("A").invoke(newObj);  A가 생성되었습니다. public일 때
+
+//            m = testClass.getDeclaredMethod("A"); 
+//			m.setAccessible(true); // private를 접근하기 위해서는 getDeclaredMethod 뒤에 해줘야 한다.
+//			m.invoke(newObj);   //  A가 생성되었습니다.
+
+		} catch (Exception e) {
+		}
+
+//		System.out.println("USER0012M".substring(0, "USER0012M".length() - 5));
+	}
+	
+	private static List<String> getMethodNames(Method[] methods) {
+	    List<String> methodNames = new ArrayList<>();
+	    for (Method method : methods)
+	      methodNames.add(method.getName());
+	    return methodNames;
 	}
 
 }
+
+class ADSA {
+	private void A() {
+		System.out.println("A가 생성되었습니다.");
+	}
+
+	public void show(boolean showOK, Integer a) {
+		if (showOK)
+			System.out.println("A " + a + " 출력");
+	}
+
+	static {
+		System.out.println("난 static블럭에 있는 함수");
+	}
+}	

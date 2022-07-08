@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="commonDao">
+	<!-- 좌측 메뉴조회 -->
+    <select id="selectLeftMenuList" parameterType="map" resultType="LowerCamelHashMap">
+    	/* commonDao.selectLeftMenuList: 좌측 메뉴조회 */
+    	SELECT COMP_ID
+    		 , MENU_SEQ
+    	     , UPPR_MENU_ID
+	       	 , MENU_ID
+	       	 , MENU_NM
+	       	 , CASE WHEN USE_YN != 'Y' THEN 'N' ELSE USE_YN END AS USE_YN
+	       	 , CASE WHEN MENU_Lvl1 != 'Y' THEN 'N' ELSE MENU_Lvl1 END AS MENU_LVL1
+	       	 , CASE WHEN MENU_Lvl2 != 'Y' THEN 'N' ELSE MENU_Lvl2 END AS MENU_LVL2
+	       	 , CASE WHEN MENU_Lvl3 != 'Y' THEN 'N' ELSE MENU_Lvl3 END AS MENU_LVL3
+	       	 , CONVERT(VARCHAR, REG_DTM, 120) AS REG_DTM
+	       	 , UPD_ID
+	       	 , CONVERT(VARCHAR, UPD_DTM, 120) AS UPD_DTM
+          FROM MENU_MANAGE
+         <where>
+	       AND USE_YN = 'Y'
+         </where>
+         ORDER BY MENU_SEQ, UPPR_MENU_ID
+    </select>
+
+</mapper>

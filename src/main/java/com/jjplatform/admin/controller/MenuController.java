@@ -28,6 +28,7 @@ public class MenuController {
     public ResponseEntity<?> getComController(@RequestBody Map param) throws Exception {
     	 
     	List<Map> resultList = new ArrayList();
+    	log.info("111111111111111111 >> " + resultList);
 		try {
 			resultList = menu001Service.menuList(param);
 	    	log.info("resultList >> " + resultList);

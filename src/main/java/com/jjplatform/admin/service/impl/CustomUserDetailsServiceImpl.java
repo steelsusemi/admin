@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.jjplatform.admin.aop.LoggerAspect;
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
-import com.jjplatform.admin.dao.CommonDao;
 import com.jjplatform.admin.dao.UserAuthDao;
 import com.jjplatform.admin.vo.UserVo;
 
 @Service("customUserDetailsServiceImpl")
-public class CustomUserDetailsServiceImpl extends CommonDao<Object> {
+public class CustomUserDetailsServiceImpl {
 	private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsServiceImpl.class);
 	
 	@Autowired

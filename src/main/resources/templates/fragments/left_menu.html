@@ -34,11 +34,15 @@
            <div class="menu_section">
              <h3><span sec:authentication="Authorities"></span></h3>
              <ul class="nav side-menu">
-               <li v-for="menu in menuList" :class="isActive"><a><i class="fa " :class="getClass(menu.menuId)"></i> {{ menu.menuNm }} <span class="fa fa-chevron-down"></span></a>
-                 <ul class="nav child_menu">
-                   <li v-for="sub in menu.subMenu"><a href="javascript:void(0)" :href="sub.menuId">{{ sub.menuNm }}</a></li>
-                   <!-- <li v-for="sub in menu.subMenu"><a @click="move(sub.menuId)">{{ sub.menuNm }}</a></li> -->
-                 </ul>
+               <li v-for="menu in menuList" :class="isActive">
+               	<a v-if="menu.menuLvl1 === 'Y'">
+               		<i class="fa " :class="getClass(menu.menuId)"></i> {{ menu.menuNm }} <span class="fa fa-chevron-down"></span>
+               	</a>
+               	{{menu.menuId}} {{this.menuId}}
+                <ul class="nav child_menu" :style="menu.menuId === this.menuId ? 'display:block' : 'display:none'">
+                   <!-- <li v-for="sub in menu.subMenu"><a href="javascript:void(0)" :href="sub.menuId">{{ sub.menuNm }}</a></li> -->
+                   <li v-for="sub in menuList" v-if="sub.menuLvl2 === 'Y' && menu.menuId === sub.upprMenuId"><a @click="move(sub.menuId, sub.upprMenuId)">{{ sub.menuNm }}</a></li>
+                </ul>
                </li>
              </ul>
            </div>
@@ -67,78 +71,73 @@
       const leftMenu = new Vue({
         el: "#leftMenu",
         data: {
-          menuList: [
-            {menuId: "SYS000M", menuNm: "시스템", level: 1, useYn: "Y", updId: "user", updDtm: ""
-              , subMenu: [
-                    {menuId: "MNU001M", menuNm: "메뉴관리", level: 2, useYn: "Y", updId: "user", updDtm: ""}
-                ]
-            },
-            {menuId: "USR000M", menuNm: "사용자", level: 1, useYn: "Y", updId: "user", updDtm: ""
-              , subMenu: [
-                    {menuId: "USR001M", menuNm: "사용자관리", level: 2, useYn: "Y", updId: "user", updDtm: ""}
-                  , {menuId: "USR002M", menuNm: "사용자권한관리", level: 2, useYn: "Y", updId: "user", updDtm: ""}
-                ]
-            },
-            {menuId: "SVC000M", menuNm: "서비스", level: 1, useYn: "Y", updId: "user", updDtm: ""
-              , subMenu: [
-                    {menuId: "SVC001M", menuNm: "서비스등록", level: 2, useYn: "Y", updId: "user", updDtm: ""}
-                ]
-            },
-            {menuId: "ITM000M", menuNm: "제품", level: 1, useYn: "Y", updId: "user", updDtm: ""
-                , subMenu: [
-                      {menuId: "ITM001M", menuNm: "제품등록", level: 2, useYn: "Y", updId: "user", updDtm: ""}
-                  ]
-              }
-          ],
-          isActive: ""
+          menuList: [],
+          isActive: "",
+          menuId: "",
+          mnuId: "leftMenu",
+          param: {}
         },
-        computed: {
+        //computed: {
           //  getClass(menuId) {
           //   console.log("111111111 > " + menuId);
           //   return menuId == 'USER000M' ? 'fa fa-user' : 'fa fa-bars';
           // }
-        },
-        //mounted: {
-        	//console.log("111111111 > " +" : "+this.isActive);
         //},
+        mounted() {
+        	this.param.menuId = this.mnuId;
+        	console.log("111111111 >  : "+this.param.menuId);
+        	this.comList();
+        	/* this.menuList = [
+				                {menuId: "SYS000M", menuNm: "시스템", level: 1, useYn: "Y", updId: "user", updDtm: ""
+				                  , subMenu: [
+				                        {menuId: "MNU001M", menuNm: "메뉴관리", level: 2, useYn: "Y", updId: "user", updDtm: ""}
+				                    ]
+				                },
+				                {menuId: "USR000M", menuNm: "사용자", level: 1, useYn: "Y", updId: "user", updDtm: ""
+				                  , subMenu: [
+				                        {menuId: "USR001M", menuNm: "사용자관리", level: 2, useYn: "Y", updId: "user", updDtm: ""}
+				                      , {menuId: "USR002M", menuNm: "사용자권한관리", level: 2, useYn: "Y", updId: "user", updDtm: ""}
+				                    ]
+				                },
+				                {menuId: "SVC000M", menuNm: "서비스", level: 1, useYn: "Y", updId: "user", updDtm: ""
+				                  , subMenu: [
+				                        {menuId: "SVC001M", menuNm: "서비스등록", level: 2, useYn: "Y", updId: "user", updDtm: ""}
+				                    ]
+				                },
+				                {menuId: "ITM000M", menuNm: "제품", level: 1, useYn: "Y", updId: "user", updDtm: ""
+				                    , subMenu: [
+				                          {menuId: "ITM001M", menuNm: "제품등록", level: 2, useYn: "Y", updId: "user", updDtm: ""}
+				                      ]
+				                  }
+				              ] */
+        },
         methods: {
-          move(id){
-            // console.log("111111111 > " + id + " : " +$("[role='main']").html());
-            // ajax option
-
-            // var ajaxOption = {
-            //         url : "/com/"+id,
-            //         async : true,
-            //         type : "GET",
-            //         dataType : "html",
-            //         cache : false
-            // };
-
-            // $.ajax(ajaxOption).done(function(data){
-              // console.log("222222 > " + id + " : " +$("[role='main']").children().html());
-                // Contents 영역 삭제
-                // $("[role='main']").children().remove();
-                // console.log("333333 > " + id + " : " +data);
-                // Contents 영역 교체
-                // var contents = $("div[role='main']").html(data);
-                // $("div[role='main']").html(data);
-                // contents.trigger("create");
-                // .on method
-                // $(document).on("click", "div[role='main']", eventFunction);
-            // });
-            
-//              window.location.href = "/com/"+id;
-              window.location.href = "/"+id;
-          },
-          getClass(menuId) {
-            console.log("111111111 > " + menuId);
-            this.isActive == "active" ? "" : "active";
-            /* $(".nav.side-menu > li").attr("class","active");
-            $(".nav.side-menu > li > ui").hide(); */
-            return menuId == 'USER000M' ? 'fa-user' : menuId == 'SYS000M' ? 'fa-bars' : 'fa-file';
-          }
-        }     
-       });
+        	comList() {
+        		console.log("111111111 > " + this.param);
+        		axios.post('/comm/selLeftMenuList', this.param, {
+    				headers: { "Content-Type": "application/json"}
+    	            }).then((res) => { 
+    	                this.menuList = res.data; 
+    	                console.log("222222 > " + this.menuList);
+    	                //console.log("33333333333333333 > " + this.menuList[1].menuId);
+    	            }).catch((ex) => { 
+    	                console.log("에러", ex); 
+    				});
+        	},
+			move(menuId,upprMenuId) {
+	            console.log("22222222 > " + menuId + " : " +upprMenuId);
+	            this.menuId = upprMenuId;
+				location.href = "/comm/"+menuId;
+			},
+			getClass(menuId) {
+			  //console.log("111111111 > " + menuId);
+			  this.isActive == "active" ? "" : "active";
+			  /* $(".nav.side-menu > li").attr("class","active");
+			  $(".nav.side-menu > li > ui").hide(); */
+			  return menuId == 'USER000M' ? 'fa-user' : menuId == 'SYS000M' ? 'fa-bars' : 'fa-file';
+			}
+		}
+	});
     </script>
 </th:block>
 </html>

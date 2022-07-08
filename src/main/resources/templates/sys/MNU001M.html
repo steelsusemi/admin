@@ -55,7 +55,7 @@
             <div class="form-group row" style="margin-bottom: 0px;">
               <label class="col-form-label col-md-3 col-sm-3" for="first-name">메뉴 ID / 명 <!-- <span class="required">*</span> --></label>
               <div class="col-md-9 col-sm-9 ">
-                <input type="text" id="searchMenuId" required="required" class="form-control"  v-model="menuId">
+                <input type="text" id="searchMenuId" required="required" class="form-control"  v-model="searchMenuId">
               </div>
             </div>
           </div>
@@ -106,6 +106,7 @@
                           <th class="th_small"></th>
                           <th class="th_small"><input type="checkbox" id="check-all" v-model="checkVal"></th>
                           <th class="th_small">No.</th>
+                          <th class="th_large">소속아이디</th>
                           <th class="th_large">메뉴아이디</th>
                           <th class="th_large">메뉴명</th>
                           <th class="th_middle">사용여부</th>
@@ -121,6 +122,7 @@
                           <td class="td_small" style="vertical-align: middle;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
                           <td class="td_small" style="vertical-align: middle;"><input type="checkbox" id="check" v-model="checkVal[index]" true-value="Y" false-value="N"></td>
                       	  <td class="td_small" style="vertical-align: middle;">{{ row.menuSeq }}</td>
+                      	  <td class="td_large"><input type="text" id="compId" v-model="row.compId" class="form-control" @blur="watch(index)"/></td>
                           <td class="td_large"><input type="text" id="menuId" v-model="row.menuId" class="form-control" @blur="watch(index)"/></td>
                           <td class="td_large" style="text-align: left;"><input type="text" id="menuNm" v-model="row.menuNm" class="form-control" @blur="watch(index)"/></td>
                           <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="useYn" v-model="row.useYn"  @change="watch(index)" true-value="Y" false-value="N"/></td>
@@ -187,6 +189,13 @@
         	,{value: "사용", code: "Y"}
         	,{value: "미사용", code: "N"}
         ],
+        param: {
+					menuId: this.mnuId
+				  , searchMenuId: this.searchMenuId
+      		      , searchUseYn: this.searchUseYn
+      		      , pageSize: pagination.common.pageSize
+      		      , curPage: pagination.common.curPage
+          	  	},
         selectVal: "10"
       },
       computed: {
@@ -201,13 +210,7 @@
 	        	this.menuList.splice(1,1);
 	        	this.menuList = [];
 	          	console.log("111111111 > " + this.searchMenuId);
-	          	const data = {
-	          		searchMenuId: this.searchMenuId,
-	            	searchUseYn: this.searchUseYn,
-	            	pageSize: pagination.common.pageSize,
-	            	curPage: pagination.common.curPage
-	          	};
-				axios.post('/menu/menuList', data, {
+				axios.post('/comm/menuList', this.param, {
 					headers: { "Content-Type": "application/json"}
 		            }).then((res) => { 
 		            	$(".odd").html("");
@@ -221,7 +224,7 @@
 		                const newObj = _.cloneDeep(this.menuList);
 		                this.menuListCopy = newObj; 
 		                this.checkVal = [];
-		                console.log("33333333333333333 > " + this.menuListCopy[1].menuNm+" : "+checkVal);
+		                //console.log("33333333333333333 > " + this.menuListCopy[1].menuNm+" : "+checkVal);
 		            }).catch((ex) => { 
 		                console.log("에러", ex); 
 		        });
