@@ -17,14 +17,12 @@ public class Menu001Dao extends CommonMapper {
 	private String NAME_SPACE = "menu001Dao.";
  
     @SuppressWarnings({ "unchecked"})
-	public List<Map> menuList(Map param) throws Exception {
-    	log.info("22222222 >> " + param);
-        return selectList(NAME_SPACE + "menuList", param);
+	public List<Map> selectMenuList(Map param) throws Exception {
+        return selectList(NAME_SPACE + "selectMenuList", param);
     }
 
-	public int menuSave(Map param) {
-		// TODO Auto-generated method stub
-		return insert(NAME_SPACE + "menuSave", param);
+	public int saveMenu(Map param) {
+		return insert(NAME_SPACE + "saveMenu", param);
 	}
 
 	public int selectMenuSeq() {

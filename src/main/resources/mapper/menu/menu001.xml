@@ -3,18 +3,19 @@
 
 <mapper namespace="menu001Dao">
 	<!-- 메뉴조회 -->
-    <select id="menuList" parameterType="map" resultType="LowerCamelHashMap">
+    <select id="selectMenuList" parameterType="map" resultType="LowerCamelHashMap">
+    	/* menu001Dao.selectMenuList: 메뉴 조회 */
     	SELECT A.TOT_CNT
-			 , A.RNUM
+			 <!-- , A.RNUM -->
 			 , A.COMP_ID
 			 , A.UPPR_MENU_ID
 			 , A.MENU_SEQ
 			 , A.MENU_ID
 			 , A.MENU_NM
 			 , A.USE_YN
-			 , MENU_Lvl1
-	       	 , MENU_Lvl2
-	       	 , MENU_Lvl3
+			 , A.MENU_LVL1
+	       	 , A.MENU_LVL2
+	       	 , A.MENU_LVL3
 			 , A.REG_ID
 			 , A.REG_DTM
 			 , A.UPD_ID
@@ -29,9 +30,9 @@
 			       	, MENU_ID
 			       	, MENU_NM
 			       	, CASE WHEN USE_YN != 'Y' THEN 'N' ELSE USE_YN END AS USE_YN
-			       	, CASE WHEN MENU_Lvl1 != 'Y' THEN 'N' ELSE MENU_Lvl1 END AS MENU_Lvl1
-			       	, CASE WHEN MENU_Lvl2 != 'Y' THEN 'N' ELSE MENU_Lvl2 END AS MENU_Lvl2
-			       	, CASE WHEN MENU_Lvl3 != 'Y' THEN 'N' ELSE MENU_Lvl3 END AS MENU_Lvl3
+			       	, CASE WHEN MENU_LVL1 IS NULL OR MENU_LVL1 != 'Y' THEN 'N' ELSE MENU_LVL1 END AS MENU_LVL1
+			       	, CASE WHEN MENU_LVL2 IS NULL OR MENU_LVL2 != 'Y' THEN 'N' ELSE MENU_LVL2 END AS MENU_LVL2
+			       	, CASE WHEN MENU_LVL3 IS NULL OR MENU_LVL3 != 'Y' THEN 'N' ELSE MENU_LVL3 END AS MENU_LVL3
 			       	, REG_ID
 			       	, CONVERT(VARCHAR, REG_DTM, 120) AS REG_DTM
 			       <!-- 	, DATE_FORMAT(REG_DTM, '%Y-%m-%d %T.%s') AS REG_DTM -->
@@ -48,9 +49,9 @@
 			          AND USE_YN = #{searchUseYn}
 			         </if>
 		         </where>
-        	 ORDER BY MENU_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY
+        	 ORDER BY COMP_ID, MENU_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY
 		   ) A
-		   <!-- ORDER BY A.MENU_SEQ ASC limit #{curPage}, #{pageSize} -->
+		   ORDER BY A.COMP_ID, A.MENU_SEQ
     </select>
     
     <!-- 순번 조회 -->
@@ -63,8 +64,8 @@
     </select>
     
     <!-- 메뉴등록 -->
-    <insert id="menuSave" parameterType="map">
-    	/* menu001Dao.menuSave: 메뉴등록*/
+    <insert id="saveMenu" parameterType="map">
+    	/* menu001Dao.saveMenu: 메뉴등록*/
     	<!-- <foreach collection="list" item="item" separator=";">    -->
     	MERGE 
     	 INTO MENU_MANAGE AS A1

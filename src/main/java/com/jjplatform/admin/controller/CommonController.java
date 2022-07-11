@@ -1,7 +1,7 @@
 package com.jjplatform.admin.controller;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +22,7 @@ import com.jjplatform.admin.config.ApplicationContextProvider;
 public class CommonController {
 	private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 	
-    @GetMapping("/comm/{v1}")
+    @GetMapping("/{v1}")
     public String commonMenuMove(@PathVariable(value = "v1") String path) {
     	log.info("commonMenuMove => " + path);
     	String v1 = "";
@@ -48,17 +48,26 @@ public class CommonController {
     	String service = "";
     	if("leftMenu".equals(menuId)) {
     		service = "commonService";
+    	}else if("MNU001M".equals(menuId)) {
+    		service = "menu001Service";
     	}
 
-    	List<Map> resultList = new ArrayList();
+    	List<?> resultList = new ArrayList();
+    	Map rtnMap = new HashMap();
 		try {
 			Object tClass = ApplicationContextProvider.getContext().getBean(service);
-			resultList = (List<Map>) tClass.getClass().getMethod(actNm, Map.class).invoke(tClass, param);
-			log.info("CommonController resultList >> " + resultList);
+			log.info("actNm => " + actNm.indexOf("select")+ " : " + actNm);
+			if(actNm.indexOf("select") != -1) {
+	    		rtnMap.put("result", (List<Map>) tClass.getClass().getMethod(actNm, Map.class).invoke(tClass, param));
+	    	}else if(actNm.indexOf("save") != -1) {
+	    		rtnMap.put("result", (int) tClass.getClass().getMethod(actNm, List.class).invoke(tClass, param.get("list")));
+	    	}
+//			rtnMap.put("result", (List<Map>) tClass.getClass().getMethod(actNm, Map.class).invoke(tClass, param));
+			log.info("CommonController rtnMap >> " + rtnMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 		
-    	return new ResponseEntity<>(resultList, HttpStatus.OK);
+    	return new ResponseEntity<>(rtnMap, HttpStatus.OK);
     }
 }

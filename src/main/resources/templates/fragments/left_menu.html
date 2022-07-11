@@ -38,10 +38,10 @@
                	<a v-if="menu.menuLvl1 === 'Y'">
                		<i class="fa " :class="getClass(menu.menuId)"></i> {{ menu.menuNm }} <span class="fa fa-chevron-down"></span>
                	</a>
-               	{{menu.menuId}} {{this.menuId}}
-                <ul class="nav child_menu" :style="menu.menuId === this.menuId ? 'display:block' : 'display:none'">
-                   <!-- <li v-for="sub in menu.subMenu"><a href="javascript:void(0)" :href="sub.menuId">{{ sub.menuNm }}</a></li> -->
-                   <li v-for="sub in menuList" v-if="sub.menuLvl2 === 'Y' && menu.menuId === sub.upprMenuId"><a @click="move(sub.menuId, sub.upprMenuId)">{{ sub.menuNm }}</a></li>
+                <ul class="nav child_menu">
+                   <li v-for="sub in menuList" v-if="sub.menuLvl2 === 'Y' && menu.menuId === sub.upprMenuId"><a href="javascript:void(0)" :href="sub.menuId">{{ sub.menuNm }}</a></li>
+                <!-- <ul class="nav child_menu" :style="menu.menuId === this.menuId ? 'display:block' : 'display:none'"> -->
+                   <!-- <li v-for="sub in menuList" v-if="sub.menuLvl2 === 'Y' && menu.menuId === sub.upprMenuId"><a @click="move(sub.menuId, sub.upprMenuId)">{{ sub.menuNm }}</a></li> -->
                 </ul>
                </li>
              </ul>
@@ -114,16 +114,17 @@
         methods: {
         	comList() {
         		console.log("111111111 > " + this.param);
-        		axios.post('/comm/selLeftMenuList', this.param, {
+        		axios.post('/comm/selectLeftMenuList', this.param, {
     				headers: { "Content-Type": "application/json"}
     	            }).then((res) => { 
-    	                this.menuList = res.data; 
+    	                this.menuList = res.data.result; 
     	                console.log("222222 > " + this.menuList);
     	                //console.log("33333333333333333 > " + this.menuList[1].menuId);
     	            }).catch((ex) => { 
     	                console.log("에러", ex); 
     				});
-        	},
+        	}
+        	,
 			move(menuId,upprMenuId) {
 	            console.log("22222222 > " + menuId + " : " +upprMenuId);
 	            this.menuId = upprMenuId;

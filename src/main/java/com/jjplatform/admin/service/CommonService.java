@@ -6,6 +6,6 @@ import java.util.Map;
 @SuppressWarnings("rawtypes")
 public interface CommonService {
 	
-	public List<Map> selLeftMenuList(Map param) throws Exception;
+	public List<Map> selectLeftMenuList(Map param) throws Exception;
 
 }

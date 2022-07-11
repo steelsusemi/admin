@@ -21,7 +21,7 @@
          <where>
 	       AND USE_YN = 'Y'
          </where>
-         ORDER BY MENU_SEQ, UPPR_MENU_ID
+         ORDER BY COMP_ID, MENU_SEQ
     </select>
 
 </mapper>

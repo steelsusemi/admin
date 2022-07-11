@@ -19,7 +19,7 @@ public class CommonServiceImpl implements CommonService {
 	private CommonDao commonDao;
 
 	@SuppressWarnings({ "rawtypes" })
-	public List<Map> selLeftMenuList(Map param) throws Exception {
+	public List<Map> selectLeftMenuList(Map param) throws Exception {
 		return commonDao.selectLeftMenuList(param);
 	}
 

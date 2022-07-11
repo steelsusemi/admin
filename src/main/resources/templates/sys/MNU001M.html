@@ -100,7 +100,7 @@
                   	<div class="col-sm-5">
 	                  <div id="datatable-checkbox_info">총건수 : {{menuList.length}} 건</div>
 	                </div>
-                    <table id="menuMng" class="table table-striped table-bordered" style="width:100%;text-align: center;">
+                    <table id="menuMng" class="table table-striped table-bordered" style="width:100%;">
                       <thead>
                         <tr>
                           <th class="th_small"></th>
@@ -109,6 +109,7 @@
                           <th class="th_large">소속아이디</th>
                           <th class="th_large">메뉴아이디</th>
                           <th class="th_large">메뉴명</th>
+                          <th class="th_large">상위메뉴아이디</th>
                           <th class="th_middle">사용여부</th>
                           <th class="th_middle">레벨1</th>
                           <th class="th_middle">레벨2</th>
@@ -121,10 +122,11 @@
                         <tr v-for="(row, index) in menuList">
                           <td class="td_small" style="vertical-align: middle;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
                           <td class="td_small" style="vertical-align: middle;"><input type="checkbox" id="check" v-model="checkVal[index]" true-value="Y" false-value="N"></td>
-                      	  <td class="td_small" style="vertical-align: middle;">{{ row.menuSeq }}</td>
+                      	  <td class="td_small" style="vertical-align: middle;">{{ index }}</td>
                       	  <td class="td_large"><input type="text" id="compId" v-model="row.compId" class="form-control" @blur="watch(index)"/></td>
                           <td class="td_large"><input type="text" id="menuId" v-model="row.menuId" class="form-control" @blur="watch(index)"/></td>
                           <td class="td_large" style="text-align: left;"><input type="text" id="menuNm" v-model="row.menuNm" class="form-control" @blur="watch(index)"/></td>
+                          <td class="td_large"><input type="text" id="upprMenuId" v-model="row.upprMenuId" class="form-control" @blur="watch(index)"/></td>
                           <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="useYn" v-model="row.useYn"  @change="watch(index)" true-value="Y" false-value="N"/></td>
                           <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl1" v-model="row.menuLvl1"  @change="watch(index)" true-value="Y" false-value="N"/></td>
                           <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl2" v-model="row.menuLvl2"  @change="watch(index)" true-value="Y" false-value="N"/></td>
@@ -180,7 +182,7 @@
         menuListCopy: [],
         checkVal: [],
         result: [],
-        mnuId: "MNU001",
+        mnuId: "MNU001M",
         menuId: "",
         searchMenuId: "",
         searchUseYn: "",
@@ -189,32 +191,34 @@
         	,{value: "사용", code: "Y"}
         	,{value: "미사용", code: "N"}
         ],
-        param: {
-					menuId: this.mnuId
-				  , searchMenuId: this.searchMenuId
-      		      , searchUseYn: this.searchUseYn
-      		      , pageSize: pagination.common.pageSize
-      		      , curPage: pagination.common.curPage
-          	  	},
+        param: {},
         selectVal: "10"
       },
       computed: {
       },
+      mounted() {
+      	this.param.menuId = this.mnuId;
+		this.param.searchMenuId = this.searchMenuId;
+	    this.param.searchUseYn = this.searchUseYn;
+	    this.param.pageSize = pagination.common.pageSize;
+	    this.param.curPage = pagination.common.curPage;
+      },
       methods: {
-    	//  조회 버튼
+    		//  조회 버튼
 	    	selectList: function() {
 	    		pagination.common.curPage = 1;   // mariadb = 0, mssql = 1
+	    		this.param.curPage = pagination.common.curPage;
 	    		this.getSearch();
 	    	},
 	        getSearch: function() {
-	        	this.menuList.splice(1,1);
+//	        	this.menuList.splice(1,1);
 	        	this.menuList = [];
-	          	console.log("111111111 > " + this.searchMenuId);
-				axios.post('/comm/menuList', this.param, {
+	          	console.log("111111111 > " + this.param);
+				axios.post('/comm/selectMenuList', this.param, {
 					headers: { "Content-Type": "application/json"}
 		            }).then((res) => { 
 		            	$(".odd").html("");
-		                this.menuList = res.data; 
+		                this.menuList = res.data.result; 
 		                console.log("222222 > " + this.menuList+" : "+this.checkVal);
 		                if(this.menuList.length > 0){
 			                pagination.common.totalCount = this.menuList[0].totCnt;
@@ -233,7 +237,7 @@
 	        	console.log("111111111 > " + this.menuList.length + " : " +this.checkVal);
 	
 	        	this.menuList.push(
-	        			{ menuSeq: "", menuId: "", menuNm: "", useYn: "", menuLvl1: "", menuLvl2: "", menuLvl3: "", updId: "", updDtm: "", rowStatus: "C" }	
+	        			{ menuSeq: "", menuId: "", menuNm: "", useYn: "", menuLvl1: "", menuLvl2: "", menuLvl3: "", updId: "", updDtm: "", rowStatus: "C" }
 	        	)
 	        },
 	        deleteRow: function() {
@@ -245,12 +249,15 @@
 	       		}
 	        },
 	        setSave: function() {
-	        	if(this.checkVal.length === 0) alert("저장할 대상을 선택해주세요.");
+	        	if(this.checkVal.length === 0) {alert("저장할 대상을 선택해주세요."); return false;}
 	        	//this.menuList = [];
-	          	//console.log("111111111 > " + this.menuList.length + " : " +this.menuList.filter(menuList => menuList.rowStatus === "C") + " : " +this.checkVal);
-	          	const data = this.menuList.filter(menuList => menuList.rowStatus === "C" || menuList.rowStatus === "U");
+	          	console.log("111111111 > " + this.menuList.length + " : " +this.menuList.filter(menu => menu.rowStatus === "C") + " : " +this.checkVal);
+	          	const data = {
+	          			list : this.menuList.filter(menu => menu.rowStatus === "C" || menu.rowStatus === "U")
+	          		  , menuId : this.mnuId
+	          	}
 	          	console.log(data);
-				axios.post("/menu/menuSave", data, {
+				axios.post("/comm/saveMenu", data, {
 					headers: { "Content-Type": "application/json"}
 		        }).then((res) => { 
 		                console.log("222222 > " + res);
@@ -273,7 +280,9 @@
            		if(changeVal[idx].rowStatus != "C" 
            				&& frtVal[idx].menuSeq === changeVal[idx].menuSeq){
            			//console.log(idx+" : "+frtVal[idx].menuNm+" : "+changeVal[idx].menuNm+" : "+frtVal[idx].menuSeq === changeVal[idx].menuSeq);
-           			if(frtVal[idx].menuId != changeVal[idx].menuId){
+           			if(frtVal[idx].compId != changeVal[idx].compId){
+           				this.menuList[idx].rowStatus = "U";
+	            	}else if(frtVal[idx].menuId != changeVal[idx].menuId){
            				this.menuList[idx].rowStatus = "U";
 	            	}else if(frtVal[idx].menuNm != changeVal[idx].menuNm){
            				this.menuList[idx].rowStatus = "U";

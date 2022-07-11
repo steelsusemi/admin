@@ -20,20 +20,19 @@ public class Menu001ServiceImpl implements Menu001Service {
 
 	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public List<Map> menuList(Map param) throws Exception {
-		return menu001Dao.menuList(param);
+	public List<Map> selectMenuList(Map param) throws Exception {
+		return menu001Dao.selectMenuList(param);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public int menuSave(List<Map> paramList) throws Exception {
+	public int saveMenu(List<Map> paramList) throws Exception {
 		int rtnCnt = 0;
-		
+		log.info("paramList >> "+paramList);
 		for(Map param : paramList) {
-			
 			int saveCnt = "U".equals(param.get("rowStatus")) ? (int) param.get("menuSeq") : menu001Dao.selectMenuSeq();
 			param.put("menuSeq", saveCnt);
-			rtnCnt += menu001Dao.menuSave(param);
+			rtnCnt += menu001Dao.saveMenu(param);
 		}
 		
 		return rtnCnt;

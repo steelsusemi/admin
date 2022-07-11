@@ -98,9 +98,9 @@ public class LoginController {
         return "user/login";
     }
 
-    @GetMapping("/error")
+    @GetMapping("/access-denied")
     public String accessDenied() {
-        return "error/page_500";
+        return "error/access-denied";
     }
     
     @GetMapping("/board")

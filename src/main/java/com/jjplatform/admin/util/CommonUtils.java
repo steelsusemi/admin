@@ -33,10 +33,10 @@ public class CommonUtils {
 	public static String getUserId() {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession sessInfo = request.getSession();
-		log.info("aaaaaaaaaaaaaaa >> " + sessInfo.getAttribute("userInfo"));
+//		log.info("aaaaaaaaaaaaaaa >> " + sessInfo.getAttribute("userInfo"));
 		UserVo userVo = new UserVo();
 		userVo = (UserVo) sessInfo.getAttribute("userInfo");
-		log.info("1111111111111 >> " + userVo+" : "+userVo.getUserId());
+		log.info("1111111111111 >> " + userVo);
 		return userVo.getUserId();
 	}
 	

@@ -6,7 +6,7 @@ import java.util.Map;
 @SuppressWarnings("rawtypes")
 public interface Menu001Service {
 	
-	public List<Map> menuList(Map param) throws Exception;
+	public List<Map> selectMenuList(Map param) throws Exception;
 
-	public int menuSave(List<Map> paramList) throws Exception;
+	public int saveMenu(List<Map> paramList) throws Exception;
 }

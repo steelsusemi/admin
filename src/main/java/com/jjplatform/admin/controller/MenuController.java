@@ -30,7 +30,7 @@ public class MenuController {
     	List<Map> resultList = new ArrayList();
     	log.info("111111111111111111 >> " + resultList);
 		try {
-			resultList = menu001Service.menuList(param);
+			resultList = menu001Service.selectMenuList(param);
 	    	log.info("resultList >> " + resultList);
 //		} catch (InvocationTargetException e) {
 //		    // Answer:
@@ -53,7 +53,7 @@ public class MenuController {
 	//   			Method method = svcClass.getMethod("svcList", new Class[] {Map.class});
 	//   	    	log.info("path >> " +m1 + " : "+ param + " : "+ svcClass+ " : "+ svcInstance+ " : "+ method);
 	//   	    	resultList = (List<Map>) method.invoke(svcInstance, param);
-	   			int svcSave = menu001Service.menuSave(paramList);
+	   			int svcSave = menu001Service.saveMenu(paramList);
 	//   		} catch (InvocationTargetException e) {
 	//   		    // Answer:
 	//   		    e.getCause().printStackTrace();
