@@ -1,8 +1,10 @@
+-- jjplatform.dbo.LOGGING_INFO definition
+
 -- Drop table
 
--- DROP TABLE jjplatform.dbo.LOG_INFO;
+-- DROP TABLE jjplatform.dbo.LOGGING_INFO;
 
-CREATE TABLE jjplatform.dbo.LOG_INFO (
+CREATE TABLE jjplatform.dbo.LOGGING_INFO (
 	SEQ numeric(38,0) IDENTITY(0,1) NOT NULL,
 	LOG_CODE varchar(10) COLLATE Korean_Wansung_CI_AS NOT NULL,
 	LOG_MESS text COLLATE Korean_Wansung_CI_AS NOT NULL,
@@ -17,18 +19,16 @@ CREATE TABLE jjplatform.dbo.LOG_INFO (
 
 -- Extended properties
 
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'�α����� ���̺�', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'����', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'SEQ';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'�α��ڵ�', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'LOG_CODE';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'�α׸޼���', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'LOG_MESS';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'��Ͼ��̵�', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'REG_ID';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'����Ͻ�', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'REG_DTM';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'��Ͼ�����', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'REG_IP';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'�����Ͻ�', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'STRT_DT';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'�����Ͻ�', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'END_DT';
-EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'����Ŭ����', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOG_INFO', @level2type=N'Column', @level2name=N'LOG_CLASS';
-
-
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'로그정보 테이블', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOGGING_INFO';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'순번', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOGGING_INFO', @level2type=N'Column', @level2name=N'SEQ';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'로그코드', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOGGING_INFO', @level2type=N'Column', @level2name=N'LOG_CODE';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'로그메세지', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOGGING_INFO', @level2type=N'Column', @level2name=N'LOG_MESS';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'등록아이디', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOGGING_INFO', @level2type=N'Column', @level2name=N'REG_ID';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'등록일시', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOGGING_INFO', @level2type=N'Column', @level2name=N'REG_DTM';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'등록아이피', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOGGING_INFO', @level2type=N'Column', @level2name=N'REG_IP';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'시작일시', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOGGING_INFO', @level2type=N'Column', @level2name=N'STRT_DT';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'종료일시', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOGGING_INFO', @level2type=N'Column', @level2name=N'END_DT';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'에러클래스', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'LOGGING_INFO', @level2type=N'Column', @level2name=N'LOG_CLASS';
 
 
 -- Drop table
@@ -92,6 +92,8 @@ EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'패
 EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'서비스순번', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'SVC_MANAGE', @level2type=N'Column', @level2name=N'SVC_SEQ';
 
 
+-- jjplatform.dbo.MENU_MANAGE definition
+
 -- Drop table
 
 -- DROP TABLE jjplatform.dbo.MENU_MANAGE;
@@ -107,8 +109,10 @@ CREATE TABLE jjplatform.dbo.MENU_MANAGE (
 	UPD_DTM datetime NULL,
 	MENU_LVL2 varchar(1) COLLATE Korean_Wansung_CI_AS NULL,
 	MENU_LVL3 varchar(1) COLLATE Korean_Wansung_CI_AS NULL,
-	MENU_SEQ numeric(38,0) NULL,
-	CONSTRAINT MENU_MANAGE_PK PRIMARY KEY (MENU_ID)
+	MENU_SEQ numeric(38,0) NOT NULL,
+	UPPR_MENU_ID varchar(100) COLLATE Korean_Wansung_CI_AS NULL,
+	COMP_ID varchar(5) COLLATE Korean_Wansung_CI_AS NOT NULL,
+	CONSTRAINT MENU_MANAGE_PK PRIMARY KEY (MENU_SEQ,MENU_ID,COMP_ID)
 );
 
 -- Extended properties
@@ -121,5 +125,8 @@ EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'등
 EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'등록일시', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'MENU_MANAGE', @level2type=N'Column', @level2name=N'REG_DTM';
 EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'수정자', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'MENU_MANAGE', @level2type=N'Column', @level2name=N'UPD_ID';
 EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'수정일시', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'MENU_MANAGE', @level2type=N'Column', @level2name=N'UPD_DTM';
-
-
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'메뉴레벨2', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'MENU_MANAGE', @level2type=N'Column', @level2name=N'MENU_LVL2';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'메뉴레벨3', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'MENU_MANAGE', @level2type=N'Column', @level2name=N'MENU_LVL3';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'메뉴순번', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'MENU_MANAGE', @level2type=N'Column', @level2name=N'MENU_SEQ';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'상위메뉴', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'MENU_MANAGE', @level2type=N'Column', @level2name=N'UPPR_MENU_ID';
+EXEC jjplatform.sys.sp_addextendedproperty @name=N'MS_Description', @value=N'소속회사', @level0type=N'Schema', @level0name=N'dbo', @level1type=N'Table', @level1name=N'MENU_MANAGE', @level2type=N'Column', @level2name=N'COMP_ID';
