@@ -67,11 +67,12 @@
 			         </if>
 			         <if test="useYn != null and useYn != ''">
 			          AND USE_YN = #{useYn})
+			          
 			         </if>
 		         </where>
-        	 ORDER BY SVC_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY
+        	 <!-- ORDER BY SVC_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY -->
 		   ) A
-		   <!-- ORDER BY A.SVC_SEQ ASC limit #{curPage}, #{pageSize} -->
+		   ORDER BY A.SVC_SEQ ASC limit #{curPage}, #{pageSize}
     </select>
     
     <!-- 순번 조회 -->

@@ -16,26 +16,45 @@
 	    overflow-y: auto;
 	    overflow-x: hidden;
 	}
-	tbody td, thead th {
-	    width: 200px;
+	thead th {
+		width: 5%;
+	    vertical-align: middle;
+    	text-align: center;
 	}
-	.th_small {
-		width: 50px;
+	tbody td {
+		width: 5%;
+	    vertical-align: middle;
+    	text-align: center;
 	}
-	.th_middle {
-		width: 100px;
+	/* .th_small {
+		width: 3%;
+	}
+	.th_middle{
+		width: 6%;
 	}
 	.th_large {
-		width: 300px;
+		width: 10%;
 	}
 	.td_small {
-		width: 50px;
+		width: 2%;
 	}
-	.td_middle {
-		width: 100px;
+	.td_middle{
+		width: 6%;
 	}
 	.td_large {
-		width: 300px;
+		width: 10%;
+	} */
+	.center_aling {
+		vertical-align: middle;
+    	text-align: center;
+	}
+	.left_aling {
+		vertical-align: middle;
+    	text-align: left;
+	}
+	.right_aling {
+		vertical-align: middle;
+    	text-align: right;
 	}
   </style>
 </head>
@@ -120,13 +139,13 @@
                       </thead>
                       <tbody>
                         <tr v-for="(row, index) in menuList">
-                          <td class="td_small" style="vertical-align: middle;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
+                          <td class="td_small">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
                           <td class="td_small" style="vertical-align: middle;"><input type="checkbox" id="check" v-model="checkVal[index]" true-value="Y" false-value="N"></td>
-                      	  <td class="td_small" style="vertical-align: middle;">{{ index }}</td>
-                      	  <td class="td_large"><input type="text" id="compId" v-model="row.compId" class="form-control" @blur="watch(index)"/></td>
-                          <td class="td_large"><input type="text" id="menuId" v-model="row.menuId" class="form-control" @blur="watch(index)"/></td>
-                          <td class="td_large" style="text-align: left;"><input type="text" id="menuNm" v-model="row.menuNm" class="form-control" @blur="watch(index)"/></td>
-                          <td class="td_large"><input type="text" id="upprMenuId" v-model="row.upprMenuId" class="form-control" @blur="watch(index)"/></td>
+                      	  <td class="td_small" style="vertical-align: middle;">{{ index + 1 }}</td>
+                      	  <td class="td_large"><input type="text" id="compId" v-model="row.compId" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large"><input type="text" id="menuId" v-model="row.menuId" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large left_aling"><input type="text" id="menuNm" v-model="row.menuNm" class="form-control" @blur="watch(index)"/></td>
+                          <td class="td_large"><input type="text" id="upprMenuId" v-model="row.upprMenuId" class="form-control center_aling" @blur="watch(index)"/></td>
                           <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="useYn" v-model="row.useYn"  @change="watch(index)" true-value="Y" false-value="N"/></td>
                           <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl1" v-model="row.menuLvl1"  @change="watch(index)" true-value="Y" false-value="N"/></td>
                           <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl2" v-model="row.menuLvl2"  @change="watch(index)" true-value="Y" false-value="N"/></td>
@@ -206,7 +225,7 @@
       methods: {
     		//  조회 버튼
 	    	selectList: function() {
-	    		pagination.common.curPage = 1;   // mariadb = 0, mssql = 1
+	    		pagination.common.curPage = 0;   // mariadb = 0, mssql = 1
 	    		this.param.curPage = pagination.common.curPage;
 	    		this.getSearch();
 	    	},

@@ -1,0 +1,101 @@
+-- jjp.LOGGING_INFO definition
+CREATE TABLE `logging_info` (
+  COMP_ID varchar(5) NOT NULL		 COMMENT '소속회사',
+  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '순번', 			
+  `LOG_CODE` varchar(10) NOT null		COMMENT '로그코드', 	
+  `LOG_MESS` text NOT null				COMMENT '로그메세지',	
+  `LOG_CLASS` varchar(1000) NOT null	COMMENT '에러클래스',
+  `END_DT` varchar(100) NOT null		COMMENT '종료일시', 	  
+  `REG_ID` varchar(10) DEFAULT null		COMMENT '등록아이디',	
+  `REG_DTM` date DEFAULT null			COMMENT '등록일시', 	
+  `REG_IP` varchar(100) DEFAULT null	COMMENT '등록아이피',	
+  `STRT_DT` varchar(100) NOT null		COMMENT '시작일시', 	
+  PRIMARY KEY (`SEQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='로그정보';
+
+
+-- jjp.logging_event definition
+CREATE TABLE `logging_event` (
+   COMP_ID varchar(5) NOT NULL		 COMMENT '소속회사',
+  `EVENT_ID` bigint(20) NOT NULL,
+  `TIMESTMP` bigint(20) NOT NULL,
+  `FORMATTED_MESSAGE` text NOT NULL,
+  `LOGGER_NAME` varchar(254) NOT NULL,
+  `LEVEL_STRING` varchar(254) NOT NULL,
+  `THREAD_NAME` varchar(254) DEFAULT NULL,
+  `REFERENCE_FLAG` smallint(6) DEFAULT NULL,
+  `ARG0` varchar(254) DEFAULT NULL,
+  `ARG1` varchar(254) DEFAULT NULL,
+  `ARG2` varchar(254) DEFAULT NULL,
+  `ARG3` varchar(254) DEFAULT NULL,
+  `CALLER_FILENAME` varchar(254) NOT NULL,
+  `CALLER_CLASS` varchar(254) NOT NULL,
+  `CALLER_METHOD` varchar(254) NOT NULL,
+  `CALLER_LINE` char(4) NOT NULL,  
+  PRIMARY KEY (COMP_ID,`EVENT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='로그이벤트';
+
+
+
+
+-- jjp.SVC_MANAGE definition
+CREATE TABLE SVC_MANAGE (
+	COMP_ID varchar(5) NOT NULL		 COMMENT '소속회사',
+	SVC_SEQ numeric(38,0) NOT NULL	 COMMENT '서비스순번',
+	SVC_ID varchar(100) NOT NULL	 COMMENT '서비스ID', 
+	SVC_NM varchar(200) NULL		 COMMENT '서비스명',
+    PAK_PATH varchar(200) NULL		 COMMENT '패키지명', 	
+	USE_YN varchar(1) NULL			 COMMENT '사용여부', 
+	SVC_DAO varchar(100) NULL		 COMMENT '서비스DAO',
+	SVC_XML varchar(100) NULL		 COMMENT '서비스XML',
+	REG_ID varchar(100) NULL		 COMMENT '등록자', 
+	REG_DTM date NULL				 COMMENT '등록일시', 
+	UPD_ID varchar(100) NULL		 COMMENT '수정자', 
+	UPD_DTM date NULL				 COMMENT '수정일시', 
+	PRIMARY KEY (COMP_ID,SVC_SEQ)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='서비스등록관리';
+
+
+-- jjp.MENU_MANAGE definition
+CREATE TABLE jjp.MENU_MANAGE (
+	COMP_ID varchar(5) NOT NULL				COMMENT '소속회사',
+	UPPR_MENU_ID varchar(100) NULL			COMMENT '상위메뉴',	
+	MENU_ID varchar(100) NOT NULL			COMMENT '메뉴ID', 
+	MENU_NM varchar(200) NULL				COMMENT '메뉴명', 
+	USE_YN varchar(1) NULL					COMMENT '사용여부', 
+	MENU_LVL1 varchar(1) NULL				COMMENT '메뉴레벨1',
+	REG_ID varchar(100) NULL				COMMENT '등록자', 
+	REG_DTM date NULL		 				COMMENT '등록일시', 
+	UPD_ID varchar(100) NULL				COMMENT '수정자', 
+	UPD_DTM date NULL						COMMENT '수정일시', 
+	MENU_LVL2 varchar(1) NULL				COMMENT '메뉴레벨2',
+	MENU_LVL3 varchar(1) NULL				COMMENT '메뉴레벨3',
+	MENU_SEQ numeric(38,0) NOT NULL			COMMENT '메뉴순번', 
+	PRIMARY KEY (COMP_ID,MENU_SEQ,MENU_ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='메뉴등록관리';
+
+
+-- jjp.USER_INFO definition
+CREATE TABLE jjp.USER_INFO (
+	COMP_ID varchar(5) NOT NULL		COMMENT '소속회사',
+	USER_ID varchar(100) NOT NULL	COMMENT '사용자ID', 	
+	USER_PASS varchar(500) NOT NULL	COMMENT '패스워드', 	
+	TEL_NO varchar(12) NOT NULL		COMMENT '전화번호', 	
+	EMAIL varchar(200) NOT NULL		COMMENT '이메일', 	
+	REG_ID varchar(100) NULL		COMMENT '등록자', 	
+	REG_DTM date NULL				COMMENT '등록시간', 	
+	REG_IP varchar(20) NULL			COMMENT '등록IP', 	
+	UPD_ID varchar(100) NULL		COMMENT '수정자ID', 	
+	UPD_DTM date NULL				COMMENT '수정일', 	
+	UPD_IP varchar(20) NULL			COMMENT '수정IP', 		
+	PRIMARY KEY (COMP_ID,USER_ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='사용자정보';
+
+
+-- jjp.USER_ROLE definition
+CREATE TABLE jjp.USER_ROLE (
+	COMP_ID varchar(5) NOT NULL		COMMENT '소속회사',
+	USER_ID varchar(100) NOT NULL   COMMENT '사용자ID',
+	USER_ROLE varchar(100) NULL     COMMENT '사용자권한',
+	PRIMARY KEY (COMP_ID,USER_ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='사용자권한';

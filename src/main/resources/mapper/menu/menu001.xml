@@ -16,6 +16,7 @@
 			 , A.MENU_LVL1
 	       	 , A.MENU_LVL2
 	       	 , A.MENU_LVL3
+	       	 , A.MENU_AUTH
 			 , A.REG_ID
 			 , A.REG_DTM
 			 , A.UPD_ID
@@ -33,12 +34,11 @@
 			       	, CASE WHEN MENU_LVL1 IS NULL OR MENU_LVL1 != 'Y' THEN 'N' ELSE MENU_LVL1 END AS MENU_LVL1
 			       	, CASE WHEN MENU_LVL2 IS NULL OR MENU_LVL2 != 'Y' THEN 'N' ELSE MENU_LVL2 END AS MENU_LVL2
 			       	, CASE WHEN MENU_LVL3 IS NULL OR MENU_LVL3 != 'Y' THEN 'N' ELSE MENU_LVL3 END AS MENU_LVL3
+			       	, MENU_AUTH
 			       	, REG_ID
-			       	, CONVERT(VARCHAR, REG_DTM, 120) AS REG_DTM
-			       <!-- 	, DATE_FORMAT(REG_DTM, '%Y-%m-%d %T.%s') AS REG_DTM -->
+			        , DATE_FORMAT(REG_DTM, '%Y-%m-%d %T') AS REG_DTM
 			       	, UPD_ID
-			       	, CONVERT(VARCHAR, UPD_DTM, 120) AS UPD_DTM
-			       	<!-- , DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T.%s') AS UPD_DTM -->
+			       	, DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T') AS UPD_DTM
 			       	, 'R' AS ROW_STATUS
 		         FROM MENU_MANAGE
 		         <where>
@@ -49,9 +49,9 @@
 			          AND USE_YN = #{searchUseYn}
 			         </if>
 		         </where>
-        	 ORDER BY COMP_ID, MENU_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY
+        	 <!-- ORDER BY COMP_ID, MENU_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY -->
 		   ) A
-		   ORDER BY A.COMP_ID, A.MENU_SEQ
+		   ORDER BY A.COMP_ID, A.MENU_SEQ LIMIT #{curPage}, #{pageSize}
     </select>
     
     <!-- 순번 조회 -->
