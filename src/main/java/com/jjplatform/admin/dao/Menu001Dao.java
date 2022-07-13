@@ -25,7 +25,7 @@ public class Menu001Dao extends CommonMapper {
 		return insert(NAME_SPACE + "saveMenu", param);
 	}
 
-	public int selectMenuSeq() {
-		return (int) selectOne(NAME_SPACE + "selectMenuSeq", "");
+	public int selectMenuSeq(Map param) {
+		return (int) selectOne(NAME_SPACE + "selectMenuSeq", param);
 	}
 }

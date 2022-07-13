@@ -2,30 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="svc001Dao">
-	<sql id="createColSql">
-		, REG_ID
-       	, REG_DTM
-       	, UPD_ID
-       	, UPD_DTM 
-	</sql>
-	
-	<sql id="createParamSql">
-		, '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
-    	, getDate()
-    	, '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
-    	, getDate()
-    	<!-- , '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
-    	, NOW()
-    	, '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
-    	, NOW() -->
-	</sql>
-	
-	<sql id="updateParamSql">
-		, UPD_ID = '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
-    	, UPD_DTM = getDate()
-    	<!-- , UPD_ID = '${@com.jjplatform.admin.util.CommonUtils@getUserId()}'
-    	, UPD_DTM = NOW() -->
-	</sql>
 
 	<!-- 서비스조회 -->
     <select id="svcList" parameterType="map" resultType="LowerCamelHashMap">
@@ -102,7 +78,7 @@
 	    	       , USE_YN = #{useYn}
 	    	       , SVC_DAO = #{svcDao}
 	    	       , SVC_XML = #{svcXml} 
-	    	       <include refid="svc001Dao.updateParamSql"/>
+	    	       <include refid="commonDao.updateParamSql"/>
 	    WHEN NOT MATCHED THEN
 	    	 INSERT 
 	    	 (     SVC_SEQ
@@ -112,7 +88,7 @@
 	    	 	 , USE_YN
 	    	 	 , SVC_DAO
 	    	 	 , SVC_XML
-	    	 	 <include refid="svc001Dao.createColSql"/>
+	    	 	 <include refid="commonDao.createColSql"/>
 	    	 ) 
 	    	 VALUES 
 	    	 (	   A.SVC_SEQ
@@ -122,7 +98,7 @@
 	    	 	 , #{useYn}
 	    	 	 , #{svcDao}
 	    	 	 , #{svcXml}
-	    	 	 <include refid="svc001Dao.createParamSql"/>
+	    	 	 <include refid="commonDao.createParamSql"/>
 	    	 )
 	    	 <!-- </foreach> -->
 	    	 ;

@@ -5,148 +5,117 @@
 	<!-- 메뉴조회 -->
     <select id="selectMenuList" parameterType="map" resultType="LowerCamelHashMap">
     	/* menu001Dao.selectMenuList: 메뉴 조회 */
-    	SELECT A.TOT_CNT
-			 <!-- , A.RNUM -->
-			 , A.COMP_ID
-			 , A.UPPR_MENU_ID
-			 , A.MENU_SEQ
-			 , A.MENU_ID
-			 , A.MENU_NM
-			 , A.USE_YN
-			 , A.MENU_LVL1
-	       	 , A.MENU_LVL2
-	       	 , A.MENU_LVL3
-	       	 , A.MENU_AUTH
-			 , A.REG_ID
-			 , A.REG_DTM
-			 , A.UPD_ID
-			 , A.UPD_DTM
-			 , A.ROW_STATUS
-		  FROM (
-		       SELECT COUNT(*) OVER() AS TOT_CNT
-			 		, ROW_NUMBER() OVER(ORDER BY MENU_SEQ ASC) AS RNUM
-			 		, COMP_ID
-			 		, UPPR_MENU_ID
-			       	, MENU_SEQ
-			       	, MENU_ID
-			       	, MENU_NM
-			       	, CASE WHEN USE_YN != 'Y' THEN 'N' ELSE USE_YN END AS USE_YN
-			       	, CASE WHEN MENU_LVL1 IS NULL OR MENU_LVL1 != 'Y' THEN 'N' ELSE MENU_LVL1 END AS MENU_LVL1
-			       	, CASE WHEN MENU_LVL2 IS NULL OR MENU_LVL2 != 'Y' THEN 'N' ELSE MENU_LVL2 END AS MENU_LVL2
-			       	, CASE WHEN MENU_LVL3 IS NULL OR MENU_LVL3 != 'Y' THEN 'N' ELSE MENU_LVL3 END AS MENU_LVL3
-			       	, MENU_AUTH
-			       	, REG_ID
-			        , DATE_FORMAT(REG_DTM, '%Y-%m-%d %T') AS REG_DTM
-			       	, UPD_ID
-			       	, DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T') AS UPD_DTM
-			       	, 'R' AS ROW_STATUS
-		         FROM MENU_MANAGE
-		         <where>
-			       	 <if test="searchMenuId != null and searchMenuId != ''">
-			          AND (MENU_ID = #{searchMenuId} OR MENU_NM LIKE CONCAT('%',#{searchMenuId}, '%'))
-			         </if>
-			         <if test="searchUseYn != null and searchUseYn != ''">
-			          AND USE_YN = #{searchUseYn}
-			         </if>
-		         </where>
-        	 <!-- ORDER BY COMP_ID, MENU_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY -->
-		   ) A
-		   ORDER BY A.COMP_ID, A.MENU_SEQ LIMIT #{curPage}, #{pageSize}
+    	WITH RECURSIVE CTE AS (
+			SELECT COMP_ID
+		 		 , UPPR_MENU_ID
+		       	 , MENU_SEQ
+		       	 , MENU_ID
+		       	 , MENU_NM
+		       	 , CASE WHEN USE_YN != 'Y' THEN 'N' ELSE USE_YN END AS USE_YN
+		       	 , CASE WHEN MENU_LVL1 IS NULL OR MENU_LVL1 != 'Y' THEN 'N' ELSE MENU_LVL1 END AS MENU_LVL1
+		       	 , CASE WHEN MENU_LVL2 IS NULL OR MENU_LVL2 != 'Y' THEN 'N' ELSE MENU_LVL2 END AS MENU_LVL2
+		       	 , CASE WHEN MENU_LVL3 IS NULL OR MENU_LVL3 != 'Y' THEN 'N' ELSE MENU_LVL3 END AS MENU_LVL3
+		       	 , MENU_AUTH
+		       	 , REG_ID
+		         , DATE_FORMAT(REG_DTM, '%Y-%m-%d %T') AS REG_DTM
+		       	 , UPD_ID
+		       	 , DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T') AS UPD_DTM
+		       	 , 'R' AS ROW_STATUS
+		       	 , CAST(MENU_SEQ AS CHAR) AS LVL_SEQ
+		      FROM MENU_MANAGE
+		     WHERE IFNULL(UPPR_MENU_ID, '') = ''
+		       AND COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+		     UNION ALL
+		    SELECT A.COMP_ID
+		 		 , A.UPPR_MENU_ID
+		       	 , A.MENU_SEQ
+		       	 , A.MENU_ID
+		       	 , A.MENU_NM
+		       	 , CASE WHEN A.USE_YN != 'Y' THEN 'N' ELSE A.USE_YN END AS USE_YN
+		       	 , CASE WHEN A.MENU_LVL1 IS NULL OR A.MENU_LVL1 != 'Y' THEN 'N' ELSE A.MENU_LVL1 END AS MENU_LVL1
+		       	 , CASE WHEN A.MENU_LVL2 IS NULL OR A.MENU_LVL2 != 'Y' THEN 'N' ELSE A.MENU_LVL2 END AS MENU_LVL2
+		       	 , CASE WHEN A.MENU_LVL3 IS NULL OR A.MENU_LVL3 != 'Y' THEN 'N' ELSE A.MENU_LVL3 END AS MENU_LVL3
+		       	 , A.MENU_AUTH
+		       	 , A.REG_ID
+		         , DATE_FORMAT(A.REG_DTM, '%Y-%m-%d %T') AS REG_DTM
+		       	 , A.UPD_ID
+		       	 , DATE_FORMAT(A.UPD_DTM, '%Y-%m-%d %T') AS UPD_DTM
+		       	 , 'R' AS ROW_STATUS
+		       	 , CONCAT(CAST(B.MENU_SEQ AS CHAR),'_',CAST(A.MENU_SEQ AS CHAR)) AS LVL_SEQ
+		      FROM MENU_MANAGE A
+		     INNER JOIN CTE B ON A.COMP_ID = B.COMP_ID AND A.UPPR_MENU_ID = B.MENU_ID
+		     WHERE A.COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+		       AND IFNULL(A.UPPR_MENU_ID, '') != ''
+		)
+		SELECT *
+		     , COUNT(*) OVER() AS TOT_CNT
+		 	 <!-- , ROW_NUMBER() OVER(ORDER BY MENU_SEQ ASC) AS RNUM -->
+		  FROM CTE
+		 <where>
+		   AND COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+	       <if test="searchMenuId != null and searchMenuId != ''">
+	       AND (MENU_ID = #{searchMenuId} OR MENU_NM LIKE CONCAT('%',#{searchMenuId}, '%'))
+	       </if>
+	       <if test="searchUseYn != null and searchUseYn != ''">
+	       AND USE_YN = #{searchUseYn}
+	       </if>
+         </where>
+         ORDER BY COMP_ID, LVL_SEQ LIMIT #{curPage}, #{pageSize}
     </select>
     
     <!-- 순번 조회 -->
-    <select id="selectMenuSeq" resultType="int">
+    <select id="selectMenuSeq"  parameterType="map" resultType="int">
     	/* menu001Dao.selectMenuSeq: 순번 조회 */
-    	<!-- SELECT IFNULL(MAX(MENU_SEQ), 0) + 1 
-	      FROM MENU_MANAGE  ALIAS_FOR_SUBQUERY -->
-    	SELECT ISNULL(MAX(MENU_SEQ), 0) + 1 
-	      FROM MENU_MANAGE
+    	SELECT IFNULL(MAX(MENU_SEQ), 0) + 1 
+	      FROM MENU_MANAGE  ALIAS_FOR_SUBQUERY
+	     WHERE COMP_ID = #{compId}
+	       AND UPPR_MENU_ID = #{upprMenuId}
     </select>
     
     <!-- 메뉴등록 -->
     <insert id="saveMenu" parameterType="map">
     	/* menu001Dao.saveMenu: 메뉴등록*/
-    	<!-- <foreach collection="list" item="item" separator=";">    -->
-    	MERGE 
-    	 INTO MENU_MANAGE AS A1
-	    USING (
-	    		 SELECT #{compId} AS COMP_ID
-	    		      , #{upprMenuId} AS UPPR_MENU_ID
-	    		      , #{menuSeq} AS MENU_SEQ
-	    	  ) AS A
-	       ON A1.MENU_SEQ = A.MENU_SEQ
-	     WHEN MATCHED THEN
-	    	  UPDATE 
-	    	     SET MENU_ID = #{menuId}
-	    	       , UPPR_MENU_ID = A.UPPR_MENU_ID
-	    	       , MENU_NM = #{menuNm}
-	    	       , USE_YN = #{useYn}
-	    	       , MENU_LVL1 = #{menuLvl1}
-	    	       , MENU_LVL2 = #{menuLvl2} 
-	    	       , MENU_LVL3 = #{menuLvl3} 
-	    	       <include refid="svc001Dao.updateParamSql"/>
-	    WHEN NOT MATCHED THEN
-	    	 INSERT 
-	    	 (     COMP_ID
-			 	 , UPPR_MENU_ID
-	    	 	 , MENU_SEQ
-	    	   	 , MENU_ID
-	    	 	 , MENU_NM
-	    	 	 , USE_YN
-	    	 	 , MENU_LVL1
-	       	  	 , MENU_LVL2
-	       	  	 , MENU_LVL3
-	    	 	 <include refid="svc001Dao.createColSql"/>
+    	<foreach collection="list" item="item" separator=";">
+		     INSERT 
+		       INTO MENU_MANAGE
+	    	 (      COMP_ID
+	    	      , UPPR_MENU_ID
+	    	      , MENU_SEQ
+	    	   	  , MENU_ID
+	    	 	  , MENU_NM
+	    	 	  , PAK_PATH
+	    	 	  , USE_YN
+	    	 	  , MENU_Lvl1
+		       	  , MENU_Lvl2
+		       	  , MENU_Lvl3
+	    	 	  <include refid="commonDao.createColSql"/>
 	    	 ) 
 	    	 VALUES 
-	    	 (	   A.COMP_ID
-	    	     , A.UPPR_MENU_ID
-	    	     , A.MENU_SEQ
-	    	 	 , #{menuId}
-	    	 	 , #{menuNm}
-	    	 	 , #{useYn}
-	    	 	 , #{menuLvl1}
-	    	 	 , #{menuLvl2}
-	    	 	 , #{menuLvl3}
-	    	 	 <include refid="svc001Dao.createParamSql"/>
+	    	 <foreach collection="list" item="item" separator=",">   
+	    	 (    	#{compId}
+	    		  , #{upprMenuId} 
+	    	 	  , #{menuSeq}
+	    	 	  , #{menuId}
+	    	 	  , #{menuNm}
+	    	 	  , #{pakPath}
+	    	 	  , #{useYn}
+	    	 	  , #{menuLvl1}
+	    	 	  , #{menuLvl2}
+	    	 	  , #{menuLvl3}
+	    	 	  <include refid="commonDao.createParamSql"/>
 	    	 )
-	    	 ;
-	     <!-- INSERT 
-	       INTO MENU_MANAGE
-    	 (      MENU_SEQ
-    	   	  , MENU_ID
-    	 	  , MENU_NM
-    	 	  , PAK_PATH
-    	 	  , USE_YN
-    	 	  , MENU_Lvl1
-	       	  , MENU_Lvl2
-	       	  , MENU_Lvl3
-    	 	  <include refid="svc001Dao.createColSql"/>
-    	 ) 
-    	 VALUES 
-    	 <foreach collection="list" item="item" separator=",">   
-    	 (    	 
-    	 	    CASE WHEN IFNULL(#{menuSeq}, '') = '' THEN #{menuSeq} ELSE #{menuSeq} END
-    	 	  , #{menuId}
-    	 	  , #{menuNm}
-    	 	  , #{pakPath}
-    	 	  , #{useYn}
-    	 	  , #{menuLvl1}
-    	 	  , #{menuLvl2}
-    	 	  , #{menuLvl3}
-    	 	  <include refid="svc001Dao.createParamSql"/>
-    	 )
+	    	 </foreach>
+	    	 ON DUPLICATE KEY UPDATE  
+	    	         COMP_ID = VALUES(COMP_ID)
+	    	       , MENU_ID = VALUES(MENU_ID)
+	    	       , MENU_NM = VALUES(MENU_NM)
+	    	       , PAK_PATH = VALUES(PAK_PATH)
+	    	       , USE_YN = VALUES(USE_YN)
+	    	       , MENU_Lvl1 = VALUES(MENU_Lvl1)
+		       	   , MENU_Lvl2 = VALUES(MENU_Lvl2)
+		       	   , MENU_Lvl3 = VALUES(MENU_Lvl3)
+	    	       <include refid="commonDao.updateParamSql"/>
     	 </foreach>
-    	 ON DUPLICATE KEY UPDATE  
-    	         MENU_ID = VALUES(MENU_ID)
-    	       , MENU_NM = VALUES(MENU_NM)
-    	       , PAK_PATH = VALUES(PAK_PATH)
-    	       , USE_YN = VALUES(USE_YN)
-    	       , MENU_Lvl1 = VALUES(MENU_Lvl1)
-	       	   , MENU_Lvl2 = VALUES(MENU_Lvl2)
-	       	   , MENU_Lvl3 = VALUES(MENU_Lvl3)
-    	       <include refid="svc001Dao.updateParamSql"/>
-    	 </foreach> -->
     </insert>
 
 </mapper>

@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="commonDao">
+	<sql id="createColSql">
+		, REG_ID
+       	, REG_DTM
+       	, UPD_ID
+       	, UPD_DTM 
+	</sql>
+	
+	<sql id="createParamSql">
+    	, ${@com.jjplatform.admin.util.CommonUtils@getCommVal('USER')}
+    	, NOW()
+    	, ${@com.jjplatform.admin.util.CommonUtils@getCommVal('USER')}
+    	, NOW() 
+	</sql>
+	
+	<sql id="updateParamSql">
+    	, UPD_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('USER')}
+    	, UPD_DTM = NOW()
+	</sql>
+	
 	<!-- 좌측 메뉴조회 -->
     <select id="selectLeftMenuList" parameterType="map" resultType="LowerCamelHashMap">
     	/* commonDao.selectLeftMenuList: 좌측 메뉴조회 */

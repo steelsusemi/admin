@@ -61,6 +61,7 @@ public class LoginController {
 			log.info("ID정보 : " + userDetails.getUserVo().getUserId()); 
 			
 			HttpSession sessInfo = request.getSession();
+			log.info("세션정보 : " + sessInfo); 
 			UserVo userVo = (UserVo) sessInfo.getAttribute("userInfo");
 			
 			if(userVo == null && request.getRequestURI().equals("/main")) {
@@ -71,7 +72,7 @@ public class LoginController {
 //				sessInfo.invalidate();
 			}
 			
-			log.info("세션 정보 : " + sessInfo.getAttribute("userInfo")+" : "+request.getRequestURI());
+//			log.info("세션 정보 : " + sessInfo.getAttribute("userInfo")+" : "+request.getRequestURI());
 		}
     	
 //    	UserVo userInfo = (UserVo) request.getSession().getAttribute("userInfo");

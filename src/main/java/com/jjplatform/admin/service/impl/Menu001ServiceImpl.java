@@ -30,8 +30,9 @@ public class Menu001ServiceImpl implements Menu001Service {
 		int rtnCnt = 0;
 		log.info("paramList >> "+paramList);
 		for(Map param : paramList) {
-			int saveCnt = "U".equals(param.get("rowStatus")) ? (int) param.get("menuSeq") : menu001Dao.selectMenuSeq();
+			int saveCnt = "U".equals(param.get("rowStatus")) ? (int) param.get("menuSeq") : menu001Dao.selectMenuSeq(param);
 			param.put("menuSeq", saveCnt);
+			log.info("param >> "+param);
 			rtnCnt += menu001Dao.saveMenu(param);
 		}
 		

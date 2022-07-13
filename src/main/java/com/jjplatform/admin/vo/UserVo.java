@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class UserVo extends commonVo {
+	private String compId;
 	private String userId;
     private String userPass;
     private String userRole;

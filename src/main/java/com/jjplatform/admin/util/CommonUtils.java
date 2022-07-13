@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jjplatform.admin.vo.UserVo;
 
 /**
@@ -30,14 +31,17 @@ public class CommonUtils {
 	 * @param  
 	 * @return String
 	 */
-	public static String getUserId() {
+	public static String getCommVal(String strGb) {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession sessInfo = request.getSession();
-//		log.info("aaaaaaaaaaaaaaa >> " + sessInfo.getAttribute("userInfo"));
-		UserVo userVo = new UserVo();
-		userVo = (UserVo) sessInfo.getAttribute("userInfo");
-		log.info("1111111111111 >> " + userVo);
-		return userVo.getUserId();
+		Object obj = sessInfo.getAttribute("userInfo");
+		log.info("aaaaaaaaaaaaaaa >> " + strGb+" : "+obj);
+		UserVo userVo = (new ObjectMapper()).convertValue(obj, UserVo.class);
+		String rtnVal = "";
+		if("USER".equals(strGb)) rtnVal = "'" + userVo.getUserId() + "'";
+		if("COMP".equals(strGb)) rtnVal = "'" + userVo.getCompId() + "'";
+		log.info("1111111111111 >> " + userVo + " : " + rtnVal);
+		return rtnVal;
 	}
 	
 	/**

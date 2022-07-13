@@ -4,7 +4,8 @@
 <mapper namespace="userAuthDao">
 
     <select id="selectUserById" parameterType="string" resultType="UserVo">
-        SELECT A.USER_ID
+        SELECT A.COMP_ID
+             , A.USER_ID
         	 , A.USER_PASS
         	 , B.USER_ROLE
         FROM USER_INFO A

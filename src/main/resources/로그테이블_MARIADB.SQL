@@ -59,20 +59,27 @@ CREATE TABLE SVC_MANAGE (
 -- jjp.MENU_MANAGE definition
 CREATE TABLE jjp.MENU_MANAGE (
 	COMP_ID varchar(5) NOT NULL				COMMENT '소속회사',
-	UPPR_MENU_ID varchar(100) NULL			COMMENT '상위메뉴',	
+	UPPR_MENU_ID varchar(100) NULL			COMMENT '상위메뉴',
+	MENU_SEQ numeric(38,0) NOT NULL			COMMENT '메뉴순번', 	
 	MENU_ID varchar(100) NOT NULL			COMMENT '메뉴ID', 
 	MENU_NM varchar(200) NULL				COMMENT '메뉴명', 
 	USE_YN varchar(1) NULL					COMMENT '사용여부', 
 	MENU_LVL1 varchar(1) NULL				COMMENT '메뉴레벨1',
+	MENU_LVL2 varchar(1) NULL				COMMENT '메뉴레벨2',
+	MENU_LVL3 varchar(1) NULL				COMMENT '메뉴레벨3',
+	MENU_AUTH varchar(10) DEFAULT NULL 		COMMENT '메뉴권한',
 	REG_ID varchar(100) NULL				COMMENT '등록자', 
 	REG_DTM date NULL		 				COMMENT '등록일시', 
 	UPD_ID varchar(100) NULL				COMMENT '수정자', 
 	UPD_DTM date NULL						COMMENT '수정일시', 
-	MENU_LVL2 varchar(1) NULL				COMMENT '메뉴레벨2',
-	MENU_LVL3 varchar(1) NULL				COMMENT '메뉴레벨3',
-	MENU_SEQ numeric(38,0) NOT NULL			COMMENT '메뉴순번', 
 	PRIMARY KEY (COMP_ID,MENU_SEQ,MENU_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='메뉴등록관리';
+
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 1, 'MNU001M', '메뉴관리', 'Y', '', 'Y', '', 'S', NULL, NULL, NULL, NULL);
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', '', 1, 'SYS000M', '시스템', 'Y', 'Y', '', '', 'S', NULL, NULL, NULL, NULL);
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', '', 2, 'SVC000M', '서비스', 'Y', 'Y', NULL, NULL, 'S', NULL, NULL, NULL, NULL);
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 2, 'USR001M', '사용자관리', 'Y', '', 'Y', '', 'S', 'user', NOW(), 'user', NOW());
+
 
 
 -- jjp.USER_INFO definition
