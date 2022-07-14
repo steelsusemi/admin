@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
     	// 허용 url 등록
-    	web.ignoring().antMatchers("/css/**", "/js/**", "/vue/**", "/img/**", "/build/**", "/docs/**", "/src/**", "/vendors/**");
+    	web.ignoring().antMatchers("/css/**", "/js/**", "/vue/**", "/img/**", "/build/**", "/docs/**", "/src/**", "/vendors/**","/favicon/**");
     }
 
     @Override
@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin()
                 .loginPage("/login").permitAll()
+//                .loginProcessingUrl("/loginPass").permitAll()
                 .defaultSuccessUrl("/main")
             .and()
             .logout()
