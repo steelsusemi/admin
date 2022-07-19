@@ -15,18 +15,26 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jjplatform.admin.vo.UserVo;
+
 public class LoggerInterceptor implements HandlerInterceptor{
 	private static final Logger log = LoggerFactory.getLogger(LoggerInterceptor.class);
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 	   HttpSession sessInfo = request.getSession();
-	   log.info("sessInfo >>>>>>>> "+sessInfo+" : "+sessInfo.getAttribute("userInfo"));
-	   
-	   if(sessInfo == null || sessInfo.getAttribute("userInfo") == null) {
-		  request.getSession().invalidate();
-		  request.getSession(true);
+	   log.info("sessInfo >>>>>>>> "+sessInfo+" : "+sessInfo.getAttribute("userInfo")+" : "+request.getRequestURI()+" : "+request.getRequestURI().equals("/"));
+	   String uri = request.getRequestURI();
+	   uri = (uri.contains("/comm/")) ? uri.substring(0,6) : "";
+	   UserVo userVo = (UserVo) sessInfo.getAttribute("userInfo");
+	   log.info(uri + "<< >> "+userVo+" : "+"/comm/".equals(uri));
+	   if(sessInfo == null || ("/comm/".equals(uri) && userVo == null)) {
+		  sessInfo.invalidate();
+		  sessInfo.setMaxInactiveInterval(0);
+		  log.info("111111111111 >> ");
 		  response.sendRedirect("/login");
+		  
+		  return false;
        }
 	   
 	   log.info("=====================LoggerInterceptor Start=====================");

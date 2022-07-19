@@ -1,5 +1,6 @@
 package com.jjplatform.admin.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,12 +30,14 @@ public class Menu001ServiceImpl implements Menu001Service {
 	public int saveMenu(List<Map> paramList) throws Exception {
 		int rtnCnt = 0;
 		log.info("paramList >> "+paramList);
-		for(Map param : paramList) {
-			int saveCnt = "U".equals(param.get("rowStatus")) ? (int) param.get("menuSeq") : menu001Dao.selectMenuSeq(param);
-			param.put("menuSeq", saveCnt);
-			log.info("param >> "+param);
+		Map param = new HashMap();
+		param.put("list", paramList);
+//		for(Map param : paramList) {
+//			int saveCnt = "U".equals(param.get("rowStatus")) ? (int) param.get("menuSeq") : menu001Dao.selectMenuSeq(param);
+//			param.put("menuSeq", saveCnt);
+//			log.info("param >> "+param);
 			rtnCnt += menu001Dao.saveMenu(param);
-		}
+//		}
 		
 		return rtnCnt;
 	}

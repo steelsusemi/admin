@@ -230,8 +230,14 @@
 	    		this.getSearch();
 	    	},
 	        getSearch: function() {
-//	        	this.menuList.splice(1,1);
+	        	if(this.menuList.length > 0) this.menuList.splice(0);
 	        	this.menuList = [];
+	        	
+	        	this.param.searchMenuId = this.searchMenuId;
+	    	    this.param.searchUseYn = this.searchUseYn;
+	    	    this.param.pageSize = pagination.common.pageSize;
+	    	    this.param.curPage = pagination.common.curPage;
+	    	    
 	          	console.log("111111111 > " + this.param);
 				axios.post('/comm/selectMenuList', this.param, {
 					headers: { "Content-Type": "application/json"}
@@ -268,12 +274,12 @@
 	       		}
 	        },
 	        setSave: function() {
-	        	if(this.checkVal.length === 0) {alert("저장할 대상을 선택해주세요."); return false;}
+	        	//if(this.checkVal.length === 0) {alert("저장할 대상을 선택해주세요."); return false;}
 	        	//this.menuList = [];
 	          	console.log("111111111 > " + this.menuList.length + " : " +this.menuList.filter(menu => menu.rowStatus === "C") + " : " +this.checkVal);
 	          	const data = {
-	          			list : this.menuList.filter(menu => menu.rowStatus === "C" || menu.rowStatus === "U")
-	          		  , menuId : this.mnuId
+	          			list: this.menuList.filter(menu => menu.rowStatus === "C" || menu.rowStatus === "U")
+	          		  , menuId: this.mnuId
 	          	}
 	          	console.log(data);
 				axios.post("/comm/saveMenu", data, {
@@ -286,7 +292,7 @@
 		        });
 	    	},
 	        changePageSize: function(val){
-	        	 //console.log("11 >> " +val);
+	        	 console.log("11 >> " +val+" : "+this.menuList[0]);
 	        	if(pagination.onChange(val, this.menuList[0].menuSeq)){
 	        		this.getSearch();
 	        	}

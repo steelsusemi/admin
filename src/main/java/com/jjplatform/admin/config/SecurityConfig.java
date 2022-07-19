@@ -23,19 +23,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
     	// 허용 url 등록
-    	web.ignoring().antMatchers("/css/**", "/js/**", "/vue/**", "/img/**", "/build/**", "/docs/**", "/src/**", "/vendors/**","/favicon/**");
+    	web.ignoring().antMatchers("/css/**", "/js/**", "/vue/**", "/img/**", "/build/**", "/docs/**", "/src/**", "/vendors/**","/favicon.ico");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
+            	.antMatchers("/", "/login").permitAll()
 //                .antMatchers("/comm/**").hasRole("USER")
+//                .anyRequest().permitAll()
                 .anyRequest().authenticated()
             .and()
             .formLogin()
-                .loginPage("/login").permitAll()
-//                .loginProcessingUrl("/loginPass").permitAll()
+                .loginPage("/login")
+                .permitAll()
                 .defaultSuccessUrl("/main")
             .and()
             .logout()

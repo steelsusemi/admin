@@ -39,7 +39,7 @@
                		<i class="fa " :class="getClass(menu.menuId)"></i> {{ menu.menuNm }} <span class="fa fa-chevron-down"></span>
                	</a>
                 <ul class="nav child_menu">
-                   <li v-for="sub in menuList" v-if="sub.menuLvl2 === 'Y' && menu.menuId === sub.upprMenuId"><a href="javascript:void(0)" :href="sub.menuId">{{ sub.menuNm }}</a></li>
+                   <li v-for="sub in menuList" v-if="sub.menuLvl2 === 'Y' && menu.menuId === sub.upprMenuId"><a href="javascript:void(0)" :href="'/move/'+sub.menuId">{{ sub.menuNm }}</a></li>
                 <!-- <ul class="nav child_menu" :style="menu.menuId === this.menuId ? 'display:block' : 'display:none'"> -->
                    <!-- <li v-for="sub in menuList" v-if="sub.menuLvl2 === 'Y' && menu.menuId === sub.upprMenuId"><a @click="move(sub.menuId, sub.upprMenuId)">{{ sub.menuNm }}</a></li> -->
                 </ul>
