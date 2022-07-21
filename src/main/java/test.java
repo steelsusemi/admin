@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
+import kr.co.shineware.nlp.komoran.core.Komoran;
+import kr.co.shineware.nlp.komoran.model.Token;
+
 public class test {
 
 	@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
@@ -72,30 +76,36 @@ public class test {
 //			e.printStackTrace();
 //		}
 		
-		String TestClass = "com.jjplatform.admin.service.CommonService"; // 원래는 패키지 경로까지 적어야 하나 같은 default 경로라 생략
-		Map rtnMap = new HashMap<>();
-		try {
-            // 이것만 선언할 경우 static만 호출 => 여기서 System.out.println("난 static블럭에 있는 함수"); 호출
-			Class<?> finedClass = Class.forName(TestClass); 
-			System.out.println("Class.forName : " + finedClass.getName());
-			Object classInstance = finedClass.newInstance(); // 클래스의 받아온 정보를 기반으로 객체를 생성 
-			System.out.println("Class Instance : " + classInstance);
-			Method m = finedClass.getMethod("leftMenuList", Map.class); // 메소드 불러오기 
-			System.out.println("Class Method : " + m.getName() + "를 찾았습니다.");
-			m.invoke(classInstance, rtnMap);
-			System.out.println("Class Method : " + m.getName() + "를 호출하였습니다.");
-//			m.invoke(newObj, rtnMap); // 메소드 호출 A 3 출력
-			
-			// testClass.getMethod("A").invoke(newObj);  A가 생성되었습니다. public일 때
-
-//            m = testClass.getDeclaredMethod("A"); 
-//			m.setAccessible(true); // private를 접근하기 위해서는 getDeclaredMethod 뒤에 해줘야 한다.
-//			m.invoke(newObj);   //  A가 생성되었습니다.
-
-		} catch (Exception e) {
-		}
+//		String TestClass = "com.jjplatform.admin.service.CommonService"; // 원래는 패키지 경로까지 적어야 하나 같은 default 경로라 생략
+//		Map rtnMap = new HashMap<>();
+//		try {
+//            // 이것만 선언할 경우 static만 호출 => 여기서 System.out.println("난 static블럭에 있는 함수"); 호출
+//			Class<?> finedClass = Class.forName(TestClass); 
+//			System.out.println("Class.forName : " + finedClass.getName());
+//			Object classInstance = finedClass.newInstance(); // 클래스의 받아온 정보를 기반으로 객체를 생성 
+//			System.out.println("Class Instance : " + classInstance);
+//			Method m = finedClass.getMethod("leftMenuList", Map.class); // 메소드 불러오기 
+//			System.out.println("Class Method : " + m.getName() + "를 찾았습니다.");
+//			m.invoke(classInstance, rtnMap);
+//			System.out.println("Class Method : " + m.getName() + "를 호출하였습니다.");
+////			m.invoke(newObj, rtnMap); // 메소드 호출 A 3 출력
+//			
+//			// testClass.getMethod("A").invoke(newObj);  A가 생성되었습니다. public일 때
+//
+////            m = testClass.getDeclaredMethod("A"); 
+////			m.setAccessible(true); // private를 접근하기 위해서는 getDeclaredMethod 뒤에 해줘야 한다.
+////			m.invoke(newObj);   //  A가 생성되었습니다.
+//
+//		} catch (Exception e) {
+//		}
 
 //		System.out.println("USER0012M".substring(0, "USER0012M".length() - 5));
+		
+		Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
+//        komoran.setUserDic("C:\\PJT\\workerspace\\user_data\\dic.user");
+        List<Token> tokens = komoran.analyze("청하는아이오아이출신입니다").getTokenList();
+        for(Token token : tokens)
+            System.out.println(token);
 	}
 	
 	private static List<String> getMethodNames(Method[] methods) {
