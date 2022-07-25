@@ -6,7 +6,7 @@ import java.util.Map;
 @SuppressWarnings("rawtypes")
 public interface Svc001Service {
 	
-	public List<Map> svcList(Map param) throws Exception;
+	public List<Map> selectSvcMngList(Map param) throws Exception;
 
-	public int svcSave(List<Map> paramList) throws Exception;
+	public int saveSvc(List<Map> paramList) throws Exception;
 }

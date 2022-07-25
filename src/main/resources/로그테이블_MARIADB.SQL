@@ -106,3 +106,34 @@ CREATE TABLE jjp.USER_ROLE (
 	USER_ROLE varchar(100) NULL     COMMENT '사용자권한',
 	PRIMARY KEY (COMP_ID,USER_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='사용자권한';
+
+-- jjp.STOCK_IN_OUT_MANAGE definition
+CREATE TABLE `stock_in_out_manage` (
+  `COMP_ID` varchar(5) NOT NULL COMMENT '소속회사',
+  `STOCK_APP_ID` varchar(10) DEFAULT NULL COMMENT '주식앱아이디',
+  `BANK_ID` varchar(10) NOT NULL COMMENT '거래은행아이디',
+  `IN_OUT_DATE` varchar(8) NOT NULL COMMENT '입출금일자',
+  `IN_AMT` bigInt(10) DEFAULT NULL COMMENT '입금금액',
+  `OUT_AMT` bigInt(10) DEFAULT NULL COMMENT '출금금액',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT '등록자',
+  `REG_DTM` date DEFAULT NULL COMMENT '등록일시',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
+  `UPD_DTM` date DEFAULT NULL COMMENT '수정일시',
+  PRIMARY KEY (`COMP_ID`,`STOCK_APP_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='주식입출금관리';		
+
+-- jjp.STOCK_MANAGE definition
+CREATE TABLE `stock_manage` (
+  `COMP_ID` varchar(5) NOT NULL COMMENT '소속회사',
+  `STOCK_APP_ID` varchar(10) DEFAULT NULL COMMENT '주식앱아이디',
+  `STOCK_ID` varchar(50) NOT NULL COMMENT '주식아이디',
+  `SELL_BUY_CD` varchar(2) NOT NULL COMMENT '매입/매도코드',
+  `SELL_BUY_DATE` varchar(8) NOT NULL COMMENT '매입/매도일자',
+  `SELL_BUY_QTY` bigInt(10) DEFAULT NULL COMMENT '매입/매도수량',
+  `SELL_BUY__AMT` bigInt(10) DEFAULT NULL COMMENT '매입/매도금액',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT '등록자',
+  `REG_DTM` date DEFAULT NULL COMMENT '등록일시',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
+  `UPD_DTM` date DEFAULT NULL COMMENT '수정일시',
+  PRIMARY KEY (`COMP_ID`,`STOCK_APP_ID`,`STOCK_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='주식관리';	

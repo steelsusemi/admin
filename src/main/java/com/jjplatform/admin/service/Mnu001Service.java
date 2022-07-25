@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("rawtypes")
-public interface Menu001Service {
+public interface Mnu001Service {
 	
 	public List<Map> selectMenuList(Map param) throws Exception;
 

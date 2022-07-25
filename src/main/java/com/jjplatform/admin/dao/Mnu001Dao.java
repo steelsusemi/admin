@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import com.jjplatform.admin.mapper.CommonMapper;
 
 @SuppressWarnings("rawtypes")
-@Repository("menu001Dao")
-public class Menu001Dao extends CommonMapper {
-	private static final Logger log = LoggerFactory.getLogger(Menu001Dao.class);
+@Repository("mnu001Dao")
+public class Mnu001Dao extends CommonMapper {
+	private static final Logger log = LoggerFactory.getLogger(Mnu001Dao.class);
 	
-	private String NAME_SPACE = "menu001Dao.";
+	private String NAME_SPACE = "mnu001Dao.";
  
     @SuppressWarnings({ "unchecked"})
 	public List<Map> selectMenuList(Map param) throws Exception {

@@ -42,6 +42,8 @@ public class CommonController {
     	}else if(path.contains("MAIN")) {
     		this.setSession(request, authentication);
     		v1 = "main";
+    	}else if(path.contains("ADM")) {
+    		v1 = "admg";
     	}else {
     		v1 = path.substring(0, path.length() - 4);
     	}
@@ -59,7 +61,11 @@ public class CommonController {
     	if("leftMenu".equals(menuId)) {
     		service = "commonService";
     	}else if("MNU001M".equals(menuId)) {
-    		service = "menu001Service";
+    		service = "mnu001Service";
+    	}else if("SVC001M".equals(menuId)) {
+    		service = "svc001Service";
+    	}else if("ADM001M".equals(menuId)) {
+    		service = "adm001Service";
     	}
 
     	Map rtnMap = new HashMap();

@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jjplatform.admin.service.Menu001Service;
+import com.jjplatform.admin.service.Mnu001Service;
 
 @RestController
 public class MenuController {
 	private final Logger log = LoggerFactory.getLogger(MenuController.class);
 
 	@Autowired
-	private Menu001Service menu001Service;
+	private Mnu001Service menu001Service;
 	
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping("/menu/menuList")

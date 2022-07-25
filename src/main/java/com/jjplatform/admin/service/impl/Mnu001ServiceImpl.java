@@ -9,20 +9,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jjplatform.admin.dao.Menu001Dao;
-import com.jjplatform.admin.service.Menu001Service;
+import com.jjplatform.admin.dao.Mnu001Dao;
+import com.jjplatform.admin.service.Mnu001Service;
 
-@Service("menu001Service")
-public class Menu001ServiceImpl implements Menu001Service {
-	private static final Logger log = LoggerFactory.getLogger(Menu001ServiceImpl.class);
+@Service("mnu001Service")
+public class Mnu001ServiceImpl implements Mnu001Service {
+	private static final Logger log = LoggerFactory.getLogger(Mnu001ServiceImpl.class);
 	
 	@Autowired
-	private Menu001Dao menu001Dao;
+	private Mnu001Dao mnu001Dao;
 
 	@SuppressWarnings({ "rawtypes" })
 	@Override
 	public List<Map> selectMenuList(Map param) throws Exception {
-		return menu001Dao.selectMenuList(param);
+		return mnu001Dao.selectMenuList(param);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -33,10 +33,10 @@ public class Menu001ServiceImpl implements Menu001Service {
 		Map param = new HashMap();
 		param.put("list", paramList);
 //		for(Map param : paramList) {
-//			int saveCnt = "U".equals(param.get("rowStatus")) ? (int) param.get("menuSeq") : menu001Dao.selectMenuSeq(param);
+//			int saveCnt = "U".equals(param.get("rowStatus")) ? (int) param.get("menuSeq") : mnu001Dao.selectMenuSeq(param);
 //			param.put("menuSeq", saveCnt);
 //			log.info("param >> "+param);
-			rtnCnt += menu001Dao.saveMenu(param);
+			rtnCnt += mnu001Dao.saveMenu(param);
 //		}
 		
 		return rtnCnt;

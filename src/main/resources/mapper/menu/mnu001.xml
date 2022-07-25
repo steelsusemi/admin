@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="menu001Dao">
+<mapper namespace="mnu001Dao">
 	<!-- 메뉴조회 -->
     <select id="selectMenuList" parameterType="map" resultType="LowerCamelHashMap">
-    	/* menu001Dao.selectMenuList: 메뉴 조회 */
+    	/* mnu001Dao.selectMenuList: 메뉴 조회 */
     	WITH RECURSIVE CTE AS (
 			SELECT COMP_ID
 		 		 , UPPR_MENU_ID
@@ -65,7 +65,7 @@
     
     <!-- 순번 조회 -->
     <select id="selectMenuSeq"  parameterType="map" resultType="int">
-    	/* menu001Dao.selectMenuSeq: 순번 조회 */
+    	/* mnu001Dao.selectMenuSeq: 순번 조회 */
     	SELECT IFNULL(MAX(MENU_SEQ), 0) + 1 
 	      FROM MENU_MANAGE  ALIAS_FOR_SUBQUERY
 	     WHERE COMP_ID = #{compId}
@@ -74,7 +74,7 @@
     
     <!-- 메뉴등록 -->
     <insert id="saveMenu" parameterType="map">
-    	/* menu001Dao.saveMenu: 메뉴등록*/
+    	/* mnu001Dao.saveMenu: 메뉴등록*/
     	<!-- <foreach collection="list" item="item" separator=";"> -->
 		     INSERT 
 		       INTO MENU_MANAGE
@@ -99,7 +99,7 @@
 				    	 	  	SELECT IFNULL(MAX(MENU_SEQ), 0) + (#{idx} + 1) 
 							      FROM MENU_MANAGE  ALIAS_FOR_SUBQUERY
 							     WHERE COMP_ID = #{item.compId}
-							       AND UPPR_MENU_ID = #{item.upprMenuId}
+							       AND UPPR_MENU_ID = IFNULL(#{item.upprMenuId},'')
 				    	 	  	)
 				     END
 	    	 	  , #{item.menuId}

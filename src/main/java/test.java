@@ -1,3 +1,4 @@
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -9,7 +10,24 @@ import java.util.Map;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.Token;
+import kr.co.shineware.nlp.komoran.modeler.builder.ModelBuilder;
 
+/**
+ * @author FIC07049
+ *
+ */
+/**
+ * @author FIC07049
+ *
+ */
+/**
+ * @author FIC07049
+ *
+ */
+/**
+ * @author FIC07049
+ *
+ */
 public class test {
 
 	@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
@@ -101,33 +119,53 @@ public class test {
 
 //		System.out.println("USER0012M".substring(0, "USER0012M".length() - 5));
 		
-		Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
-//        komoran.setUserDic("C:\\PJT\\workerspace\\user_data\\dic.user");
-        List<Token> tokens = komoran.analyze("청하는아이오아이출신입니다").getTokenList();
-        for(Token token : tokens)
-            System.out.println(token);
+//		Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
+////        komoran.setUserDic("C:\\PJT\\workerspace\\user_data\\dic.user");
+//        komoran.setFWDic("C:\\PJT\\workerspace\\user_data\\wiki.titles");
+//        List<Token> tokens = komoran.analyze("감기는 자주 걸리는 병이다 바람과 함께 사라지다를 봤어").getTokenList();
+//        for(Token token : tokens)
+//            System.out.println(token);
+        
+        modelSave();
+        modelLoad();
 	}
 	
-	private static List<String> getMethodNames(Method[] methods) {
-	    List<String> methodNames = new ArrayList<>();
-	    for (Method method : methods)
-	      methodNames.add(method.getName());
-	    return methodNames;
+//	private static List<String> getMethodNames(Method[] methods) {
+//	    List<String> methodNames = new ArrayList<>();
+//	    for (Method method : methods)
+//	      methodNames.add(method.getName());
+//	    return methodNames;
+//	}
+	
+	private static void modelLoad() {
+		ModelBuilder builder = new ModelBuilder();
+		builder.load("models");
+	}
+
+	private static void modelSave() {
+	    ModelBuilder builder = new ModelBuilder();
+	    //external dictionary for out of vocabulary
+//	    builder.setExternalDic("user_data"+ File.separator+"wiki.titles");
+	    builder.setExternalDic("C:\\PJT\\workerspace\\user_data\\wiki.titles");
+	    //training corpus path must include dictionary, grammar and irregular dictionary
+	    builder.buildPath("corpus_build");
+	    //path to save models
+	    builder.save("models");
 	}
 
 }
 
-class ADSA {
-	private void A() {
-		System.out.println("A가 생성되었습니다.");
-	}
-
-	public void show(boolean showOK, Integer a) {
-		if (showOK)
-			System.out.println("A " + a + " 출력");
-	}
-
-	static {
-		System.out.println("난 static블럭에 있는 함수");
-	}
-}	
+//class ADSA {
+//	private void A() {
+//		System.out.println("A가 생성되었습니다.");
+//	}
+//
+//	public void show(boolean showOK, Integer a) {
+//		if (showOK)
+//			System.out.println("A " + a + " 출력");
+//	}
+//
+//	static {
+//		System.out.println("난 static블럭에 있는 함수");
+//	}
+//}	

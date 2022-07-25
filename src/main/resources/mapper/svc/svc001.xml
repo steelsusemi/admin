@@ -4,7 +4,7 @@
 <mapper namespace="svc001Dao">
 
 	<!-- 서비스조회 -->
-    <select id="svcList" parameterType="map" resultType="LowerCamelHashMap">
+    <select id="selectSvcMngList" parameterType="map" resultType="LowerCamelHashMap">
     	SELECT A.TOT_CNT
 			 , A.RNUM
 			 , A.SVC_SEQ
@@ -30,16 +30,14 @@
 			       	, SVC_DAO
 			       	, SVC_XML
 			       	, REG_ID
-			       	, CONVERT(VARCHAR, REG_DTM, 120) AS REG_DTM
-			       <!-- 	, DATE_FORMAT(REG_DTM, '%Y-%m-%d %T.%s') AS REG_DTM -->
+			        , DATE_FORMAT(REG_DTM, '%Y-%m-%d %T.%s') AS REG_DTM
 			       	, UPD_ID
-			       	, CONVERT(VARCHAR, UPD_DTM, 120) AS UPD_DTM
-			       	<!-- , DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T.%s') AS UPD_DTM -->
+			       	, DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T.%s') AS UPD_DTM
 			       	, 'R' AS ROW_STATUS
 		         FROM SVC_MANAGE
 		         <where>
 			       	 <if test="svcId != null and svcId != ''">
-			          AND (SVC_ID = #{svcId} OR SVC_NM LIKE CONCAT('%',#{svcId}, '%'))
+			          AND (SVC_ID = #{searchSvcId} OR SVC_NM LIKE CONCAT('%',#{searchSvcId}, '%'))
 			         </if>
 			         <if test="useYn != null and useYn != ''">
 			          AND USE_YN = #{useYn})
@@ -61,69 +59,38 @@
     </select>
     
     <!-- 서비스등록 -->
-    <insert id="svcSave" parameterType="map">
-    	/* svc001Dao.svcSave: 서비스등록*/
-    	<!-- <foreach collection="list" item="item" separator=";">    -->
-    	MERGE 
-    	 INTO SVC_MANAGE AS A1
-	    USING (
-	    		 SELECT #{svcSeq} AS SVC_SEQ
-	    	  ) AS A
-	       ON A1.SVC_SEQ = A.SVC_SEQ
-	     WHEN MATCHED THEN
-	    	  UPDATE 
-	    	     SET SVC_ID = #{svcId}
-	    	       , SVC_NM = #{svcNm}
-	    	       , PAK_PATH = #{pakPath}
-	    	       , USE_YN = #{useYn}
-	    	       , SVC_DAO = #{svcDao}
-	    	       , SVC_XML = #{svcXml} 
-	    	       <include refid="commonDao.updateParamSql"/>
-	    WHEN NOT MATCHED THEN
-	    	 INSERT 
-	    	 (     SVC_SEQ
-	    	   	 , SVC_ID
-	    	 	 , SVC_NM
-	    	 	 , PAK_PATH
-	    	 	 , USE_YN
-	    	 	 , SVC_DAO
-	    	 	 , SVC_XML
-	    	 	 <include refid="commonDao.createColSql"/>
-	    	 ) 
-	    	 VALUES 
-	    	 (	   A.SVC_SEQ
-	    	 	 , #{svcId}
-	    	 	 , #{svcNm}
-	    	 	 , #{pakPath}
-	    	 	 , #{useYn}
-	    	 	 , #{svcDao}
-	    	 	 , #{svcXml}
-	    	 	 <include refid="commonDao.createParamSql"/>
-	    	 )
-	    	 <!-- </foreach> -->
-	    	 ;
-	     <!-- INSERT 
+    <insert id="saveSvc" parameterType="map">
+    	/* svc001Dao.saveSvc: 서비스등록 */
+	     INSERT 
 	       INTO SVC_MANAGE
-    	 (     SVC_SEQ
+    	 (     COMP_ID			/* 소속회사 */
+    	     , SVC_SEQ
     	   	 , SVC_ID
     	 	 , SVC_NM
     	 	 , PAK_PATH
     	 	 , USE_YN
     	 	 , SVC_DAO
     	 	 , SVC_XML
-    	 	 <include refid="svc001Dao.createColSql"/>
+    	 	 <include refid="commonDao.createColSql"/>
     	 ) 
     	 VALUES 
-    	 <foreach collection="list" item="item" separator=",">   
+    	 <foreach collection="list" item="item" index="idx" separator=",">   
     	 (    	 
-    	 	   CASE WHEN IFNULL(#{svcSeq}, '') = '' THEN #{svcSeq} ELSE #{svcSeq} END
-    	 	 , #{svcId}
-    	 	 , #{svcNm}
-    	 	 , #{pakPath}
-    	 	 , #{useYn}
-    	 	 , #{svcDao}
-    	 	 , #{svcXml}
-    	 	 <include refid="svc001Dao.createParamSql"/>
+    	 	   ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+    	 	 , CASE WHEN IFNULL(#{item.svcSeq},'') != '' THEN #{item.svcSeq}
+    	 	  		ELSE (
+			    	 		SELECT IFNULL(MAX(SVC_SEQ), 0) + (#{idx} + 1) 
+						      FROM SVC_MANAGE  ALIAS_FOR_SUBQUERY
+						     WHERE COMP_ID = #{item.compId}
+			    	 	 )
+				END
+    	 	 , #{item.svcId}
+    	 	 , #{item.svcNm}
+    	 	 , #{item.pakPath}
+    	 	 , #{item.useYn}
+    	 	 , #{item.svcDao}
+    	 	 , #{item.svcXml}
+    	 	 <include refid="commonDao.createParamSql"/>
     	 )
     	 </foreach>
     	 ON DUPLICATE KEY UPDATE  
@@ -133,8 +100,7 @@
     	       , USE_YN = VALUES(USE_YN)
     	       , SVC_DAO = VALUES(SVC_DAO)
     	       , SVC_XML = VALUES(SVC_XML)
-    	       <include refid="svc001Dao.updateParamSql"/>
-    	 </foreach> -->
+    	       <include refid="commonDao.updateParamSql"/>
     </insert>
 
 </mapper>

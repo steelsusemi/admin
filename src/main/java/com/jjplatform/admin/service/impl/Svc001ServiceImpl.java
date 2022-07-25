@@ -1,5 +1,6 @@
 package com.jjplatform.admin.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,29 +21,35 @@ public class Svc001ServiceImpl implements Svc001Service {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Map> svcList(Map param) throws Exception {
+	public List<Map> selectSvcMngList(Map param) throws Exception {
 //		log.info("1111111111111 >> " + param);
 //		List<Map> aa = new ArrayList<Map>();
 //		aa.add(param);
 //		return aa;
 //		param.put("currentPage", (int) param.get("currentPage") == 0 ? 0 : (int) param.get("currentPage") * (int) param.get("pageSize") + 1);
-		return svc001Dao.svcList(param);
+		return svc001Dao.selectSvcMngList(param);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public int svcSave(List<Map> paramList) throws Exception {
+	public int saveSvc(List<Map> paramList) throws Exception {
 //		List<Map> aa = new ArrayList<Map>();
 //		aa.add(param);
 //		return aa;
-		int rtnCnt = 0;
+//		int rtnCnt = 0;
+//		
+//		for(Map param : paramList) {
+//			
+//			int saveCnt = "U".equals(param.get("rowStatus")) ? (int) param.get("svcSeq") : svc001Dao.selectSvcSeq();
+//			param.put("svcSeq", saveCnt);
+//			rtnCnt += svc001Dao.svcSave(param);
+//		}
 		
-		for(Map param : paramList) {
-			
-			int saveCnt = "U".equals(param.get("rowStatus")) ? (int) param.get("svcSeq") : svc001Dao.selectSvcSeq();
-			param.put("svcSeq", saveCnt);
-			rtnCnt += svc001Dao.svcSave(param);
-		}
+		int rtnCnt = 0;
+		log.info("paramList >> "+paramList);
+		Map param = new HashMap();
+		param.put("list", paramList);
+		rtnCnt += svc001Dao.saveSvc(param);
 		
 		return rtnCnt;
 	}

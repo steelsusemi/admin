@@ -17,19 +17,16 @@ public class Svc001Dao extends CommonMapper {
 	private String NAME_SPACE = "svc001Dao.";
  
     @SuppressWarnings({ "unchecked"})
-	public List<Map> svcList(Map param) throws Exception {
+	public List<Map> selectSvcMngList(Map param) throws Exception {
     	log.info("22222222 >> " + param);
-        return selectList(NAME_SPACE + "svcList", param);
+        return selectList(NAME_SPACE + "selectSvcMngList", param);
     }
 
-	@SuppressWarnings("unchecked")
-	public int svcSave(Map param) {
-		// TODO Auto-generated method stub
-		return insert(NAME_SPACE + "svcSave", param);
+	public int saveSvc(Map param) {
+		return insert(NAME_SPACE + "saveSvc", param);
 	}
 
 	public int selectSvcSeq() {
-		// TODO Auto-generated method stub
 		return (int) selectOne(NAME_SPACE + "selectSvcSeq", "");
 	}
 }

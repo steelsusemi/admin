@@ -43,7 +43,7 @@ public class SvcController {
 //			Method method = svcClass.getMethod("svcList", new Class[] {Map.class});
 //	    	log.info("path >> " +m1 + " : "+ param + " : "+ svcClass+ " : "+ svcInstance+ " : "+ method);
 //	    	resultList = (List<Map>) method.invoke(svcInstance, param);
-			resultList = svc001Service.svcList(param);
+			resultList = svc001Service.selectSvcMngList(param);
 	    	log.info("resultList >> " + resultList);
 //		} catch (InvocationTargetException e) {
 //		    // Answer:
@@ -55,8 +55,8 @@ public class SvcController {
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
-   	@PostMapping("/svc/svcSave")
-    public ResponseEntity<?> svcSave(@RequestBody List<Map> paramList) throws Exception {
+   	@PostMapping("/svc/saveSvc")
+    public ResponseEntity<?> saveSvc(@RequestBody List<Map> paramList) throws Exception {
 		log.info("paramList >> " + paramList);
 	//       	Class<?> svcClass = Class.forName("com.jjplatform.admin.service.impl.Svc001ServiceImpl");
 	//       	Constructor<?> cons = svcClass.getConstructor();
@@ -66,7 +66,7 @@ public class SvcController {
 	//   			Method method = svcClass.getMethod("svcList", new Class[] {Map.class});
 	//   	    	log.info("path >> " +m1 + " : "+ param + " : "+ svcClass+ " : "+ svcInstance+ " : "+ method);
 	//   	    	resultList = (List<Map>) method.invoke(svcInstance, param);
-	   			int svcSave = svc001Service.svcSave(paramList);
+	   			int svcSave = svc001Service.saveSvc(paramList);
 	//   		} catch (InvocationTargetException e) {
 	//   		    // Answer:
 	//   		    e.getCause().printStackTrace();

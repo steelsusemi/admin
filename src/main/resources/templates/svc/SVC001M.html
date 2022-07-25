@@ -46,7 +46,7 @@
             <div class="form-group row" style="margin-bottom: 0px;">
               <label class="col-form-label col-md-3 col-sm-3" for="first-name">서비스 ID / 명<!-- <span class="required">*</span> --></label>
               <div class="col-md-9 col-sm-9 ">
-                <input type="text" id="svcId" required="required" class="form-control" v-model="svcId">
+                <input type="text" id="searchSvcId" required="required" class="form-control" v-model="searchSvcId">
               </div>
             </div>
           </div>
@@ -172,42 +172,37 @@
         svcListCopy: [],
         checkVal: [],
         result: [],
-        mnuId: "SVC001",
-        svcId: "",
+        mnuId: "SVC001M",
+        searchSvcId: "",
+        param: {},
         selectVal: "10"
       },
       mounted() {
-    	 console.log("common >> "+pagination.common+" : "+this.svcList.length);
-    	 
-    	 //const pageInfo = this.setPageInfo(this.common);
-    	  
-    	  // 데이터조회
-    	 //this.getSearch(pageInfo);
-    	 
+    	console.log("common >> "+pagination.common+" : "+this.searchSvcId.length);
+    	this.param.menuId = this.mnuId;
+		this.param.searchSvcId = this.searchSvcId;
+ 	    this.param.pageSize = pagination.common.pageSize;
+ 	    this.param.curPage = pagination.common.curPage;
       },
       computed: {
       },
       methods: {
 	    	//  조회 버튼
 	    	selectList: function() {
-	    		pagination.common.curPage = 1;   // mariadb = 0, mssql = 1
+	    		pagination.common.curPage = 0;   // mariadb = 0, mssql = 1
 	    		this.getSearch();
 	    	},
 	        getSearch: function() {
 	        	this.svcList.splice(1,1);
 	        	this.svcList = [];
-	          	console.log("111111111 > " + this.svcId);
-	          	const data = {
-	            	mnuId: this.mnuId,
-	            	svcId: this.svcId,
-	            	pageSize: pagination.common.pageSize,
-	            	curPage: pagination.common.curPage
-	          	};
-				axios.post('/jjp/svcList', data, {
+	          	console.log("111111111 > " + this.searchSvcId);
+	          	this.param.searchSvcId = this.searchSvcId;
+	          	
+				axios.post('/comm/selectSvcMngList', this.param, {
 					headers: { "Content-Type": "application/json"}
 		            }).then((res) => { 
 		            	$(".odd").html("");
-		                this.svcList = res.data; 
+		                this.svcList = res.data.result; 
 		                console.log("222222 > " + this.svcList);
 		                if(this.svcList.length > 0){
 			                pagination.common.totalCount = this.svcList[0].totCnt;
@@ -216,7 +211,8 @@
 		                // this.svcListCopy = res.data; 
 		                const newObj = _.cloneDeep(this.svcList);
 		                this.svcListCopy = newObj; 
-		                console.log("33333333333333333 > " + this.svcListCopy[1].svcNm);
+		                this.checkVal = [];
+		                //console.log("33333333333333333 > " + this.svcList.length); 
 		            }).catch((ex) => { 
 		                console.log("에러", ex); 
 		        });
@@ -239,9 +235,12 @@
 	        setSave: function() {
 	        	//this.svcList = [];
 	          	//console.log("111111111 > " + this.svcList.length + " : " +this.svcList.filter(svcList => svcList.rowStatus === "C") + " : " +this.checkVal);
-	          	const data = this.svcList.filter(svcList => svcList.rowStatus === "C" || svcList.rowStatus === "U");
+	          	const data = {
+	          			list: this.svcList.filter(svcList => svcList.rowStatus === "C" || svcList.rowStatus === "U")
+	          		  , menuId: this.mnuId
+	          	}
 	          	console.log(data);
-				axios.post("/svc/svcSave", data, {
+				axios.post("/comm/saveSvc", data, {
 					headers: { "Content-Type": "application/json"}
 		        }).then((res) => { 
 		                console.log("222222 > " + res);
