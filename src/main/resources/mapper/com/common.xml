@@ -43,5 +43,17 @@
          </where>
          ORDER BY COMP_ID, MENU_SEQ
     </select>
+    
+    <!-- 등록된 서비스아이디 조회 -->
+    <select id="selectServiceNm" parameterType="map" resultType="String">
+    	/* commonDao.selectServiceNm: 등록된 서비스아이디 조회 */
+    	SELECT CONCAT(LOWER(LEFT(SVC_ID, 1)),SUBSTR(SVC_ID, 2, LENGTH(SVC_ID) - 1))
+          FROM SVC_MANAGE
+       <where>
+           AND COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+           AND UPPER(LEFT(SVC_ID, 6)) = LEFT(#{menuId}, 6)
+	       AND USE_YN = 'Y'
+       </where>
+    </select>
 
 </mapper>

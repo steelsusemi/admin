@@ -21,4 +21,8 @@ public class CommonDao extends CommonMapper {
     	log.info("22222222 >> " + param);
         return selectList(NAME_SPACE + "selectLeftMenuList", param);
     }
+
+	public String selectServiceNm(Map param) {
+		return (String) selectOne(NAME_SPACE + "selectServiceNm", param);
+	}
 }

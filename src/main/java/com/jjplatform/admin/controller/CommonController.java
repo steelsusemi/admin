@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,12 +23,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
 import com.jjplatform.admin.config.ApplicationContextProvider;
+import com.jjplatform.admin.service.CommonService;
 import com.jjplatform.admin.vo.UserVo;
 
 
 @Controller
 public class CommonController {
 	private static final Logger log = LoggerFactory.getLogger(CommonController.class);
+	
+	@Autowired
+	private CommonService commonService;
 	
     @GetMapping("/move/{v1}")
     public String commonMenuMove(HttpServletRequest request, Authentication authentication, @PathVariable(value = "v1") String path) {
@@ -57,21 +62,24 @@ public class CommonController {
     public ResponseEntity<?> commonList(@RequestBody Map param, @PathVariable(value = "actNm") String actNm) {
     	String menuId = (String) param.get("menuId");
     	log.info("menuId => " + menuId + " : " + actNm);
-    	String service = "";
+    	
+    	String serviceNm = "";
     	if("leftMenu".equals(menuId)) {
-    		service = "commonService";
-    	}else if("MNU001M".equals(menuId)) {
-    		service = "mnu001Service";
-    	}else if("SVC001M".equals(menuId)) {
-    		service = "svc001Service";
-    	}else if("ADM001M".equals(menuId)) {
-    		service = "adm001Service";
+    		serviceNm = "commonService";
+//    	}else if("MNU001M".equals(menuId)) {
+//    		serviceNm = "mnu001Service";
+//    	}else if("SVC001M".equals(menuId)) {
+//    		serviceNm = "svc001Service";
+//    	}else if("ADM001M".equals(menuId)) {
+//    		serviceNm = "adm001Service";
+    	}else {
+    		serviceNm = commonService.selectServiceNm(param);
     	}
 
     	Map rtnMap = new HashMap();
+    	log.info("actNm => " + actNm.indexOf("select")+ " : " + actNm+ " : " + serviceNm);
 		try {
-			Object tClass = ApplicationContextProvider.getContext().getBean(service);
-			log.info("actNm => " + actNm.indexOf("select")+ " : " + actNm);
+			Object tClass = ApplicationContextProvider.getContext().getBean(serviceNm);
 			if(actNm.indexOf("select") != -1) {
 	    		rtnMap.put("result", (List<Map>) tClass.getClass().getMethod(actNm, Map.class).invoke(tClass, param));
 	    	}else if(actNm.indexOf("save") != -1) {

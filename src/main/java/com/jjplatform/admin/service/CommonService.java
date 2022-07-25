@@ -7,5 +7,7 @@ import java.util.Map;
 public interface CommonService {
 	
 	public List<Map> selectLeftMenuList(Map param) throws Exception;
+	
+	public String selectServiceNm(Map param);
 
 }
