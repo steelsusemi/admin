@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(accessDeniedHandler)
             .and().sessionManagement() 
             	.maximumSessions(1) 				/* session 허용 갯수 */ 
-            	.expiredUrl("/login"); 				/* session 만료시 이동 페이지*/ 
+            	.expiredUrl("/logout"); 				/* session 만료시 이동 페이지*/ 
 //            	.maxSessionsPreventsLogin(true); 	/* 동일한 사용자 로그인시 x, false 일 경우 기존 사용자 */
         http.csrf().ignoringAntMatchers("/comm/**");
     }

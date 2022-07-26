@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adm001Dao">
+	<!-- 주식입출금관리 조회 -->
+    <select id="selectStockInOutList" parameterType="map" resultType="LowerCamelHashMap">
+    	/* adm001Dao.selectStockInOutList: 주식입출금관리 조회 */
+		SELECT COMP_ID			/* 소속회사 */
+	 		 , STOCK_APP_ID 	/* 주식앱아이디 */
+	       	 , BANK_ID		 	/* 거래은행아이디 */
+	       	 , IN_OUT_DATE 		/* 입출금일자 */
+	       	 , IN_AMT 			/* 입금금액 */
+	       	 , OUT_AMT 			/* 출금금액 */
+	       	 , 'R' AS ROW_STATUS
+	       	 , REG_ID
+	         , DATE_FORMAT(REG_DTM, '%Y-%m-%d %T') AS REG_DTM
+	       	 , UPD_ID
+	       	 , DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T') AS UPD_DTM
+	       	 , COUNT(*) OVER() AS TOT_CNT
+	      FROM STOCK_IN_OUT_MANAGE /* 주식입출금관리 */
+	     WHERE COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+	     <if test="searchStockAppId != null and searchStockAppId != ''">
+       	   AND STOCK_APP_ID = #{searchStockAppId}
+       	 </if>
+       	 <if test="searchBankId != null and searchBankId != ''">
+       	   AND BANK_ID = #{searchBankId}
+       	 </if>
+         ORDER BY COMP_ID, STOCK_APP_ID, IN_OUT_DATE LIMIT #{curPage}, #{pageSize}
+    </select>
+    
+    <!-- 주식입출금관리 등록 -->
+    <insert id="saveStockInOut" parameterType="map">
+		/* adm001Dao.saveStockInOut: 주식입출금관리 등록 */
+	    INSERT 
+	      INTO STOCK_IN_OUT_MANAGE /* 주식입출금관리 */
+    	(      COMP_ID			/* 소속회사 */
+	 		 , STOCK_APP_ID 	/* 주식앱아이디 */
+	       	 , BANK_ID		 	/* 거래은행아이디 */
+	       	 , IN_OUT_DATE 		/* 입출금일자 */
+	       	 , IN_AMT 			/* 입금금액 */
+	       	 , OUT_AMT 			/* 출금금액 */
+    	 	 <include refid="commonDao.createColSql"/>
+    	 ) 
+    	 VALUES 
+    	 <foreach collection="list" item="item" index="idx" separator=",">   
+    	 (    	${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+    		  , #{item.stockAppId} 
+    	 	  , #{item.bankId}
+    	 	  , #{item.inOutDate}
+    	 	  , #{item.inAmt}
+    	 	  , #{item.outAmt}
+    	 	  <include refid="commonDao.createParamSql"/>
+    	 )
+    	 </foreach>
+    	 ON DUPLICATE KEY UPDATE  
+    	         COMP_ID 		= VALUES(COMP_ID)
+    	       , STOCK_APP_ID 	= VALUES(STOCK_APP_ID)
+    	       , BANK_ID 		= VALUES(BANK_ID)
+    	       , IN_OUT_DATE 	= VALUES(IN_OUT_DATE)
+    	       , IN_AMT 		= VALUES(IN_AMT)
+	       	   , OUT_AMT 		= VALUES(OUT_AMT)
+    	       <include refid="commonDao.updateParamSql"/>
+    </insert>
+
+</mapper>

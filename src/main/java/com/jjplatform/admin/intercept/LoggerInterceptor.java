@@ -32,7 +32,7 @@ public class LoggerInterceptor implements HandlerInterceptor{
 		  sessInfo.invalidate();
 		  sessInfo.setMaxInactiveInterval(0);
 		  log.info("111111111111 >> ");
-		  response.sendRedirect("/login");
+		  response.sendRedirect("/logout");
 		  
 		  return false;
        }

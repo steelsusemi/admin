@@ -74,7 +74,7 @@
             <div class="form-group row" style="margin-bottom: 0px;">
               <label class="col-form-label col-md-3 col-sm-3" for="first-name">주식앱 <!-- <span class="required">*</span> --></label>
               <div class="col-md-9 col-sm-9">
-              	<select id="searchStock" class="form-control" v-model="searchStock">
+              	<select id="searchStockAppId" class="form-control" v-model="searchStockAppId">
 					<option v-for="selectStock in stockApp" :value="selectStock.code">{{ selectStock.value }}</option>
 				</select>
               </div>
@@ -82,10 +82,10 @@
           </div>
           <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
             <div class="form-group row" style="margin-bottom: 0px;">
-              <label class="col-form-label col-md-3 col-sm-3 label-align" for="second-name">매입/매도</label>
+              <label class="col-form-label col-md-3 col-sm-3 label-align" for="second-name">은행명</label>
               <div class="col-md-9 col-sm-9">
-              	<select id="searchBuySell" class="form-control" v-model="searchBuySell ">
-					<option v-for="selectBuySell in buySell" :value="selectBuySell.code">{{ selectBuySell.value }}</option>
+              	<select id="searchBankId" class="form-control" v-model="searchBankId ">
+					<option v-for="selectBankId in bankId" :value="selectBankId.code">{{ selectBankId.value }}</option>
 				</select>
               </div>
             </div>
@@ -141,12 +141,12 @@
                           <td class="td_small" style="vertical-align: middle;"><input type="checkbox" id="check" v-model="checkVal[index]" true-value="Y" false-value="N"></td>
                       	  <td class="td_small" style="vertical-align: middle;">{{ index + 1 }}</td>
                       	  <td class="td_large">
-                      	  	<select id="stockId" class="form-control">
-								<option v-for="selectStock in stockApp" :value="row.stockId == '' ? '' : selectStock.code">{{ selectStock.value }}</option>
+                      	  	<select id="stockAppId" class="form-control" v-model="row.stockAppId"  @change="changeVal('stock',index)">
+								<option v-for="selectStockAppId in stockApp" :value="row.stockAppId == '' ? '' : selectStockAppId.code">{{ selectStockAppId.value }}</option>
 							</select>
                       	  </td>
                       	  <td class="td_large">
-                      	  	<select id="bankId" class="form-control">
+                      	  	<select id="bankId" class="form-control" v-model="row.bankId"  @change="changeVal('bank',index)">
 								<option v-for="selectBank in bankId" :value="row.bankId == '' ? '' : selectBank.code">{{ selectBank.value }}</option>
 							</select>
                       	  </td>
@@ -192,8 +192,8 @@
         result: [],
         mnuId: "ADM001M",
         menuId: "",
-        searchStock: "",
-        searchBuySell: "",
+        searchStockAppId: "",
+        searchBankId: "",
         stockApp: [
 	       	 {value: "전체", code: ""}
 	       	,{value: "신한투자금융", code: "SHIN"}
@@ -218,8 +218,6 @@
       },
       mounted() {
       	this.param.menuId = this.mnuId;
-		this.param.searchStock = this.searchStock;
-	    this.param.searchBuySell = this.searchBuySell;
 	    this.param.pageSize = pagination.common.pageSize;
 	    this.param.curPage = pagination.common.curPage;
       },
@@ -234,8 +232,8 @@
 	        	if(this.stockInOutList.length > 0) this.stockInOutList.splice(0);
 	        	this.stockInOutList = [];
 	        	
-	        	this.param.searchStock = this.searchStock;
-	    	    this.param.searchBuySell = this.searchBuySell;
+	        	this.param.searchStockAppId = this.searchStockAppId;
+	    	    this.param.searchBankId = this.searchBankId;
 	    	    this.param.pageSize = pagination.common.pageSize;
 	    	    this.param.curPage = pagination.common.curPage;
 	    	    
@@ -261,10 +259,7 @@
 	        },
     	  	addRow: function() {
 	        	console.log("111111111 > " + this.stockInOutList.length + " : " +this.checkVal);
-	
-	        	this.stockInOutList.push(
-	        			{}
-	        	)
+	        	this.stockInOutList.push({rowStatus: "C" });
 	        },
 	        deleteRow: function() {
 	        	if(this.checkVal.length === 0) alert("삭제할 행을 선택해주세요.");
@@ -277,7 +272,7 @@
 	        setSave: function() {
 	        	//if(this.checkVal.length === 0) {alert("저장할 대상을 선택해주세요."); return false;}
 	        	//this.stockInOutList = [];
-	          	console.log("111111111 > " + this.stockInOutList.length + " : " +this.stockInOutList.filter(menu => stockInOut.rowStatus === "C") + " : " +this.checkVal);
+	          	console.log("111111111 > " + this.stockInOutList.length + " : " +this.stockInOutList.filter(stockInOut => stockInOut.rowStatus === "C") + " : " +this.checkVal);
 	          	const data = {
 	          			list: this.stockInOutList.filter(stockInOut => stockInOut.rowStatus === "C" || stockInOut.rowStatus === "U")
 	          		  , menuId: this.mnuId
@@ -298,30 +293,32 @@
 	        		this.getSearch();
 	        	}
 	    	 },
+	    	 changeVal: function(flag, idx){
+				const oldVal = (flag === "stock") ? this.stockInOutListCopy[idx].stockAppId : this.stockInOutListCopy[idx].bankId;
+				const newVal = (flag === "stock") ? this.stockInOutList[idx].stockAppId : this.stockInOutList[idx].bankId;
+				console.log("11 >> " +flag+" : "+idx+" : "+oldVal+" : "+newVal);
+	        	(oldVal != newVal) ? this.stockInOutList[idx].rowStatus = "U" : "";
+	    	 },
 	    	 watch: function(idx){
 	    		const frtVal = this.stockInOutListCopy;
 	   			const changeVal = this.stockInOutList;
-	   			console.log("111111111111111111 >> "+idx+" : "+frtVal[idx].menuLvl2+" : "+changeVal[idx].menuLvl2);
+	   			console.log("111111111111111111 >> "+idx+" : "+changeVal[idx].rowStatus+" : "+frtVal[idx].stockAppId+" : "+changeVal[idx].bankId);
            	//for(var t=0; t<changeVal.length; t++){
-           		if(changeVal[idx].rowStatus != "C" 
-           				&& frtVal[idx].menuSeq === changeVal[idx].menuSeq){
-           			//console.log(idx+" : "+frtVal[idx].menuNm+" : "+changeVal[idx].menuNm+" : "+frtVal[idx].menuSeq === changeVal[idx].menuSeq);
-           			if(frtVal[idx].compId != changeVal[idx].compId){
+           		if(changeVal[idx].rowStatus != "C"){
+           			//console.log(idx+" : "+frtVal[idx].bankId+" : "+changeVal[idx].bankId+" : "+frtVal[idx].bankId != changeVal[idx].bankId);
+           			if(frtVal[idx].stockAppId != changeVal[idx].stockAppId){
            				this.stockInOutList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].menuId != changeVal[idx].menuId){
+	            	}else if(frtVal[idx].bankId != changeVal[idx].bankId){
+	            		console.log("3333333333333 >> ");
            				this.stockInOutList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].menuNm != changeVal[idx].menuNm){
+	            	}else if(frtVal[idx].inOutDate != changeVal[idx].inOutDate){
            				this.stockInOutList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].useYn != changeVal[idx].useYn){
+	            	}else if(frtVal[idx].inAmt != changeVal[idx].inAmt){
            				this.stockInOutList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].menuLvl1 != changeVal[idx].menuLvl1){
-           				this.stockInOutList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].menuLvl2 != changeVal[idx].menuLvl2){
-           				this.stockInOutList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].menuLvl3 != changeVal[idx].menuLvl3){
+	            	}else if(frtVal[idx].outAmt != changeVal[idx].outAmt){
            				this.stockInOutList[idx].rowStatus = "U";
 	            	}else{
-	            			this.stockInOutList[idx].rowStatus = "";
+	            		this.stockInOutList[idx].rowStatus = "";
 	            	}
            		}
 //	    	}
