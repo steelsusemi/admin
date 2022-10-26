@@ -113,3 +113,48 @@ SELECT 7673		/* AS '11번가 0815'  */
 	   +63900   /* AS '온실구입 할부 0901'    */
 	   AS '합계' /* 합계 494,148    */
 	   ;
+	   
+
+##### 자산관리 #######
+SELECT (A.전세금 - A.은행대출금) AS '전세금자산'
+	 , (A.야당예금 + A.회현새마을예금 + A.가영새마을예금 + A.가영신한금융투자) AS '저축합계'
+	 , (A.전세금 - A.은행대출금) + (A.야당예금 + A.회현새마을예금 + A.가영새마을예금 + A.가영신한금융투자)  AS '전세가용자산합계'
+	 , (A.전세금 - A.은행대출금) + (A.야당예금 + A.회현새마을예금 + A.가영새마을예금 + A.가영신한금융투자 + A.주천청약)  AS '총자산합계'
+	 , A.*
+FROM (
+		SELECT 262500000 AS '전세금'
+			, 30000000 AS '야당예금'
+			, 60000000 AS '회현새마을예금'
+			, 20000000 AS '가영새마을예금'
+			, 17000000 AS '가영신한금융투자'
+			, 35000000 AS '은행대출금'
+			, 11000000 AS '주천청약'
+--			, 262500000 - 35000000 AS '실금액'
+--			, (72000000+45000000 -(30000000)) + (262500000 - 35000000) AS '실금액'
+--			, (72000000+45000000 -(30000000)) + ((262500000 - 35000000) + (35000000 - 2000000))  AS '총전세금액'
+--			, 35000000 * 0.05 AS '대출금갚을금액'
+--			, 40000000 * (0.02) AS '대출금갚을금액'
+--			, (((40000000 * (0.02)) / 12) * 10) AS '새마을 금고(4000)'
+--			, (((30000000 * (0.04)) / 12) * 12) AS '새마을 금고(4000)'
+			--, CONVERT(VARCHAR(10), GETDATE(), 112)
+--			, CONVERT(NVARCHAR,GETDATE(),12)
+--			, SELECT MAX(CASE WHEN LEN(INOUT_NO) = 15 THEN RIGHT(INOUT_NO ,6) ELSE RIGHT(INOUT_NO ,4) END)
+--		                                               FROM TBWH001 		/* 입출고 마스터 */
+--		                                      	      WHERE CP_CD = '6011'
+--		                                      			AND INOUT_NO LIKE 'INO'+'220908'+'%'
+--			, 18000  * 0.05
+--		    ,  SELECT PREF+NOW+FORMAT(ISNULL((SELECT MAX(CASE WHEN LEN(INOUT_NO) = 15 THEN RIGHT(INOUT_NO ,6) ELSE RIGHT(INOUT_NO ,4) END) + ROWNUM /* MAX(RIGHT(INOUT_NO ,4))+ROWNUM(자리수변경(20220913)) */
+--		                                               FROM TBWH001 		/* 입출고 마스터 */
+--		                                      	      WHERE CP_CD = '6011'
+--		                                      			AND INOUT_NO LIKE PREF+NOW+'%'
+--		                                      		 ), ROWNUM), '00000#')
+--		               FROM (SELECT '220908' NOW,'INO' PREF, 0 + (0 * 2) ROWNUM ) AS C
+--		    , SELECT PREF + NOW + FORMAT(ISNULL(( SELECT MAX(CASE WHEN LEN(STK_ADJ_NO) = 15 THEN RIGHT(STK_ADJ_NO ,6) ELSE RIGHT(STK_ADJ_NO ,4) END) + ROWNUM /* MAX(RIGHT(STK_ADJ_NO , 4))+ ROWNUM(자리수변경(20220913)) */
+--										  FROM TBST007
+--										 WHERE CP_CD = '6011'
+--										   AND STK_ADJ_NO LIKE PREF + NOW + '%' ),ROWNUM)
+--										   ,'00000#') AS MAKE_STK_ADJ_NO
+--	 			 FROM ( SELECT '220912' NOW,'STA' PREF,1 ROWNUM ,'6011' CP_CD ) AS C
+--	 		1
+) A
+;	   
