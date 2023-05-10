@@ -99,7 +99,7 @@
 				    	 	  	SELECT IFNULL(MAX(MENU_SEQ), 0) + (#{idx} + 1) 
 							      FROM MENU_MANAGE  ALIAS_FOR_SUBQUERY
 							     WHERE COMP_ID = #{item.compId}
-							       AND UPPR_MENU_ID = IFNULL(#{item.upprMenuId},'')
+							       <!-- AND UPPR_MENU_ID = IFNULL(#{item.upprMenuId},'') -->
 				    	 	  	)
 				     END
 	    	 	  , #{item.menuId}

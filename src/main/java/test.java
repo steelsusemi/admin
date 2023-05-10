@@ -4,8 +4,11 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
@@ -126,8 +129,25 @@ public class test {
 //        for(Token token : tokens)
 //            System.out.println(token);
         
-        modelSave();
-        modelLoad();
+//        modelSave();
+//        modelLoad();
+//		System.out.println("USER0012M".substring(0, "USER0012M".length() - 5));
+		List<String> list = List.of("one", "two", "three");
+		Set<String> set = Set.of("one", "two", "three");
+		Map<String, String> map = Map.of("foo", "one", "bar", "two");
+		System.out.println("1 > "+list);
+		System.out.println("2 > "+set);
+		System.out.println("3 > "+map);
+		
+		List<Integer> listA = Arrays.asList(1, 2, null);
+		System.out.println("4 > "+listA);
+		listA.set(1, 10); // OK
+		System.out.println("5 > "+listA);
+		
+		String[] array = {"2","1"};
+		List<String> list1 = new ArrayList<>(List.of(array));
+		Set<String> set1 = new HashSet<>(List.of(array));
+		System.out.println("6 > "+list1+" : "+set1);
 	}
 	
 //	private static List<String> getMethodNames(Method[] methods) {

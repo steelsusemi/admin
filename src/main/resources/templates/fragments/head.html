@@ -37,6 +37,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}"/>
     
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
     <!-- vue js -->
     <script type="text/javascript" th:src="@{/vue/vue.js}"></script>
     <!-- axios js -->
@@ -45,6 +49,11 @@
 	<script type="text/javascript" th:src="@{/js/pagination.js}"></script>
 	<!-- v-runtime-template js -->
 	<!-- <script type="text/javascript" th:src="@{/vue/v-runtime-template.js}"></script> -->
+	
+	<!-- 서머노트를 위해 추가해야할 부분 -->
+	<script type="text/javascript" th:src="@{/summernote/summernote-lite.js}"></script>
+	<script type="text/javascript" th:src="@{/summernote/lang/summernote-ko-KR.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/summernote/summernote-lite.css}">
 </th:block>		
 </head>
 </html>

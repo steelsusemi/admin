@@ -122,9 +122,9 @@
                     <table id="menuMng" class="table table-striped table-bordered" style="width:100%;">
                       <thead>
                         <tr>
+						  <th class="th_small">No.</th>
                           <th class="th_small"></th>
                           <th class="th_small"><input type="checkbox" id="check-all" v-model="checkVal"></th>
-                          <th class="th_small">No.</th>
                           <th class="th_large">소속아이디</th>
                           <th class="th_large">메뉴아이디</th>
                           <th class="th_large">메뉴명</th>
@@ -139,9 +139,9 @@
                       </thead>
                       <tbody>
                         <tr v-for="(row, index) in menuList">
+                          <td class="td_small" style="vertical-align: middle;">{{ param.curPage + index + 1 }}</td>
                           <td class="td_small">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
                           <td class="td_small" style="vertical-align: middle;"><input type="checkbox" id="check" v-model="checkVal[index]" true-value="Y" false-value="N"></td>
-                      	  <td class="td_small" style="vertical-align: middle;">{{ index + 1 }}</td>
                       	  <td class="td_large"><input type="text" id="compId" v-model="row.compId" class="form-control center_aling" @blur="watch(index)"/></td>
                           <td class="td_large"><input type="text" id="menuId" v-model="row.menuId" class="form-control center_aling" @blur="watch(index)"/></td>
                           <td class="td_large left_aling"><input type="text" id="menuNm" v-model="row.menuNm" class="form-control" @blur="watch(index)"/></td>
