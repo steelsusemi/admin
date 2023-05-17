@@ -10,7 +10,7 @@
     <div class="col-md-3 left_col" id="leftMenu">
        <div class="left_col scroll-view">
          <div class="navbar nav_title" style="border: 0;">
-           <a th:href="@{/}" class="site_title"><i class="fa fa-laptop"></i> <span>J.J.PlatForm</span></a>
+           <a th:href="@{/}" class="site_title"><i class="fa fa-laptop"></i><span>J.J.PlatForm</span></a>
          </div>
 
          <div class="clearfix"></div>
@@ -40,7 +40,7 @@
                	</a>
                 <ul class="nav child_menu">
                    <li v-for="sub in menuList" v-if="sub.menuLvl2 === 'Y' && menu.menuId === sub.upprMenuId"><a href="javascript:void(0)" :href="'/move/'+sub.menuId">{{ sub.menuNm }}</a></li>
-                <!-- <ul class="nav child_menu" :style="menu.menuId === this.menuId ? 'display:block' : 'display:none'"> -->
+                <!-- <ul class="nav child_menu" :style="menu.menuId === this.menuId ? 'display:block' : 'display:none'">  -->
                    <!-- <li v-for="sub in menuList" v-if="sub.menuLvl2 === 'Y' && menu.menuId === sub.upprMenuId"><a @click="move(sub.menuId, sub.upprMenuId)">{{ sub.menuNm }}</a></li> -->
                 </ul>
                </li>
@@ -128,7 +128,10 @@
 			move(menuId,upprMenuId) {
 	            console.log("22222222 > " + menuId + " : " +upprMenuId);
 	            this.menuId = upprMenuId;
-				location.href = "/comm/"+menuId;
+				//location.href = "/move/"+menuId;
+				//window.location.replace("/move/"+menuId);
+				//this.goPage(menuId);
+				this.$router.push({ path: "/move/"+menuId })
 			},
 			getClass(menuId) {
 			  //console.log("111111111 > " + menuId);
@@ -136,6 +139,16 @@
 			  /* $(".nav.side-menu > li").attr("class","active");
 			  $(".nav.side-menu > li > ui").hide(); */
 			  return menuId == 'USER000M' ? 'fa-user' : menuId == 'SYS000M' ? 'fa-bars' : 'fa-file';
+			}
+			,
+			goPage(menuId){
+				axios.get("/move/"+menuId)
+			    .then(response => {
+			        console.log(response.data)
+			        //$("#MENU001M").html = response.data;
+			        //name.innerHTML = "${response.data.data.first_name} ${response.data.data.last_name}"";
+			        //email.innerHTML = response.data.data.email
+			    })
 			}
 		}
 	});

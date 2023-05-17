@@ -23,6 +23,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
+import com.jjplatform.admin.exception.CustomException;
+import com.jjplatform.admin.exception.ErrorCode;
 import com.jjplatform.admin.vo.UserVo;
 
 @Controller
@@ -41,6 +43,9 @@ public class LoginController {
 	@GetMapping("/main")
     public String main(HttpServletRequest request, HttpServletResponse respose, Authentication authentication, Model model) throws IOException {
     	log.info("###################[ Main Page 이동]###################");
+    	HttpSession sessInfo = request.getSession(false);
+		log.info("세션정보 : " + sessInfo); 
+		if(sessInfo == null) throw new CustomException(ErrorCode.TEMPORARY_SERVER_ERROR);
 //    	if(true) {
 //    		throw new CustomException(ErrorCode.TEMPORARY_SERVER_ERROR);
 //    	}
@@ -59,15 +64,12 @@ public class LoginController {
 			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 //			log.info("ID정보 : " + userDetails.getUserVo().get(0).getUserId()); 
 			log.info("ID정보 : " + userDetails.getUserVo().getUserId()); 
-			
-			HttpSession sessInfo = request.getSession();
-			log.info("세션정보 : " + sessInfo); 
 			UserVo userVo = (UserVo) sessInfo.getAttribute("userInfo");
 			
 			if(userVo == null && request.getRequestURI().equals("/main")) {
 				log.info("userDetails.getUserVo() : " + userDetails.getUserVo()); 
 				sessInfo.setAttribute("userInfo", userDetails.getUserVo());
-				sessInfo.setMaxInactiveInterval(300);  // 60초
+				sessInfo.setMaxInactiveInterval(600);  // 5분
 				log.info("ID정보 : " + userVo); 
 //				sessInfo.invalidate();
 			}
@@ -85,17 +87,28 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(HttpServletRequest request, Model model) {
-    	log.info("login : 2222222222222"); 
+    	log.info("##########[로그인]############"); 
+    	
         return "user/login";
     } 
     
     @GetMapping("/logout")
-    public String loout() throws Exception {
+    public String logout() throws Exception {
+    	log.info("##########[로그아웃]############"); 
 //    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();                                                                                                                                                                                                                                                                                                                                                                                                                              
 //    	if (auth != null) {
 //    		new SecurityContextLogoutHandler().logout(request, response, auth);
 //    	}
 
+        return "user/login";
+    }
+    
+    @GetMapping("/expired")
+    public String expired(HttpServletRequest request) throws Exception {
+    	log.info("##########[세션만료]############"); 
+    	HttpSession sessInfo = request.getSession(false);
+		log.info("세션정보 : " + sessInfo); 
+		sessInfo.setMaxInactiveInterval(0);  // 5분
         return "user/login";
     }
 
