@@ -38,99 +38,121 @@ CREATE TABLE `logging_event` (
 
 
 
--- jjp.SVC_MANAGE definition
-CREATE TABLE SVC_MANAGE (
-	COMP_ID varchar(5) NOT NULL		 COMMENT '소속회사',
-	SVC_SEQ numeric(38,0) NOT NULL	 COMMENT '서비스순번',
-	SVC_ID varchar(100) NOT NULL	 COMMENT '서비스ID', 
-	SVC_NM varchar(200) NULL		 COMMENT '서비스명',
-    PAK_PATH varchar(200) NULL		 COMMENT '패키지명', 	
-	USE_YN varchar(1) NULL			 COMMENT '사용여부', 
-	SVC_DAO varchar(100) NULL		 COMMENT '서비스DAO',
-	SVC_XML varchar(100) NULL		 COMMENT '서비스XML',
-	REG_ID varchar(100) NULL		 COMMENT '등록자', 
-	REG_DTM date NULL				 COMMENT '등록일시', 
-	UPD_ID varchar(100) NULL		 COMMENT '수정자', 
-	UPD_DTM date NULL				 COMMENT '수정일시', 
-	PRIMARY KEY (COMP_ID,SVC_SEQ)
+-- jjplatform.svc_manage definition
+CREATE TABLE `svc_manage` (
+  `COMP_ID` varchar(5) NOT NULL COMMENT '소속회사',
+  `SVC_SEQ` decimal(38,0) NOT NULL COMMENT '서비스순번',
+  `SVC_ID` varchar(100) NOT NULL COMMENT '서비스ID',
+  `SVC_NM` varchar(200) DEFAULT NULL COMMENT '서비스명',
+  `PAK_PATH` varchar(200) DEFAULT NULL COMMENT '패키지명',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT '사용여부',
+  `SVC_DAO` varchar(100) DEFAULT NULL COMMENT '서비스DAO',
+  `SVC_XML` varchar(100) DEFAULT NULL COMMENT '서비스XML',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT '등록자',
+  `REG_DTM` date DEFAULT NULL COMMENT '등록일시',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
+  `UPD_DTM` date DEFAULT NULL COMMENT '수정일시',
+  PRIMARY KEY (`COMP_ID`,`SVC_SEQ`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='서비스등록관리';
 
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 1, 'Svc001Service', '서비스관리', 'com.jjplatform.admin.service', 'Y', 'Svc001Dao', 'svc001', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 2, 'Mnu001Service', '메뉴관리', 'com.jjplatform.admin.service', 'Y', 'Mnu001Dao', 'mnu001', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 4, 'Adm001Service', '주식입출금관리', 'com.jjplatform.admin.service', 'Y', 'Adm001Dao', 'adm001', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 5, 'Adm002Service', '주식관리', 'com.jjplatform.admin.service', 'Y', 'Adm002Dao', 'adm002', 'admin', '2022-07-26', 'admin', '2022-07-26');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 6, 'Usr001Service', '사용자관리', 'com.jjplatform.admin.service', 'Y', 'Usr001Dao', 'usr001', 'admin', '2022-07-26', 'admin', '2022-07-26');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 7, 'Com001Service', '공통코드', 'com.jjplatform.admin.service.impl', 'Y', 'Com001Dao', 'com001', 'admin', '2022-07-26', 'admin', '2022-07-26');
 
--- jjp.MENU_MANAGE definition
-CREATE TABLE jjp.MENU_MANAGE (
-	COMP_ID varchar(5) NOT NULL				COMMENT '소속회사',
-	UPPR_MENU_ID varchar(100) NULL			COMMENT '상위메뉴',
-	MENU_SEQ numeric(38,0) NOT NULL			COMMENT '메뉴순번', 	
-	MENU_ID varchar(100) NOT NULL			COMMENT '메뉴ID', 
-	MENU_NM varchar(200) NULL				COMMENT '메뉴명', 
-	USE_YN varchar(1) NULL					COMMENT '사용여부', 
-	MENU_LVL1 varchar(1) NULL				COMMENT '메뉴레벨1',
-	MENU_LVL2 varchar(1) NULL				COMMENT '메뉴레벨2',
-	MENU_LVL3 varchar(1) NULL				COMMENT '메뉴레벨3',
-	MENU_AUTH varchar(10) DEFAULT NULL 		COMMENT '메뉴권한',
-	REG_ID varchar(100) NULL				COMMENT '등록자', 
-	REG_DTM date NULL		 				COMMENT '등록일시', 
-	UPD_ID varchar(100) NULL				COMMENT '수정자', 
-	UPD_DTM date NULL						COMMENT '수정일시', 
-	PRIMARY KEY (COMP_ID,MENU_SEQ,MENU_ID)
+
+
+-- jjplatform.menu_manage definition
+CREATE TABLE `menu_manage` (
+  `COMP_ID` varchar(5) NOT NULL COMMENT '소속회사',
+  `UPPR_MENU_ID` varchar(100) DEFAULT NULL COMMENT '상위메뉴',
+  `MENU_SEQ` bigint(20) NOT NULL COMMENT '메뉴순번',
+  `MENU_ID` varchar(100) NOT NULL COMMENT '메뉴ID',
+  `MENU_NM` varchar(200) DEFAULT NULL COMMENT '메뉴명',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT '사용여부',
+  `MENU_LVL1` varchar(1) DEFAULT NULL COMMENT '메뉴레벨1',
+  `MENU_LVL2` varchar(1) DEFAULT NULL COMMENT '메뉴레벨2',
+  `MENU_LVL3` varchar(1) DEFAULT NULL COMMENT '메뉴레벨3',
+  `MENU_AUTH` varchar(10) DEFAULT NULL COMMENT '메뉴권한',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT '등록자',
+  `REG_DTM` date DEFAULT NULL COMMENT '등록일시',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
+  `UPD_DTM` date DEFAULT NULL COMMENT '수정일시',
+  PRIMARY KEY (`COMP_ID`,`MENU_SEQ`,`MENU_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='메뉴등록관리';
 
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'ADM000M', 1, 'ADM001M', '주식입출금관리', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
 INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 1, 'MNU001M', '메뉴관리', 'Y', '', 'Y', '', 'S', NULL, NULL, NULL, NULL);
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SVC000M', 1, 'SVC001M', '서비스관리', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
 INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', '', 1, 'SYS000M', '시스템', 'Y', 'Y', '', '', 'S', NULL, NULL, NULL, NULL);
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'ADM000M', 2, 'ADM002M', '주식관리', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
 INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', '', 2, 'SVC000M', '서비스', 'Y', 'Y', NULL, NULL, 'S', NULL, NULL, NULL, NULL);
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 2, 'USR001M', '사용자관리', 'Y', '', 'Y', '', 'S', 'user', NOW(), 'user', NOW());
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 2, 'USR001M', '사용자관리', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19', 'admin', '2022-07-19');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', NULL, 3, 'ADM000M', '관리자만씀', 'Y', 'Y', 'N', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 3, 'COM000M', '공통코드', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19', 'admin', '2022-07-19');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', NULL, 4, 'BOA000M', '게시판', 'Y', 'Y', 'N', 'N', '', 'admin', '2023-05-10', 'admin', '2023-05-10');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'BOA000M', 5, 'BOA001M', '공지사항', 'Y', 'N', 'Y', 'N', '', 'admin', '2023-05-10', 'admin', '2023-05-10');
 
 
 
--- jjp.USER_INFO definition
-CREATE TABLE jjp.USER_INFO (
-	COMP_ID varchar(5) NOT NULL		COMMENT '소속회사',
-	USER_ID varchar(100) NOT NULL	COMMENT '사용자ID', 	
-	USER_PASS varchar(500) NOT NULL	COMMENT '패스워드', 	
-	TEL_NO varchar(12) NOT NULL		COMMENT '전화번호', 	
-	EMAIL varchar(200) NOT NULL		COMMENT '이메일', 	
-	REG_ID varchar(100) NULL		COMMENT '등록자', 	
-	REG_DTM date NULL				COMMENT '등록시간', 	
-	REG_IP varchar(20) NULL			COMMENT '등록IP', 	
-	UPD_ID varchar(100) NULL		COMMENT '수정자ID', 	
-	UPD_DTM date NULL				COMMENT '수정일', 	
-	UPD_IP varchar(20) NULL			COMMENT '수정IP', 		
-	PRIMARY KEY (COMP_ID,USER_ID)
+-- jjplatform.user_info definition
+CREATE TABLE `user_info` (
+  `COMP_ID` varchar(5) NOT NULL COMMENT '소속회사',
+  `USER_ID` varchar(100) NOT NULL COMMENT '사용자ID',
+  `USER_PASS` varchar(500) NOT NULL COMMENT '패스워드',
+  `TEL_NO` varchar(12) NOT NULL COMMENT '전화번호',
+  `EMAIL` varchar(200) NOT NULL COMMENT '이메일',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT '등록자',
+  `REG_DTM` date DEFAULT NULL COMMENT '등록시간',
+  `REG_IP` varchar(20) DEFAULT NULL COMMENT '등록IP',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자ID',
+  `UPD_DTM` date DEFAULT NULL COMMENT '수정일',
+  `UPD_IP` varchar(20) DEFAULT NULL COMMENT '수정IP',
+  PRIMARY KEY (`COMP_ID`,`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='사용자정보';
 
+INSERT INTO jjplatform.user_info (COMP_ID, USER_ID, USER_PASS, TEL_NO, EMAIL, REG_ID, REG_DTM, REG_IP, UPD_ID, UPD_DTM, UPD_IP) VALUES('00000', 'admin', '$2a$10$SSCZO3zH8ooEakriNbM.EOG26sIcZVG5N445ba3ugMnE0XSXmDehq', '01045459806 ', 'whwncjs95@gmail.com', 'admin', NULL, NULL, NULL, NULL, NULL);
 
--- jjp.USER_ROLE definition
-CREATE TABLE jjp.USER_ROLE (
-	COMP_ID varchar(5) NOT NULL		COMMENT '소속회사',
-	USER_ID varchar(100) NOT NULL   COMMENT '사용자ID',
-	USER_ROLE varchar(100) NULL     COMMENT '사용자권한',
-	PRIMARY KEY (COMP_ID,USER_ID)
+
+-- jjplatform.user_role definition
+CREATE TABLE `user_role` (
+  `COMP_ID` varchar(5) NOT NULL COMMENT '소속회사',
+  `USER_ID` varchar(100) NOT NULL COMMENT '사용자ID',
+  `USER_ROLE` varchar(100) DEFAULT NULL COMMENT '사용자권한',
+  PRIMARY KEY (`COMP_ID`,`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='사용자권한';
 
--- jjp.STOCK_IN_OUT_MANAGE definition
+INSERT INTO jjplatform.user_role (COMP_ID, USER_ID, USER_ROLE) VALUES('00000', 'ADMIN', 'ROLE_ADMIN');
+
+
+-- jjplatform.stock_in_out_manage definition
 CREATE TABLE `stock_in_out_manage` (
   `COMP_ID` varchar(5) NOT NULL COMMENT '소속회사',
-  `STOCK_APP_ID` varchar(10) DEFAULT NULL COMMENT '주식앱아이디',
+  `STOCK_APP_ID` varchar(10) NOT NULL COMMENT '주식앱아이디',
   `BANK_ID` varchar(10) NOT NULL COMMENT '거래은행아이디',
   `IN_OUT_DATE` varchar(8) NOT NULL COMMENT '입출금일자',
-  `IN_AMT` bigInt(10) DEFAULT NULL COMMENT '입금금액',
-  `OUT_AMT` bigInt(10) DEFAULT NULL COMMENT '출금금액',
+  `IN_AMT` bigint(10) DEFAULT NULL COMMENT '입금금액',
+  `OUT_AMT` bigint(10) DEFAULT NULL COMMENT '출금금액',
   `REG_ID` varchar(100) DEFAULT NULL COMMENT '등록자',
   `REG_DTM` date DEFAULT NULL COMMENT '등록일시',
   `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
   `UPD_DTM` date DEFAULT NULL COMMENT '수정일시',
   PRIMARY KEY (`COMP_ID`,`STOCK_APP_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='주식입출금관리';		
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='주식입출금관리';	
+INSERT INTO jjplatform.stock_in_out_manage (COMP_ID, STOCK_APP_ID, BANK_ID, IN_OUT_DATE, IN_AMT, OUT_AMT, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SHIN', '01', '20220726', 1000, 1000, 'admin', '2022-07-26', 'admin', '2022-07-26');
 
--- jjp.STOCK_MANAGE definition
+
+-- jjplatform.stock_manage definition
 CREATE TABLE `stock_manage` (
   `COMP_ID` varchar(5) NOT NULL COMMENT '소속회사',
-  `STOCK_APP_ID` varchar(10) DEFAULT NULL COMMENT '주식앱아이디',
+  `STOCK_APP_ID` varchar(10) NOT NULL COMMENT '주식앱아이디',
   `STOCK_ID` varchar(50) NOT NULL COMMENT '주식아이디',
   `SELL_BUY_CD` varchar(2) NOT NULL COMMENT '매입/매도코드',
   `SELL_BUY_DATE` varchar(8) NOT NULL COMMENT '매입/매도일자',
-  `SELL_BUY_QTY` bigInt(10) DEFAULT NULL COMMENT '매입/매도수량',
-  `SELL_BUY__AMT` bigInt(10) DEFAULT NULL COMMENT '매입/매도금액',
+  `SELL_BUY_QTY` bigint(10) DEFAULT NULL COMMENT '매입/매도수량',
+  `SELL_BUY__AMT` bigint(10) DEFAULT NULL COMMENT '매입/매도금액',
   `REG_ID` varchar(100) DEFAULT NULL COMMENT '등록자',
   `REG_DTM` date DEFAULT NULL COMMENT '등록일시',
   `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
