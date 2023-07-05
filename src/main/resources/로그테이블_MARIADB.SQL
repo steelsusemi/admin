@@ -1,22 +1,22 @@
 -- jjp.LOGGING_INFO definition
 CREATE TABLE `logging_info` (
-  COMP_ID varchar(5) NOT NULL		 COMMENT 'ÏÜåÏÜçÌöåÏÇ¨',
-  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ÏàúÎ≤à', 			
-  `LOG_CODE` varchar(10) NOT null		COMMENT 'Î°úÍ∑∏ÏΩîÎìú', 	
-  `LOG_MESS` text NOT null				COMMENT 'Î°úÍ∑∏Î©îÏÑ∏ÏßÄ',	
-  `LOG_CLASS` varchar(1000) NOT null	COMMENT 'ÏóêÎü¨ÌÅ¥ÎûòÏä§',
-  `END_DT` varchar(100) NOT null		COMMENT 'Ï¢ÖÎ£åÏùºÏãú', 	  
-  `REG_ID` varchar(10) DEFAULT null		COMMENT 'Îì±Î°ùÏïÑÏù¥Îîî',	
-  `REG_DTM` date DEFAULT null			COMMENT 'Îì±Î°ùÏùºÏãú', 	
-  `REG_IP` varchar(100) DEFAULT null	COMMENT 'Îì±Î°ùÏïÑÏù¥Ìîº',	
-  `STRT_DT` varchar(100) NOT null		COMMENT 'ÏãúÏûëÏùºÏãú', 	
+  COMP_ID varchar(5) NOT NULL		 COMMENT 'º“º”»∏ªÁ',
+  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT 'º¯π¯', 			
+  `LOG_CODE` varchar(10) NOT null		COMMENT '∑Œ±◊ƒ⁄µÂ', 	
+  `LOG_MESS` text NOT null				COMMENT '∑Œ±◊∏ﬁºº¡ˆ',	
+  `LOG_CLASS` varchar(1000) NOT null	COMMENT 'ø°∑Ø≈¨∑°Ω∫',
+  `END_DT` varchar(100) NOT null		COMMENT '¡æ∑·¿œΩ√', 	  
+  `REG_ID` varchar(10) DEFAULT null		COMMENT 'µÓ∑œæ∆¿Ãµ',	
+  `REG_DTM` date DEFAULT null			COMMENT 'µÓ∑œ¿œΩ√', 	
+  `REG_IP` varchar(100) DEFAULT null	COMMENT 'µÓ∑œæ∆¿Ã««',	
+  `STRT_DT` varchar(100) NOT null		COMMENT 'Ω√¿€¿œΩ√', 	
   PRIMARY KEY (`SEQ`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Î°úÍ∑∏Ï†ïÎ≥¥';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='∑Œ±◊¡§∫∏';
 
 
 -- jjp.logging_event definition
 CREATE TABLE `logging_event` (
-   COMP_ID varchar(5) NOT NULL		 COMMENT 'ÏÜåÏÜçÌöåÏÇ¨',
+   COMP_ID varchar(5) NOT NULL		 COMMENT 'º“º”»∏ªÁ',
   `EVENT_ID` bigint(20) NOT NULL,
   `TIMESTMP` bigint(20) NOT NULL,
   `FORMATTED_MESSAGE` text NOT NULL,
@@ -33,129 +33,161 @@ CREATE TABLE `logging_event` (
   `CALLER_METHOD` varchar(254) NOT NULL,
   `CALLER_LINE` char(4) NOT NULL,  
   PRIMARY KEY (COMP_ID,`EVENT_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Î°úÍ∑∏Ïù¥Î≤§Ìä∏';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='∑Œ±◊¿Ã∫•∆Æ';
 
 
 
 
 -- jjplatform.svc_manage definition
 CREATE TABLE `svc_manage` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT 'ÏÜåÏÜçÌöåÏÇ¨',
-  `SVC_SEQ` decimal(38,0) NOT NULL COMMENT 'ÏÑúÎπÑÏä§ÏàúÎ≤à',
-  `SVC_ID` varchar(100) NOT NULL COMMENT 'ÏÑúÎπÑÏä§ID',
-  `SVC_NM` varchar(200) DEFAULT NULL COMMENT 'ÏÑúÎπÑÏä§Î™Ö',
-  `PAK_PATH` varchar(200) DEFAULT NULL COMMENT 'Ìå®ÌÇ§ÏßÄÎ™Ö',
-  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ÏÇ¨Ïö©Ïó¨Î∂Ä',
-  `SVC_DAO` varchar(100) DEFAULT NULL COMMENT 'ÏÑúÎπÑÏä§DAO',
-  `SVC_XML` varchar(100) DEFAULT NULL COMMENT 'ÏÑúÎπÑÏä§XML',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'Îì±Î°ùÏûê',
-  `REG_DTM` date DEFAULT NULL COMMENT 'Îì±Î°ùÏùºÏãú',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ÏàòÏ†ïÏûê',
-  `UPD_DTM` date DEFAULT NULL COMMENT 'ÏàòÏ†ïÏùºÏãú',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'º“º”»∏ªÁ',
+  `SVC_SEQ` decimal(38,0) NOT NULL COMMENT 'º≠∫ÒΩ∫º¯π¯',
+  `SVC_ID` varchar(100) NOT NULL COMMENT 'º≠∫ÒΩ∫ID',
+  `SVC_NM` varchar(200) DEFAULT NULL COMMENT 'º≠∫ÒΩ∫∏Ì',
+  `PAK_PATH` varchar(200) DEFAULT NULL COMMENT '∆–≈∞¡ˆ∏Ì',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ªÁøÎø©∫Œ',
+  `SVC_DAO` varchar(100) DEFAULT NULL COMMENT 'º≠∫ÒΩ∫DAO',
+  `SVC_XML` varchar(100) DEFAULT NULL COMMENT 'º≠∫ÒΩ∫XML',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µÓ∑œ¿⁄',
+  `REG_DTM` date DEFAULT NULL COMMENT 'µÓ∑œ¿œΩ√',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ºˆ¡§¿⁄',
+  `UPD_DTM` date DEFAULT NULL COMMENT 'ºˆ¡§¿œΩ√',
   PRIMARY KEY (`COMP_ID`,`SVC_SEQ`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='ÏÑúÎπÑÏä§Îì±Î°ùÍ¥ÄÎ¶¨';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='º≠∫ÒΩ∫µÓ∑œ∞¸∏Æ';
 
-INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 1, 'Svc001Service', 'ÏÑúÎπÑÏä§Í¥ÄÎ¶¨', 'com.jjplatform.admin.service', 'Y', 'Svc001Dao', 'svc001', 'admin', '2022-07-25', 'admin', '2022-07-25');
-INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 2, 'Mnu001Service', 'Î©îÎâ¥Í¥ÄÎ¶¨', 'com.jjplatform.admin.service', 'Y', 'Mnu001Dao', 'mnu001', 'admin', '2022-07-25', 'admin', '2022-07-25');
-INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 4, 'Adm001Service', 'Ï£ºÏãùÏûÖÏ∂úÍ∏àÍ¥ÄÎ¶¨', 'com.jjplatform.admin.service', 'Y', 'Adm001Dao', 'adm001', 'admin', '2022-07-25', 'admin', '2022-07-25');
-INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 5, 'Adm002Service', 'Ï£ºÏãùÍ¥ÄÎ¶¨', 'com.jjplatform.admin.service', 'Y', 'Adm002Dao', 'adm002', 'admin', '2022-07-26', 'admin', '2022-07-26');
-INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 6, 'Usr001Service', 'ÏÇ¨Ïö©ÏûêÍ¥ÄÎ¶¨', 'com.jjplatform.admin.service', 'Y', 'Usr001Dao', 'usr001', 'admin', '2022-07-26', 'admin', '2022-07-26');
-INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 7, 'Com001Service', 'Í≥µÌÜµÏΩîÎìú', 'com.jjplatform.admin.service.impl', 'Y', 'Com001Dao', 'com001', 'admin', '2022-07-26', 'admin', '2022-07-26');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 1, 'Svc001Service', 'º≠∫ÒΩ∫∞¸∏Æ', 'com.jjplatform.admin.service', 'Y', 'Svc001Dao', 'svc001', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 2, 'Mnu001Service', '∏ﬁ¥∫∞¸∏Æ', 'com.jjplatform.admin.service', 'Y', 'Mnu001Dao', 'mnu001', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 4, 'Adm001Service', '¡÷Ωƒ¿‘√‚±›∞¸∏Æ', 'com.jjplatform.admin.service', 'Y', 'Adm001Dao', 'adm001', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 5, 'Adm002Service', '¡÷Ωƒ∞¸∏Æ', 'com.jjplatform.admin.service', 'Y', 'Adm002Dao', 'adm002', 'admin', '2022-07-26', 'admin', '2022-07-26');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 6, 'Usr001Service', 'ªÁøÎ¿⁄∞¸∏Æ', 'com.jjplatform.admin.service', 'Y', 'Usr001Dao', 'usr001', 'admin', '2022-07-26', 'admin', '2022-07-26');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 7, 'Com001Service', '∞¯≈Îƒ⁄µÂ', 'com.jjplatform.admin.service.impl', 'Y', 'Com001Dao', 'com001', 'admin', '2022-07-26', 'admin', '2022-07-26');
+INSERT INTO jjplatform.svc_manage (COMP_ID, SVC_SEQ, SVC_ID, SVC_NM, PAK_PATH, USE_YN, SVC_DAO, SVC_XML, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 8, 'Boa001Service', '∞‘Ω√∆«', 'com.jjplatform.admin.service', 'Y', 'Boa001Dao', 'boa001', 'admin', '2023-07-05', 'admin', '2023-07-05');
 
 
 
 -- jjplatform.menu_manage definition
 CREATE TABLE `menu_manage` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT 'ÏÜåÏÜçÌöåÏÇ¨',
-  `UPPR_MENU_ID` varchar(100) DEFAULT NULL COMMENT 'ÏÉÅÏúÑÎ©îÎâ¥',
-  `MENU_SEQ` bigint(20) NOT NULL COMMENT 'Î©îÎâ¥ÏàúÎ≤à',
-  `MENU_ID` varchar(100) NOT NULL COMMENT 'Î©îÎâ¥ID',
-  `MENU_NM` varchar(200) DEFAULT NULL COMMENT 'Î©îÎâ¥Î™Ö',
-  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ÏÇ¨Ïö©Ïó¨Î∂Ä',
-  `MENU_LVL1` varchar(1) DEFAULT NULL COMMENT 'Î©îÎâ¥Î†àÎ≤®1',
-  `MENU_LVL2` varchar(1) DEFAULT NULL COMMENT 'Î©îÎâ¥Î†àÎ≤®2',
-  `MENU_LVL3` varchar(1) DEFAULT NULL COMMENT 'Î©îÎâ¥Î†àÎ≤®3',
-  `MENU_AUTH` varchar(10) DEFAULT NULL COMMENT 'Î©îÎâ¥Í∂åÌïú',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'Îì±Î°ùÏûê',
-  `REG_DTM` date DEFAULT NULL COMMENT 'Îì±Î°ùÏùºÏãú',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ÏàòÏ†ïÏûê',
-  `UPD_DTM` date DEFAULT NULL COMMENT 'ÏàòÏ†ïÏùºÏãú',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'º“º”»∏ªÁ',
+  `UPPR_MENU_ID` varchar(100) DEFAULT NULL COMMENT 'ªÛ¿ß∏ﬁ¥∫',
+  `MENU_SEQ` bigint(20) NOT NULL COMMENT '∏ﬁ¥∫º¯π¯',
+  `MENU_ID` varchar(100) NOT NULL COMMENT '∏ﬁ¥∫ID',
+  `MENU_NM` varchar(200) DEFAULT NULL COMMENT '∏ﬁ¥∫∏Ì',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ªÁøÎø©∫Œ',
+  `MENU_LVL1` varchar(1) DEFAULT NULL COMMENT '∏ﬁ¥∫∑π∫ß1',
+  `MENU_LVL2` varchar(1) DEFAULT NULL COMMENT '∏ﬁ¥∫∑π∫ß2',
+  `MENU_LVL3` varchar(1) DEFAULT NULL COMMENT '∏ﬁ¥∫∑π∫ß3',
+  `MENU_AUTH` varchar(10) DEFAULT NULL COMMENT '∏ﬁ¥∫±««—',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µÓ∑œ¿⁄',
+  `REG_DTM` date DEFAULT NULL COMMENT 'µÓ∑œ¿œΩ√',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ºˆ¡§¿⁄',
+  `UPD_DTM` date DEFAULT NULL COMMENT 'ºˆ¡§¿œΩ√',
   PRIMARY KEY (`COMP_ID`,`MENU_SEQ`,`MENU_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Î©îÎâ¥Îì±Î°ùÍ¥ÄÎ¶¨';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='∏ﬁ¥∫µÓ∑œ∞¸∏Æ';
 
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'ADM000M', 1, 'ADM001M', 'Ï£ºÏãùÏûÖÏ∂úÍ∏àÍ¥ÄÎ¶¨', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 1, 'MNU001M', 'Î©îÎâ¥Í¥ÄÎ¶¨', 'Y', '', 'Y', '', 'S', NULL, NULL, NULL, NULL);
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SVC000M', 1, 'SVC001M', 'ÏÑúÎπÑÏä§Í¥ÄÎ¶¨', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', '', 1, 'SYS000M', 'ÏãúÏä§ÌÖú', 'Y', 'Y', '', '', 'S', NULL, NULL, NULL, NULL);
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'ADM000M', 2, 'ADM002M', 'Ï£ºÏãùÍ¥ÄÎ¶¨', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', '', 2, 'SVC000M', 'ÏÑúÎπÑÏä§', 'Y', 'Y', NULL, NULL, 'S', NULL, NULL, NULL, NULL);
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 2, 'USR001M', 'ÏÇ¨Ïö©ÏûêÍ¥ÄÎ¶¨', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19', 'admin', '2022-07-19');
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', NULL, 3, 'ADM000M', 'Í¥ÄÎ¶¨ÏûêÎßåÏîÄ', 'Y', 'Y', 'N', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 3, 'COM000M', 'Í≥µÌÜµÏΩîÎìú', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19', 'admin', '2022-07-19');
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', NULL, 4, 'BOA000M', 'Í≤åÏãúÌåê', 'Y', 'Y', 'N', 'N', '', 'admin', '2023-05-10', 'admin', '2023-05-10');
-INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'BOA000M', 5, 'BOA001M', 'Í≥µÏßÄÏÇ¨Ìï≠', 'Y', 'N', 'Y', 'N', '', 'admin', '2023-05-10', 'admin', '2023-05-10');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'ADM000M', 1, 'ADM001M', '¡÷Ωƒ¿‘√‚±›∞¸∏Æ', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 1, 'MNU001M', '∏ﬁ¥∫∞¸∏Æ', 'Y', '', 'Y', '', 'S', NULL, NULL, NULL, NULL);
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SVC000M', 1, 'SVC001M', 'º≠∫ÒΩ∫∞¸∏Æ', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', '', 1, 'SYS000M', 'Ω√Ω∫≈€', 'Y', 'Y', '', '', 'S', NULL, NULL, NULL, NULL);
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'ADM000M', 2, 'ADM002M', '¡÷Ωƒ∞¸∏Æ', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', '', 2, 'SVC000M', 'º≠∫ÒΩ∫', 'Y', 'Y', NULL, NULL, 'S', NULL, NULL, NULL, NULL);
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 2, 'USR001M', 'ªÁøÎ¿⁄∞¸∏Æ', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19', 'admin', '2022-07-19');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', NULL, 3, 'ADM000M', '∞¸∏Æ¿⁄∏∏æ∏', 'Y', 'Y', 'N', 'N', '', 'admin', '2022-07-25', 'admin', '2022-07-25');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SYS000M', 3, 'COM000M', '∞¯≈Îƒ⁄µÂ', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19', 'admin', '2022-07-19');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', NULL, 4, 'BOA000M', '∞‘Ω√∆«', 'Y', 'Y', 'N', 'N', '', 'admin', '2023-05-10', 'admin', '2023-05-10');
+INSERT INTO jjplatform.menu_manage (COMP_ID, UPPR_MENU_ID, MENU_SEQ, MENU_ID, MENU_NM, USE_YN, MENU_LVL1, MENU_LVL2, MENU_LVL3, MENU_AUTH, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'BOA000M', 5, 'BOA001M', '∞‘Ω√∆«', 'Y', 'N', 'Y', 'N', '', 'admin', '2023-05-10', 'admin', '2023-07-05');
 
 
 
 -- jjplatform.user_info definition
 CREATE TABLE `user_info` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT 'ÏÜåÏÜçÌöåÏÇ¨',
-  `USER_ID` varchar(100) NOT NULL COMMENT 'ÏÇ¨Ïö©ÏûêID',
-  `USER_PASS` varchar(500) NOT NULL COMMENT 'Ìå®Ïä§ÏõåÎìú',
-  `TEL_NO` varchar(12) NOT NULL COMMENT 'Ï†ÑÌôîÎ≤àÌò∏',
-  `EMAIL` varchar(200) NOT NULL COMMENT 'Ïù¥Î©îÏùº',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'Îì±Î°ùÏûê',
-  `REG_DTM` date DEFAULT NULL COMMENT 'Îì±Î°ùÏãúÍ∞Ñ',
-  `REG_IP` varchar(20) DEFAULT NULL COMMENT 'Îì±Î°ùIP',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ÏàòÏ†ïÏûêID',
-  `UPD_DTM` date DEFAULT NULL COMMENT 'ÏàòÏ†ïÏùº',
-  `UPD_IP` varchar(20) DEFAULT NULL COMMENT 'ÏàòÏ†ïIP',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'º“º”»∏ªÁ',
+  `USER_ID` varchar(100) NOT NULL COMMENT 'ªÁøÎ¿⁄ID',
+  `USER_PASS` varchar(500) NOT NULL COMMENT '∆–Ω∫øˆµÂ',
+  `TEL_NO` varchar(12) NOT NULL COMMENT '¿¸»≠π¯»£',
+  `EMAIL` varchar(200) NOT NULL COMMENT '¿Ã∏ﬁ¿œ',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µÓ∑œ¿⁄',
+  `REG_DTM` date DEFAULT NULL COMMENT 'µÓ∑œΩ√∞£',
+  `REG_IP` varchar(20) DEFAULT NULL COMMENT 'µÓ∑œIP',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ºˆ¡§¿⁄ID',
+  `UPD_DTM` date DEFAULT NULL COMMENT 'ºˆ¡§¿œ',
+  `UPD_IP` varchar(20) DEFAULT NULL COMMENT 'ºˆ¡§IP',
   PRIMARY KEY (`COMP_ID`,`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='ÏÇ¨Ïö©ÏûêÏ†ïÎ≥¥';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='ªÁøÎ¿⁄¡§∫∏';
 
 INSERT INTO jjplatform.user_info (COMP_ID, USER_ID, USER_PASS, TEL_NO, EMAIL, REG_ID, REG_DTM, REG_IP, UPD_ID, UPD_DTM, UPD_IP) VALUES('00000', 'admin', '$2a$10$SSCZO3zH8ooEakriNbM.EOG26sIcZVG5N445ba3ugMnE0XSXmDehq', '01045459806 ', 'whwncjs95@gmail.com', 'admin', NULL, NULL, NULL, NULL, NULL);
 
 
 -- jjplatform.user_role definition
 CREATE TABLE `user_role` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT 'ÏÜåÏÜçÌöåÏÇ¨',
-  `USER_ID` varchar(100) NOT NULL COMMENT 'ÏÇ¨Ïö©ÏûêID',
-  `USER_ROLE` varchar(100) DEFAULT NULL COMMENT 'ÏÇ¨Ïö©ÏûêÍ∂åÌïú',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'º“º”»∏ªÁ',
+  `USER_ID` varchar(100) NOT NULL COMMENT 'ªÁøÎ¿⁄ID',
+  `USER_ROLE` varchar(100) DEFAULT NULL COMMENT 'ªÁøÎ¿⁄±««—',
   PRIMARY KEY (`COMP_ID`,`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='ÏÇ¨Ïö©ÏûêÍ∂åÌïú';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='ªÁøÎ¿⁄±««—';
 
 INSERT INTO jjplatform.user_role (COMP_ID, USER_ID, USER_ROLE) VALUES('00000', 'ADMIN', 'ROLE_ADMIN');
 
 
 -- jjplatform.stock_in_out_manage definition
 CREATE TABLE `stock_in_out_manage` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT 'ÏÜåÏÜçÌöåÏÇ¨',
-  `STOCK_APP_ID` varchar(10) NOT NULL COMMENT 'Ï£ºÏãùÏï±ÏïÑÏù¥Îîî',
-  `BANK_ID` varchar(10) NOT NULL COMMENT 'Í±∞ÎûòÏùÄÌñâÏïÑÏù¥Îîî',
-  `IN_OUT_DATE` varchar(8) NOT NULL COMMENT 'ÏûÖÏ∂úÍ∏àÏùºÏûê',
-  `IN_AMT` bigint(10) DEFAULT NULL COMMENT 'ÏûÖÍ∏àÍ∏àÏï°',
-  `OUT_AMT` bigint(10) DEFAULT NULL COMMENT 'Ï∂úÍ∏àÍ∏àÏï°',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'Îì±Î°ùÏûê',
-  `REG_DTM` date DEFAULT NULL COMMENT 'Îì±Î°ùÏùºÏãú',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ÏàòÏ†ïÏûê',
-  `UPD_DTM` date DEFAULT NULL COMMENT 'ÏàòÏ†ïÏùºÏãú',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'º“º”»∏ªÁ',
+  `STOCK_APP_ID` varchar(10) NOT NULL COMMENT '¡÷Ωƒæ€æ∆¿Ãµ',
+  `BANK_ID` varchar(10) NOT NULL COMMENT '∞≈∑°¿∫«‡æ∆¿Ãµ',
+  `IN_OUT_DATE` varchar(8) NOT NULL COMMENT '¿‘√‚±›¿œ¿⁄',
+  `IN_AMT` bigint(10) DEFAULT NULL COMMENT '¿‘±›±›æ◊',
+  `OUT_AMT` bigint(10) DEFAULT NULL COMMENT '√‚±›±›æ◊',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µÓ∑œ¿⁄',
+  `REG_DTM` date DEFAULT NULL COMMENT 'µÓ∑œ¿œΩ√',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ºˆ¡§¿⁄',
+  `UPD_DTM` date DEFAULT NULL COMMENT 'ºˆ¡§¿œΩ√',
   PRIMARY KEY (`COMP_ID`,`STOCK_APP_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Ï£ºÏãùÏûÖÏ∂úÍ∏àÍ¥ÄÎ¶¨';	
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='¡÷Ωƒ¿‘√‚±›∞¸∏Æ';	
 INSERT INTO jjplatform.stock_in_out_manage (COMP_ID, STOCK_APP_ID, BANK_ID, IN_OUT_DATE, IN_AMT, OUT_AMT, REG_ID, REG_DTM, UPD_ID, UPD_DTM) VALUES('00000', 'SHIN', '01', '20220726', 1000, 1000, 'admin', '2022-07-26', 'admin', '2022-07-26');
 
 
 -- jjplatform.stock_manage definition
 CREATE TABLE `stock_manage` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT 'ÏÜåÏÜçÌöåÏÇ¨',
-  `STOCK_APP_ID` varchar(10) NOT NULL COMMENT 'Ï£ºÏãùÏï±ÏïÑÏù¥Îîî',
-  `STOCK_ID` varchar(50) NOT NULL COMMENT 'Ï£ºÏãùÏïÑÏù¥Îîî',
-  `SELL_BUY_CD` varchar(2) NOT NULL COMMENT 'Îß§ÏûÖ/Îß§ÎèÑÏΩîÎìú',
-  `SELL_BUY_DATE` varchar(8) NOT NULL COMMENT 'Îß§ÏûÖ/Îß§ÎèÑÏùºÏûê',
-  `SELL_BUY_QTY` bigint(10) DEFAULT NULL COMMENT 'Îß§ÏûÖ/Îß§ÎèÑÏàòÎüâ',
-  `SELL_BUY__AMT` bigint(10) DEFAULT NULL COMMENT 'Îß§ÏûÖ/Îß§ÎèÑÍ∏àÏï°',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'Îì±Î°ùÏûê',
-  `REG_DTM` date DEFAULT NULL COMMENT 'Îì±Î°ùÏùºÏãú',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ÏàòÏ†ïÏûê',
-  `UPD_DTM` date DEFAULT NULL COMMENT 'ÏàòÏ†ïÏùºÏãú',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'º“º”»∏ªÁ',
+  `STOCK_APP_ID` varchar(10) NOT NULL COMMENT '¡÷Ωƒæ€æ∆¿Ãµ',
+  `STOCK_ID` varchar(50) NOT NULL COMMENT '¡÷Ωƒæ∆¿Ãµ',
+  `SELL_BUY_CD` varchar(2) NOT NULL COMMENT '∏≈¿‘/∏≈µµƒ⁄µÂ',
+  `SELL_BUY_DATE` varchar(8) NOT NULL COMMENT '∏≈¿‘/∏≈µµ¿œ¿⁄',
+  `SELL_BUY_QTY` bigint(10) DEFAULT NULL COMMENT '∏≈¿‘/∏≈µµºˆ∑Æ',
+  `SELL_BUY__AMT` bigint(10) DEFAULT NULL COMMENT '∏≈¿‘/∏≈µµ±›æ◊',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µÓ∑œ¿⁄',
+  `REG_DTM` date DEFAULT NULL COMMENT 'µÓ∑œ¿œΩ√',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ºˆ¡§¿⁄',
+  `UPD_DTM` date DEFAULT NULL COMMENT 'ºˆ¡§¿œΩ√',
   PRIMARY KEY (`COMP_ID`,`STOCK_APP_ID`,`STOCK_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Ï£ºÏãùÍ¥ÄÎ¶¨';	
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='¡÷Ωƒ∞¸∏Æ';	
+
+CREATE TABLE `board_manage` (
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'º“º”»∏ªÁ',
+  `BOA_SEQ` decimal(38,0) NOT NULL COMMENT '∞‘Ω√π∞º¯π¯',
+  `BOA_TITLE` varchar(200) DEFAULT NULL COMMENT '¡¶∏Ò',
+  `BOA_CONTENT` text DEFAULT NULL COMMENT '≥ªøÎ',
+  `BOA_GB` varchar(200) DEFAULT NULL COMMENT '∞‘Ω√±∏∫–',
+  `OPEN_START_DATE` varchar(8) DEFAULT NULL COMMENT 'ø¿«¬¿œ¿⁄',
+  `OPEN_END_DATE` varchar(8) DEFAULT NULL COMMENT '¡æ∑·¿œ¿⁄',
+  `FILE_ID` bigint(20) DEFAULT NULL COMMENT '∆ƒ¿œæ∆¿Ãµ',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ªÁøÎø©∫Œ',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µÓ∑œ¿⁄',
+  `REG_DTM` date DEFAULT NULL COMMENT 'µÓ∑œ¿œΩ√',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ºˆ¡§¿⁄',
+  `UPD_DTM` date DEFAULT NULL COMMENT 'ºˆ¡§¿œΩ√',
+  PRIMARY KEY (`COMP_ID`,`BOA_SEQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='∞‘Ω√π∞µÓ∑œ∞¸∏Æ';
+
+
+CREATE TABLE `board_reply` (
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'º“º”»∏ªÁ',
+  `BOA_SEQ` decimal(38,0) NOT NULL COMMENT '∞‘Ω√π∞º¯π¯',
+  `REPLY_SEQ` decimal(38,0) NOT NULL COMMENT '¥‰±€º¯π¯',
+  `REPLY_CONTENT` varchar(200) DEFAULT NULL COMMENT '¥‰±€',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ªÁøÎø©∫Œ',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µÓ∑œ¿⁄',
+  `REG_DTM` date DEFAULT NULL COMMENT 'µÓ∑œ¿œΩ√',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ºˆ¡§¿⁄',
+  `UPD_DTM` date DEFAULT NULL COMMENT 'ºˆ¡§¿œΩ√',
+  PRIMARY KEY (`COMP_ID`,`BOA_SEQ`,`REPLY_SEQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='∞‘Ω√π∞¥‰±€';
