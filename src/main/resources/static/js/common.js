@@ -1,5 +1,5 @@
 const common = new Vue({
-  el: "#common",
+//  el: "#common",
   data: {
   },
   methods: {
@@ -24,6 +24,27 @@ const common = new Vue({
     	  }).catch((ex) => { 
             console.log("에러", ex); 
     	  });
+      },
+      /**
+	   * 이미지 파일 업로드
+	   */
+      fileExcute: function(url, file, editor){
+	  	data = new FormData();
+	  	data.append("file", file);
+	  	$.ajax({
+	  		data : data,
+	  		type : "POST",
+	  		url : url,
+	  		contentType : false,
+	  		processData : false,
+	  		success : function(data) {
+	          	//항상 업로드된 파일의 url이 있어야 한다.
+	  			editor.summernote("insertImage", data.url);
+	  		},
+	  		error: function (jqXHR, textStatus, errorThrown) {
+	            console.error(textStatus + " " + errorThrown);
+	        }
+	  	});
       }
   }
 });

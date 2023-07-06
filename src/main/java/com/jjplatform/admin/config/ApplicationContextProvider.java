@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 public class ApplicationContextProvider implements ApplicationContextAware {
 	private static ApplicationContext context ;
 
-
 	/**
 	* WebApplication의  컨텍스트 저장한다.
 	* @param paContext

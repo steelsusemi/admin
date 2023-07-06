@@ -25,17 +25,17 @@ import org.springframework.stereotype.Component;
 public class LoggingAccessDeniedHandler implements AccessDeniedHandler{
 	private static Logger log = LoggerFactory.getLogger(LoggingAccessDeniedHandler.class);
 
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException ex) throws IOException, ServletException {
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
+        
+        log.info(auth.getPrincipal() + " was trying to access protected resource: " + request.getRequestURI());
+        log.info("auth.getAuthorities() >> "+auth+" : "+auth.getAuthorities());
+        log.info("request.getContextPath() >> "+request.getContextPath());
+        
         if (auth != null) {
-            log.info(auth.getPrincipal() + " was trying to access protected resource: " + request.getRequestURI());
-            log.info("auth.getAuthorities() >> "+auth.getAuthorities());
 //            response.sendRedirect(request.getContextPath() + "/main");
-        }else {
-        	response.sendRedirect(request.getContextPath() + "/access-denied");
-        }
+        } else response.sendRedirect(request.getContextPath() + "/access-denied");
     }
 }

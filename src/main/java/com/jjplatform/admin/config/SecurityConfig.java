@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .expiredUrl("/expired ");			/* session 만료시 이동 페이지*/ 
 //            	.expiredUrl("/logout"); 			/* session 만료시 이동 페이지*/ 
 //		        .maxSessionsPreventsLogin(true); 	/* 동일한 사용자 로그인시 x, false 일 경우 기존 사용자 */
-        http.csrf().ignoringAntMatchers("/comm/**");
+        http.csrf().ignoringAntMatchers("/comm/**","/file/**");
     }
 
     /**

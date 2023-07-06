@@ -55,7 +55,7 @@
 									<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">제목 <span class="required">*</span>
 									</label>
 									<div class="col-md-6 col-sm-6 ">
-										<input type="text" id="first-name" required="required" class="form-control ">
+										<input type="text" id="title"  name="title" required="required" class="form-control ">
 									</div>
 								</div>
 								<div class="item form-group">
@@ -71,7 +71,7 @@
 										<!-- <select id="boadFlag" class="form-control" v-model="row.boadFlag"  @change="changeVal('board',index)">
 											<option v-for="selectBoadFlag in boadFlag" :value="row.boadFlag == '' ? '' : selectBoadFlag.code">{{ selectBoadFlag.value }}</option>
 										</select> -->
-										<select id="boadFlag" class="form-control">
+										<select id="boadFlag" name="boadFlag" class="form-control">
 											<option v-for="selectBoadFlag in boadFlag" :value="selectBoadFlag.code">{{ selectBoadFlag.value }}</option>
 										</select>
 									</div>
@@ -94,7 +94,7 @@
 									<label class="col-form-label col-md-3 col-sm-3 label-align">내용 <span class="required">*</span></label>
 									<div class="col-md-6 col-sm-6 ">
 										<div class="container" style="height:500px;">
-										  <textarea class="summernote" name="editordata"></textarea>    
+										  <textarea class="summernote" name="editordata" id="editordata"></textarea>    
 										</div>
 									</div>
 								</div>
@@ -1015,10 +1015,17 @@ const BOA001M = new Vue ({
           			list: this.stockInOutList.filter(stockInOut => stockInOut.rowStatus === "C" || stockInOut.rowStatus === "U")
           		  , menuId: this.mnuId
           	} */
-          	const data = {menuId: this.mnuId};
-          	console.log("111111111 > " + data);
+          	//const data = {menuId: this.mnuId};
+          	//JSON.stringify($('#boardForm').serialize())
+          	$("#boardForm").attr("action", "/comm/saveBoard");
+			$("#boardForm").attr("method", "POST");
+          	$('#boardForm').append("menuId", this.mnuId);
+          	$("#boardForm").submit();
+          	
+          	//const data = JSON.stringify($('#boardForm').serialize());
+          	//console.log(data);
          	// 저장
-          	common.postExcute("/comm/saveBoard", data);
+          	//common.postExcute("/comm/saveBoard", data);
 			/* axios.post("/comm/saveBoard", data, {
 				headers: { "Content-Type": "application/json"}
 	        }).then((res) => { 
@@ -1070,11 +1077,27 @@ const BOA001M = new Vue ({
 });
 </script>   
 <script>
-$(".summernote").summernote({
-	// 에디터 높이
-	  height: 400,
-	  // 에디터 한글 설정
-	  lang: "ko-KR",
+$("#editordata").summernote({
+	height: 450,                 	// 에디터 높이
+	minHeight: null,             	// 최소 높이
+	maxHeight: null,             	// 최대 높이
+	focus: true,                  	// 에디터 로딩후 포커스를 맞출지 여부
+	lang: "ko-KR",					// 한글 설정
+	placeholder: "최대 2048자까지 쓸 수 있습니다",	//placeholder 설정
+	callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+		onImageUpload : function(files) {
+			common.fileExcute("/file/uploadFile", files[0], $(this));
+		},
+		onPaste: function (e) {
+			var clipboardData = e.originalEvent.clipboardData;
+			if (clipboardData && clipboardData.items && clipboardData.items.length) {
+				var item = clipboardData.items[0];
+				if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+					e.preventDefault();
+				}
+			}
+		}
+	}
 });
 </script>
 </body>

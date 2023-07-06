@@ -5940,7 +5940,7 @@ var Editor_Editor = /*#__PURE__*/function () {
     key: "insertImage",
     value: function insertImage(src, param) {
       var _this3 = this;
-
+debugger;
       return createImage(src, param).then(function ($image) {
         _this3.beforeCommand();
 
