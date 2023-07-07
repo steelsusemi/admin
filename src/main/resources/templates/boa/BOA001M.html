@@ -995,18 +995,6 @@ const BOA001M = new Vue ({
 	                console.log("에러", ex); 
 	        }); */
         },
-  	  	addRow: function() {
-	        	console.log("111111111 > " + this.stockInOutList.length + " : " +this.checkVal);
-	        	this.stockInOutList.push({rowStatus: "C" });
-        },
-        deleteRow: function() {
-        	if(this.checkVal.length === 0) alert("삭제할 행을 선택해주세요.");
-        	console.log("33333333333 > " +this.checkVal);
-        	for(var i=0; i < this.checkVal.length; i++) {
-       		  	console.log('array index: ' + this.checkVal[i]);
-       			this.stockInOutList.splice(this.checkVal[i], 1);
-       		}
-        },
         setSave: function() {
         	//if(this.checkVal.length === 0) {alert("저장할 대상을 선택해주세요."); return false;}
         	//this.stockInOutList = [];
@@ -1015,17 +1003,12 @@ const BOA001M = new Vue ({
           			list: this.stockInOutList.filter(stockInOut => stockInOut.rowStatus === "C" || stockInOut.rowStatus === "U")
           		  , menuId: this.mnuId
           	} */
-          	//const data = {menuId: this.mnuId};
-          	//JSON.stringify($('#boardForm').serialize())
-          	$("#boardForm").attr("action", "/comm/saveBoard");
-			$("#boardForm").attr("method", "POST");
-          	$('#boardForm').append("menuId", this.mnuId);
-          	$("#boardForm").submit();
           	
-          	//const data = JSON.stringify($('#boardForm').serialize());
-          	//console.log(data);
+          	const data = convertFormToJSON($("#boardForm"));
+          	data.menuId = this.mnuId;
+          	console.log(data);
          	// 저장
-          	//common.postExcute("/comm/saveBoard", data);
+          	common.postExcute("/comm/saveBoard", data);
 			/* axios.post("/comm/saveBoard", data, {
 				headers: { "Content-Type": "application/json"}
 	        }).then((res) => { 

@@ -191,3 +191,20 @@ CREATE TABLE `board_reply` (
   `UPD_DTM` date DEFAULT NULL COMMENT '수정일시',
   PRIMARY KEY (`COMP_ID`,`BOA_SEQ`,`REPLY_SEQ`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='게시물답글';
+
+
+-- jjp.FILE_MANAGE definition
+CREATE TABLE `FILE_MANAGE` (
+  `FILE_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '파일아이디', 			
+  `FILE_NAME` varchar(50) NOT null		COMMENT '파일명', 	
+  `FILE_HASH` varchar(200) NOT null		COMMENT '파일HASH명',	
+  `FILE_PATH` varchar(200) NOT null		COMMENT '파일경로',	
+  `FILE_URL` varchar(200) NOT null		COMMENT '파일URL',	
+  `FILE_EXTEND` varchar(1000) NOT null	COMMENT '확장자',
+  `DEL_YN` varchar(1) NOT null			COMMENT '삭제여부', 	  
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT '등록자',
+  `REG_DTM` date DEFAULT NULL COMMENT '등록일시',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
+  `UPD_DTM` date DEFAULT NULL COMMENT '수정일시',
+  PRIMARY KEY (`FILE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='파일관리마스터';

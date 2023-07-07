@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            	.antMatchers("/", "/login").permitAll()
+//            	.antMatchers("/", "/login").permitAll()
 //                .antMatchers("/comm/**").hasRole("USER")
 //                .anyRequest().permitAll()
                 .anyRequest().authenticated()
@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(accessDeniedHandler)
             .and().sessionManagement() 
             	.maximumSessions(1) 				/* session 허용 갯수 */ 
-                .expiredUrl("/expired ");			/* session 만료시 이동 페이지*/ 
+                .expiredUrl("/logout ");			/* session 만료시 이동 페이지*/ 
 //            	.expiredUrl("/logout"); 			/* session 만료시 이동 페이지*/ 
 //		        .maxSessionsPreventsLogin(true); 	/* 동일한 사용자 로그인시 x, false 일 경우 기존 사용자 */
         http.csrf().ignoringAntMatchers("/comm/**","/file/**");

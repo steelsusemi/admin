@@ -1,13 +1,13 @@
 server:
   servlet:
     session:
-      timeout: 5m     
+      timeout: 1m     
 #      cookie:
 #        max-age: 5m   
 #        name: SID
 #        http-only: true
 #        secure: true
- 
+
 spring:
   application:
     name: admin

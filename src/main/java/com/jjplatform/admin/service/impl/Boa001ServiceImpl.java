@@ -30,9 +30,9 @@ public class Boa001ServiceImpl implements Boa001Service {
 		return boa001Dao.selectBoardList(param);
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes"})
 	@Override
-	public int saveBoard(List<Map> paramList) throws Exception {
+	public int saveBoard(Map param) throws Exception {
 //		List<Map> aa = new ArrayList<Map>();
 //		aa.add(param);
 //		return aa;
@@ -46,9 +46,7 @@ public class Boa001ServiceImpl implements Boa001Service {
 //		}
 		
 		int rtnCnt = 0;
-		log.info("paramList >> "+paramList);
-		Map param = new HashMap();
-		param.put("list", paramList);
+		log.info("param >> "+param);
 		rtnCnt += boa001Dao.saveBoard(param);
 		
 		return rtnCnt;

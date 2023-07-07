@@ -8,5 +8,5 @@ public interface Boa001Service {
 	
 	public List<Map> selectBoardList(Map param) throws Exception;
 
-	public int saveBoard(List<Map> paramList) throws Exception;
+	public int saveBoard(Map param) throws Exception;
 }

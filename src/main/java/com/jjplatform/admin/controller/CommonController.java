@@ -3,12 +3,14 @@ package com.jjplatform.admin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -31,6 +33,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
 import com.jjplatform.admin.config.ApplicationContextProvider;
+import com.jjplatform.admin.contents.ValiableContents;
 import com.jjplatform.admin.service.CommonService;
 import com.jjplatform.admin.vo.UserVo;
 
@@ -43,7 +46,8 @@ public class CommonController {
 	private CommonService commonService;
 	
     @GetMapping("/move/{v1}")
-    public String commonMenuMove(HttpServletRequest request, Authentication authentication, @PathVariable(value = "v1") String path) {
+    public String commonMenuMove(HttpServletRequest request, HttpServletResponse respose, Authentication authentication, @PathVariable(value = "v1") String path) throws IOException {
+    	log.info("###################[ 페이지이동 ]###################");
     	log.info("commonMenuMove => " + path);
     	String v1 = "";
     	path = path.toUpperCase();
@@ -60,8 +64,8 @@ public class CommonController {
     	}else {
     		v1 = path.substring(0, path.length() - 4);
     	}
-    	log.info("path >> " +path + " : "+ v1.toLowerCase());
     	
+    	log.info("path >> " +path + " : "+ v1.toLowerCase());
     	return v1.toLowerCase() + "/" + path.toLowerCase();
     }
     
@@ -74,6 +78,7 @@ public class CommonController {
     @SuppressWarnings({ "rawtypes", "unchecked"})
 	@PostMapping("/comm/{actNm}")
     public ResponseEntity<?> commonList(@RequestBody Map param, @PathVariable(value = "actNm") String actNm) {
+    	log.info("###################[ 공통 Api 호출 처리 ]###################");
     	String menuId = (String) param.get("menuId");
     	log.info("menuId => " + menuId + " : " + actNm);
     	
@@ -88,7 +93,9 @@ public class CommonController {
 			if(actNm.indexOf("select") != -1) {
 	    		rtnMap.put("result", (List<Map>) tClass.getClass().getMethod(actNm, Map.class).invoke(tClass, param));
 	    	}else if(actNm.indexOf("save") != -1) {
-	    		rtnMap.put("result", (int) tClass.getClass().getMethod(actNm, List.class).invoke(tClass, param.get("list")));
+	    		boolean exceptCheck = Arrays.asList(ValiableContents.MAP_LIST).contains(menuId);
+	    		log.info("exceptCheck > "+exceptCheck);
+	    		rtnMap.put("result", (int) tClass.getClass().getMethod(actNm, (exceptCheck) ? Map.class : List.class).invoke(tClass, (exceptCheck) ? param : param.get("list")));
 	    	}
 //			rtnMap.put("result", (List<Map>) tClass.getClass().getMethod(actNm, Map.class).invoke(tClass, param));
 			log.info("CommonController rtnMap >> " + rtnMap);
@@ -127,7 +134,6 @@ public class CommonController {
 		log.info("getName => " + fileParam.getName());
 		log.info("fileRoot => " + fileRoot);
 		log.info("###################[ 파일정보 종료 ]###################");
-		
 		
 		try {
 			InputStream fileStream = fileParam.getInputStream();

@@ -16,7 +16,7 @@ import nz.net.ultraq.thymeleaf.LayoutDialect;
 @Configuration
 public class WebConfigure implements WebMvcConfigurer{
 	// 인터셉터가 동작 해야 될 요청 주소 mapping 목록
-	private final List<String> EXCEPT_URL = Arrays.asList("/login","/css/**", "/vue/**", "/js/**", "/img/**", "/build/**", "/docs/**", "/src/**", "/vendors/**", "/error/**");  
+	private final List<String> EXCEPT_URL = Arrays.asList("/","/login","/logout","/css/**", "/vue/**", "/js/**", "/img/**", "/build/**", "/docs/**", "/src/**", "/vendors/**", "/error/**");  
 //	private final List<String> PASS_URL = Arrays.asList("/jjpf/**");  
 	 
 	//인터셉터 주소 세팅

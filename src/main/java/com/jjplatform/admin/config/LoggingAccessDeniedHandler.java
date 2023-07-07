@@ -28,6 +28,7 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler{
     @SuppressWarnings("unused")
 	@Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException ex) throws IOException, ServletException {
+    	log.info("###################[ 액세스 거부 처리기 ]###################");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
         log.info(auth.getPrincipal() + " was trying to access protected resource: " + request.getRequestURI());

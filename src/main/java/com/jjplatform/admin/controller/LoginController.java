@@ -86,9 +86,9 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String login(HttpServletRequest request, Model model) {
+    public String login(HttpServletRequest request, HttpServletResponse respose, Model model) throws IOException {
     	log.info("##########[로그인]############"); 
-    	
+    	respose.sendRedirect("/");
         return "user/login";
     } 
     

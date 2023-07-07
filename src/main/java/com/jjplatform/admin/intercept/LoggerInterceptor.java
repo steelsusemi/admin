@@ -22,6 +22,7 @@ public class LoggerInterceptor implements HandlerInterceptor{
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	log.info("#################[ LoggerInterceptor ]#################");
 	   HttpSession sessInfo = request.getSession();
 	   log.info("sessInfo >>>>>>>> "+sessInfo+" : "+sessInfo.getAttribute("userInfo")+" : "+request.getRequestURI()+" : "+request.getRequestURI().equals("/"));
 	   String uri = request.getRequestURI();
@@ -31,23 +32,23 @@ public class LoggerInterceptor implements HandlerInterceptor{
 	   if(sessInfo == null || ("/comm/".equals(uri) && userVo == null)) {
 		  sessInfo.invalidate();
 		  sessInfo.setMaxInactiveInterval(0);
-		  log.info("111111111111 >> ");
+		  log.info("111111111111 >> " + sessInfo.getMaxInactiveInterval());
 		  response.sendRedirect("/logout");
 		  
 		  return false;
        }
 	   
 	   log.info("=====================LoggerInterceptor Start=====================");
-	   log.info("Around LocalDate.now() >> "+ LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-	   log.info("Around LocalDateTime.now() >> "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-	   log.info("Around LocalDate.now() >> "+ LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
-	   log.info("Around request.getMethod >> "+request.getMethod());
-	   log.info("Around request.getContextPath >> "+request.getContextPath());
-	   log.info("Around request.getRequestURI >> "+request.getRequestURI());
-	   log.info("Around request.getRequestURL >> "+request.getRequestURL());
-	   log.info("Around request.getLocalAddr >> "+request.getLocalAddr());
-	   log.info("Around request.getServerName >> "+request.getServerName());
-	   log.info("Around request.getServletPath >> "+request.getServletPath());
+	   log.info("LocalDate.now() 		>> "+ LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+	   log.info("LocalDateTime.now() 	>> "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+	   log.info("LocalDate.now() 		>> "+ LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+	   log.info("request.getMethod 		>> "+request.getMethod());
+	   log.info("request.getContextPath >> "+request.getContextPath());
+	   log.info("request.getRequestURI 	>> "+request.getRequestURI());
+	   log.info("request.getRequestURL 	>> "+request.getRequestURL());
+	   log.info("request.getLocalAddr 	>> "+request.getLocalAddr());
+	   log.info("request.getServerName 	>> "+request.getServerName());
+	   log.info("request.getServletPath >> "+request.getServletPath());
 	   log.info("=====================LoggerInterceptor End=====================");
 		
 		return true;
