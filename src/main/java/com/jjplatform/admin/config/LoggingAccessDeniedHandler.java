@@ -2,10 +2,6 @@ package com.jjplatform.admin.config;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
@@ -13,6 +9,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 액세스 거부 처리기를 만듭니다. 
@@ -26,8 +26,7 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler{
 	private static Logger log = LoggerFactory.getLogger(LoggingAccessDeniedHandler.class);
 
     @SuppressWarnings("unused")
-	@Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException ex) throws IOException, ServletException {
+	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException ex) throws IOException, ServletException {
     	log.info("###################[ 액세스 거부 처리기 ]###################");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         

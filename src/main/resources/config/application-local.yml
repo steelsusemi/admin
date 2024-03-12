@@ -6,7 +6,8 @@ spring:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
      # mariaDB
 #    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/jjplatform?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:log4jdbc:mariadb://127.0.0.1:3306/jjplatform?serverTimezone=UTC&characterEncoding=UTF-8
+#    url: jdbc:mariadb://127.0.0.1:3306/jjplatform?serverTimezone=UTC&characterEncoding=UTF-8
 #    url: ENC(5cExKOcNwuK329Isuvigd5ZEobDcvLSB5CxNCmdof6QFNHnEpEt97zYCwRByUB0ADOfWtLn/m3+RGVL+ancFy79FT7a4AQvDZr+LJZrRCKKYUHXjXV2RiK0alwfNQSGhKyzfBUZrOgkC5aTllim735p6smSV/gW8aay/Vl6deP8=)
     # mssqlDB
 #    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
@@ -14,8 +15,8 @@ spring:
 #    url: ENC(1hfdcXlYudTCXN4vFQjOZVLDvbejQcLb7Hje4wJ/Q5P/BfOQifMxloSm/uLduUT1AgmotA5M0lmJNbYL6n8IBAAw/8Bg7atzZskZH8xjgLq8kPshEBJQ1hkEOVh8b+wb)
 #    username: jjplatform
 #    password: akfls5315!@
-    username: ENC(1khpix9dD+YIZethFw0X13K4ZtpHIF3UPbJ3+vtm7YnaULX6pD1/C336mftKNFET)
-    password: ENC(aaArq4TXfNLXQyLISVOfWpX+JEFySuWCwwayiESoTBLyL2F4NT2FkzbA+0rpnZjh)
+    username: ENC(gH4EHmbNHbI4M4+RYgSF6LjpNr7Le/5BglYAhGlMv6k5/hsXsqJMJGslqx+fMiFc)
+    password: ENC(NyYDnPrs/S4kn/AGeZ5fr5poSYONTnYj+hgaHPNsbfbSVi3LButTC0lH9l1JC/eG)
     type: com.zaxxer.hikari.HikariDataSource
   hikari:
       pool-name: JJPLATFormHikariCP

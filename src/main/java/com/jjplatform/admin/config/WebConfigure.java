@@ -3,15 +3,12 @@ package com.jjplatform.admin.config;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.jjplatform.admin.intercept.LoggerInterceptor;
-
-import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
 public class WebConfigure implements WebMvcConfigurer{

@@ -27,14 +27,14 @@
     <property name="LOG_PATH_NAME" value="${LOG_DIR}/server_${spring.profiles.active}.log" />
     
     <!-- 서버에따른 yml 조회 -->
-    <property resource="${DB_LOG_DIR}/application-${spring.profiles.active}.yml" />
-    <logger name="com.ulisesbocchio.jasyptspringboot" level="ALL"/>
+    <!--<property resource="classpath:${DB_LOG_DIR}/application-${spring.profiles.active}.yml" />
+    <logger name="com.ulisesbocchio.jasyptspringboot" level="ALL"/>-->
 
-    <springProperty scope="context" name="dbUrl" source="spring.datasource.url"/>
+    <!--<springProperty scope="context" name="dbUrl" source="spring.datasource.url"/>
     <springProperty scope="context" name="dbUsername" source="spring.datasource.username"/>
     <springProperty scope="context" name="dbPassword" source="spring.datasource.password"/>
 
-    <!-- <appender name="MyDbAppender" class="ch.qos.logback.classic.db.DBAppender"> -->
+     <appender name="MyDbAppender" class="ch.qos.logback.classic.db.DBAppender"> 
     <appender name="MyDbAppender" class="com.jjplatform.admin.log.LogDBAppender">
         <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
             <driverClass>net.sf.log4jdbc.sql.jdbcapi.DriverSpy</driverClass>
@@ -42,7 +42,7 @@
             <user>${dbUsername}</user>
             <password>${dbPassword}</password>
         </connectionSource>
-    </appender>
+    </appender>-->
 
     <!-- FILE Appender -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">

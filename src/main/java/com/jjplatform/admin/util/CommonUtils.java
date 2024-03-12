@@ -4,9 +4,6 @@ import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,6 +12,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jjplatform.admin.vo.UserVo;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * 공통 함수 모음
@@ -32,7 +32,7 @@ public class CommonUtils {
 	 * @return String
 	 */
 	public static String getCommVal(String strGb) {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+		HttpServletRequest request = (HttpServletRequest) ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession sessInfo = request.getSession();
 		Object obj = sessInfo.getAttribute("userInfo");
 		log.info("aaaaaaaaaaaaaaa >> " + strGb+" : "+obj);

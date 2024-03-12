@@ -26,7 +26,7 @@
 //
 ///**
 // * 아두이노 블루투스 통신으로 온.습도.조도 통신
-// * @author FIC07049
+// * @author j.j.platform
 // *
 // */
 //public class ArduinoInterface extends AppCompatActivity implements View.OnClickListener{
