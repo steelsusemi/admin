@@ -1,2 +1,8 @@
 ####### Adimin 개발 샘플화면 주소 #######
 https://colorlib.com/polygon/gentelella/index.html
+
+####### Adimin 개발 환경설정 #######
+1. sts4 버젼
+2. mariaDB jjplatform/akfls5315!@
+3. openjdk17
+
