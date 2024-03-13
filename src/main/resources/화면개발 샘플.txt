@@ -5,4 +5,5 @@ https://colorlib.com/polygon/gentelella/index.html
 1. sts4 버젼
 2. mariaDB jjplatform/akfls5315!@
 3. openjdk17
+4. C:\smartFarm\maven\repository
 

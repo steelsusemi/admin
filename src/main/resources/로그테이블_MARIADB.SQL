@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
--- È£½ºÆ®:                          127.0.0.1
--- ¼­¹ö ¹öÀü:                        10.11.7-MariaDB - mariadb.org binary distribution
--- ¼­¹ö OS:                        Win64
--- HeidiSQL ¹öÀü:                  12.6.0.6765
+-- í˜¸ìŠ¤íŠ¸:                          127.0.0.1
+-- ì„œë²„ ë²„ì „:                        10.11.7-MariaDB - mariadb.org binary distribution
+-- ì„œë²„ OS:                        Win64
+-- HeidiSQL ë²„ì „:                  12.6.0.6765
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -15,67 +15,67 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- jjplatform µ¥ÀÌÅÍº£ÀÌ½º ±¸Á¶ ³»º¸³»±â
+-- jjplatform ë°ì´í„°ë² ì´ìŠ¤ êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE DATABASE IF NOT EXISTS `jjplatform` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 USE `jjplatform`;
 
--- Å×ÀÌºí jjplatform.board_manage ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.board_manage êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `board_manage` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT '¼Ò¼ÓÈ¸»ç',
-  `BOA_SEQ` decimal(38,0) NOT NULL COMMENT '°Ô½Ã¹°¼ø¹ø',
-  `BOA_TITLE` varchar(200) DEFAULT NULL COMMENT 'Á¦¸ñ',
-  `BOA_CONTENT` text DEFAULT NULL COMMENT '³»¿ë',
-  `BOA_GB` varchar(200) DEFAULT NULL COMMENT '°Ô½Ã±¸ºĞ',
-  `OPEN_START_DATE` varchar(8) DEFAULT NULL COMMENT '¿ÀÇÂÀÏÀÚ',
-  `OPEN_END_DATE` varchar(8) DEFAULT NULL COMMENT 'Á¾·áÀÏÀÚ',
-  `FILE_ID` bigint(20) DEFAULT NULL COMMENT 'ÆÄÀÏ¾ÆÀÌµğ',
-  `USE_YN` varchar(1) DEFAULT NULL COMMENT '»ç¿ë¿©ºÎ',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µî·ÏÀÚ',
-  `REG_DTM` datetime DEFAULT NULL COMMENT 'µî·ÏÀÏ½Ã',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '¼öÁ¤ÀÚ',
-  `UPD_DTM` datetime DEFAULT NULL COMMENT '¼öÁ¤ÀÏ½Ã',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
+  `BOA_SEQ` decimal(38,0) NOT NULL COMMENT 'ê²Œì‹œë¬¼ìˆœë²ˆ',
+  `BOA_TITLE` varchar(200) DEFAULT NULL COMMENT 'ì œëª©',
+  `BOA_CONTENT` text DEFAULT NULL COMMENT 'ë‚´ìš©',
+  `BOA_GB` varchar(200) DEFAULT NULL COMMENT 'ê²Œì‹œêµ¬ë¶„',
+  `OPEN_START_DATE` varchar(8) DEFAULT NULL COMMENT 'ì˜¤í”ˆì¼ì',
+  `OPEN_END_DATE` varchar(8) DEFAULT NULL COMMENT 'ì¢…ë£Œì¼ì',
+  `FILE_ID` bigint(20) DEFAULT NULL COMMENT 'íŒŒì¼ì•„ì´ë””',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ì‚¬ìš©ì—¬ë¶€',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'ë“±ë¡ì',
+  `REG_DTM` datetime DEFAULT NULL COMMENT 'ë“±ë¡ì¼ì‹œ',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ìˆ˜ì •ì',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT 'ìˆ˜ì •ì¼ì‹œ',
   PRIMARY KEY (`COMP_ID`,`BOA_SEQ`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='°Ô½Ã¹°µî·Ï°ü¸®';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ê²Œì‹œë¬¼ë“±ë¡ê´€ë¦¬';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.board_manage:~0 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.board_manage:~0 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 
--- Å×ÀÌºí jjplatform.board_reply ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.board_reply êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `board_reply` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT '¼Ò¼ÓÈ¸»ç',
-  `BOA_SEQ` decimal(38,0) NOT NULL COMMENT '°Ô½Ã¹°¼ø¹ø',
-  `REPLY_SEQ` decimal(38,0) NOT NULL COMMENT '´ä±Û¼ø¹ø',
-  `REPLY_CONTENT` varchar(200) DEFAULT NULL COMMENT '´ä±Û',
-  `USE_YN` varchar(1) DEFAULT NULL COMMENT '»ç¿ë¿©ºÎ',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µî·ÏÀÚ',
-  `REG_DTM` datetime DEFAULT NULL COMMENT 'µî·ÏÀÏ½Ã',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '¼öÁ¤ÀÚ',
-  `UPD_DTM` datetime DEFAULT NULL COMMENT '¼öÁ¤ÀÏ½Ã',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
+  `BOA_SEQ` decimal(38,0) NOT NULL COMMENT 'ê²Œì‹œë¬¼ìˆœë²ˆ',
+  `REPLY_SEQ` decimal(38,0) NOT NULL COMMENT 'ë‹µê¸€ìˆœë²ˆ',
+  `REPLY_CONTENT` varchar(200) DEFAULT NULL COMMENT 'ë‹µê¸€',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ì‚¬ìš©ì—¬ë¶€',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'ë“±ë¡ì',
+  `REG_DTM` datetime DEFAULT NULL COMMENT 'ë“±ë¡ì¼ì‹œ',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ìˆ˜ì •ì',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT 'ìˆ˜ì •ì¼ì‹œ',
   PRIMARY KEY (`COMP_ID`,`BOA_SEQ`,`REPLY_SEQ`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='°Ô½Ã¹°´ä±Û';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ê²Œì‹œë¬¼ë‹µê¸€';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.board_reply:~0 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.board_reply:~0 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 
--- Å×ÀÌºí jjplatform.file_manage ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.file_manage êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `file_manage` (
-  `FILE_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ÆÄÀÏ¾ÆÀÌµğ',
-  `FILE_NAME` varchar(50) NOT NULL COMMENT 'ÆÄÀÏ¸í',
-  `FILE_HASH` varchar(200) NOT NULL COMMENT 'ÆÄÀÏHASH¸í',
-  `FILE_PATH` varchar(200) NOT NULL COMMENT 'ÆÄÀÏ°æ·Î',
-  `FILE_URL` varchar(200) NOT NULL COMMENT 'ÆÄÀÏURL',
-  `FILE_EXTEND` varchar(1000) NOT NULL COMMENT 'È®ÀåÀÚ',
-  `DEL_YN` varchar(1) NOT NULL COMMENT '»èÁ¦¿©ºÎ',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µî·ÏÀÚ',
-  `REG_DTM` datetime DEFAULT NULL COMMENT 'µî·ÏÀÏ½Ã',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '¼öÁ¤ÀÚ',
-  `UPD_DTM` datetime DEFAULT NULL COMMENT '¼öÁ¤ÀÏ½Ã',
+  `FILE_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'íŒŒì¼ì•„ì´ë””',
+  `FILE_NAME` varchar(50) NOT NULL COMMENT 'íŒŒì¼ëª…',
+  `FILE_HASH` varchar(200) NOT NULL COMMENT 'íŒŒì¼HASHëª…',
+  `FILE_PATH` varchar(200) NOT NULL COMMENT 'íŒŒì¼ê²½ë¡œ',
+  `FILE_URL` varchar(200) NOT NULL COMMENT 'íŒŒì¼URL',
+  `FILE_EXTEND` varchar(1000) NOT NULL COMMENT 'í™•ì¥ì',
+  `DEL_YN` varchar(1) NOT NULL COMMENT 'ì‚­ì œì—¬ë¶€',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'ë“±ë¡ì',
+  `REG_DTM` datetime DEFAULT NULL COMMENT 'ë“±ë¡ì¼ì‹œ',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ìˆ˜ì •ì',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT 'ìˆ˜ì •ì¼ì‹œ',
   PRIMARY KEY (`FILE_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ÆÄÀÏ°ü¸®¸¶½ºÅÍ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='íŒŒì¼ê´€ë¦¬ë§ˆìŠ¤í„°';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.file_manage:~0 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.file_manage:~0 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 
--- Å×ÀÌºí jjplatform.logging_event ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.logging_event êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `logging_event` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT '¼Ò¼ÓÈ¸»ç',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
   `EVENT_ID` bigint(20) NOT NULL,
   `TIMESTMP` bigint(20) NOT NULL,
   `FORMATTED_MESSAGE` text NOT NULL,
@@ -92,175 +92,177 @@ CREATE TABLE IF NOT EXISTS `logging_event` (
   `CALLER_METHOD` varchar(254) NOT NULL,
   `CALLER_LINE` char(4) NOT NULL,
   PRIMARY KEY (`COMP_ID`,`EVENT_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='·Î±×ÀÌº¥Æ®';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ë¡œê·¸ì´ë²¤íŠ¸';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.logging_event:~0 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.logging_event:~0 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 
--- Å×ÀÌºí jjplatform.logging_info ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.logging_info êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `logging_info` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT '¼Ò¼ÓÈ¸»ç',
-  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '¼ø¹ø',
-  `LOG_CODE` varchar(10) NOT NULL COMMENT '·Î±×ÄÚµå',
-  `LOG_MESS` text NOT NULL COMMENT '·Î±×¸Ş¼¼Áö',
-  `LOG_CLASS` varchar(1000) NOT NULL COMMENT '¿¡·¯Å¬·¡½º',
-  `END_DT` varchar(100) NOT NULL COMMENT 'Á¾·áÀÏ½Ã',
-  `REG_ID` varchar(10) DEFAULT NULL COMMENT 'µî·Ï¾ÆÀÌµğ',
-  `REG_DTM` datetime DEFAULT NULL COMMENT 'µî·ÏÀÏ½Ã',
-  `REG_IP` varchar(100) DEFAULT NULL COMMENT 'µî·Ï¾ÆÀÌÇÇ',
-  `STRT_DT` varchar(100) NOT NULL COMMENT '½ÃÀÛÀÏ½Ã',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
+  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ìˆœë²ˆ',
+  `LOG_CODE` varchar(10) NOT NULL COMMENT 'ë¡œê·¸ì½”ë“œ',
+  `LOG_MESS` text NOT NULL COMMENT 'ë¡œê·¸ë©”ì„¸ì§€',
+  `LOG_CLASS` varchar(1000) NOT NULL COMMENT 'ì—ëŸ¬í´ë˜ìŠ¤',
+  `END_DT` varchar(100) NOT NULL COMMENT 'ì¢…ë£Œì¼ì‹œ',
+  `REG_ID` varchar(10) DEFAULT NULL COMMENT 'ë“±ë¡ì•„ì´ë””',
+  `REG_DTM` datetime DEFAULT NULL COMMENT 'ë“±ë¡ì¼ì‹œ',
+  `REG_IP` varchar(100) DEFAULT NULL COMMENT 'ë“±ë¡ì•„ì´í”¼',
+  `STRT_DT` varchar(100) NOT NULL COMMENT 'ì‹œì‘ì¼ì‹œ',
   PRIMARY KEY (`SEQ`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='·Î±×Á¤º¸';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ë¡œê·¸ì •ë³´';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.logging_info:~0 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.logging_info:~0 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 
--- Å×ÀÌºí jjplatform.menu_manage ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.menu_manage êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `menu_manage` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT '¼Ò¼ÓÈ¸»ç',
-  `UPPR_MENU_ID` varchar(100) DEFAULT NULL COMMENT '»óÀ§¸Ş´º',
-  `MENU_SEQ` bigint(20) NOT NULL COMMENT '¸Ş´º¼ø¹ø',
-  `MENU_ID` varchar(100) NOT NULL COMMENT '¸Ş´ºID',
-  `MENU_NM` varchar(200) DEFAULT NULL COMMENT '¸Ş´º¸í',
-  `USE_YN` varchar(1) DEFAULT NULL COMMENT '»ç¿ë¿©ºÎ',
-  `MENU_LVL1` varchar(1) DEFAULT NULL COMMENT '¸Ş´º·¹º§1',
-  `MENU_LVL2` varchar(1) DEFAULT NULL COMMENT '¸Ş´º·¹º§2',
-  `MENU_LVL3` varchar(1) DEFAULT NULL COMMENT '¸Ş´º·¹º§3',
-  `MENU_AUTH` varchar(10) DEFAULT NULL COMMENT '¸Ş´º±ÇÇÑ',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µî·ÏÀÚ',
-  `REG_DTM` datetime DEFAULT NULL COMMENT 'µî·ÏÀÏ½Ã',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '¼öÁ¤ÀÚ',
-  `UPD_DTM` datetime DEFAULT NULL COMMENT '¼öÁ¤ÀÏ½Ã',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
+  `UPPR_MENU_ID` varchar(100) DEFAULT NULL COMMENT 'ìƒìœ„ë©”ë‰´',
+  `MENU_SEQ` bigint(20) NOT NULL COMMENT 'ë©”ë‰´ìˆœë²ˆ',
+  `MENU_ID` varchar(100) NOT NULL COMMENT 'ë©”ë‰´ID',
+  `MENU_NM` varchar(200) DEFAULT NULL COMMENT 'ë©”ë‰´ëª…',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ì‚¬ìš©ì—¬ë¶€',
+  `MENU_LVL1` varchar(1) DEFAULT NULL COMMENT 'ë©”ë‰´ë ˆë²¨1',
+  `MENU_LVL2` varchar(1) DEFAULT NULL COMMENT 'ë©”ë‰´ë ˆë²¨2',
+  `MENU_LVL3` varchar(1) DEFAULT NULL COMMENT 'ë©”ë‰´ë ˆë²¨3',
+  `MENU_AUTH` varchar(10) DEFAULT NULL COMMENT 'ë©”ë‰´ê¶Œí•œ',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'ë“±ë¡ì',
+  `REG_DTM` datetime DEFAULT NULL COMMENT 'ë“±ë¡ì¼ì‹œ',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ìˆ˜ì •ì',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT 'ìˆ˜ì •ì¼ì‹œ',
   PRIMARY KEY (`COMP_ID`,`MENU_SEQ`,`MENU_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='¸Ş´ºµî·Ï°ü¸®';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ë©”ë‰´ë“±ë¡ê´€ë¦¬';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.menu_manage:~13 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.menu_manage:~13 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 INSERT IGNORE INTO `menu_manage` (`COMP_ID`, `UPPR_MENU_ID`, `MENU_SEQ`, `MENU_ID`, `MENU_NM`, `USE_YN`, `MENU_LVL1`, `MENU_LVL2`, `MENU_LVL3`, `MENU_AUTH`, `REG_ID`, `REG_DTM`, `UPD_ID`, `UPD_DTM`) VALUES
-	('00000', 'ADM000M', 1, 'ADM001M', 'ÁÖ½ÄÀÔÃâ±İ°ü¸®', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25 00:00:00', 'admin', '2022-07-25 00:00:00'),
-	('00000', 'SYS000M', 1, 'MNU001M', '¸Ş´º°ü¸®', 'Y', '', 'Y', '', 'S', NULL, NULL, NULL, NULL),
-	('00000', 'SVC000M', 1, 'SVC001M', '¼­ºñ½º°ü¸®', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25 00:00:00', 'admin', '2022-07-25 00:00:00'),
-	('00000', '', 1, 'SYS000M', '½Ã½ºÅÛ', 'Y', 'Y', '', '', 'S', NULL, NULL, NULL, NULL),
-	('00000', 'ADM000M', 2, 'ADM002M', 'ÁÖ½Ä°ü¸®', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25 00:00:00', 'admin', '2022-07-25 00:00:00'),
-	('00000', '', 2, 'SVC000M', '¼­ºñ½º', 'Y', 'Y', NULL, NULL, 'S', NULL, NULL, NULL, NULL),
-	('00000', 'SYS000M', 2, 'USR001M', '»ç¿ëÀÚ°ü¸®', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19 00:00:00', 'admin', '2022-07-19 00:00:00'),
-	('00000', NULL, 3, 'ADM000M', '°ü¸®ÀÚ¸¸¾¸', 'Y', 'Y', 'N', 'N', '', 'admin', '2022-07-25 00:00:00', 'admin', '2022-07-25 00:00:00'),
-	('00000', 'SYS000M', 3, 'COM000M', '°øÅëÄÚµå', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19 00:00:00', 'admin', '2022-07-19 00:00:00'),
-	('00000', NULL, 4, 'BOA000M', '°Ô½ÃÆÇ', 'Y', 'Y', 'N', 'N', '', 'admin', '2023-05-10 00:00:00', 'admin', '2023-05-10 00:00:00'),
-	('00000', 'BOA000M', 5, 'BOA001M', '°Ô½ÃÆÇ', 'Y', 'N', 'Y', 'N', '', 'admin', '2023-05-10 00:00:00', 'admin', '2023-07-05 00:00:00'),
-	('00000', NULL, 6, 'FAM000M', '½º¸¶Æ®ÆÊ', 'Y', 'Y', 'N', 'N', '', 'admin', '2024-03-12 00:00:00', 'admin', '2024-03-12 00:00:00'),
-	('00000', 'FAM000M', 7, 'FAM001M', 'Ã¤¼Ò ÆÊ', 'Y', 'N', 'Y', 'N', '', 'admin', '2024-03-12 00:00:00', 'admin', '2024-03-13 00:00:00');
+	('00000', 'ADM000M', 1, 'ADM001M', 'ì£¼ì‹ì…ì¶œê¸ˆê´€ë¦¬', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25 00:00:00', 'admin', '2022-07-25 00:00:00'),
+	('00000', 'SYS000M', 1, 'MNU001M', 'ë©”ë‰´ê´€ë¦¬', 'Y', '', 'Y', '', 'S', NULL, NULL, NULL, NULL),
+	('00000', 'SVC000M', 1, 'SVC001M', 'ì„œë¹„ìŠ¤ê´€ë¦¬', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25 00:00:00', 'admin', '2022-07-25 00:00:00'),
+	('00000', '', 1, 'SYS000M', 'ì‹œìŠ¤í…œ', 'Y', 'Y', '', '', 'S', NULL, NULL, NULL, NULL),
+	('00000', 'ADM000M', 2, 'ADM002M', 'ì£¼ì‹ê´€ë¦¬', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-25 00:00:00', 'admin', '2022-07-25 00:00:00'),
+	('00000', '', 2, 'SVC000M', 'ì„œë¹„ìŠ¤', 'Y', 'Y', NULL, NULL, 'S', NULL, NULL, NULL, NULL),
+	('00000', 'SYS000M', 2, 'USR001M', 'ì‚¬ìš©ìê´€ë¦¬', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19 00:00:00', 'admin', '2022-07-19 00:00:00'),
+	('00000', NULL, 3, 'ADM000M', 'ê´€ë¦¬ìë§Œì”€', 'Y', 'Y', 'N', 'N', '', 'admin', '2022-07-25 00:00:00', 'admin', '2022-07-25 00:00:00'),
+	('00000', 'SYS000M', 3, 'COM000M', 'ê³µí†µì½”ë“œ', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19 00:00:00', 'admin', '2022-07-19 00:00:00'),
+	('00000', NULL, 4, 'BOA000M', 'ê²Œì‹œíŒ', 'Y', 'Y', 'N', 'N', '', 'admin', '2023-05-10 00:00:00', 'admin', '2023-05-10 00:00:00'),
+	('00000', 'BOA000M', 5, 'BOA001M', 'ê²Œì‹œíŒ', 'Y', 'N', 'Y', 'N', '', 'admin', '2023-05-10 00:00:00', 'admin', '2023-07-05 00:00:00'),
+	('00000', NULL, 6, 'FAM000M', 'ìŠ¤ë§ˆíŠ¸íŒœ', 'Y', 'Y', 'N', 'N', '', 'admin', '2024-03-12 00:00:00', 'admin', '2024-03-12 00:00:00'),
+	('00000', 'FAM000M', 7, 'FAM001M', 'ì±„ì†Œ íŒœ', 'Y', 'N', 'Y', 'N', '', 'admin', '2024-03-12 00:00:00', 'admin', '2024-03-13 00:00:00');
 
--- Å×ÀÌºí jjplatform.smart_farm_manage ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.smart_farm_manage êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `smart_farm_manage` (
-  `FARM_CD` varchar(10) NOT NULL COMMENT 'ÆÊÄÚµå',
-  `CROP_ID` varchar(10) NOT NULL COMMENT 'ÀÛ¹°ID',
-  `CROP_NAME` varchar(200) DEFAULT NULL COMMENT 'ÀÛ¹°¸í',
-  `CROP_STTUS` varchar(2) DEFAULT 'G' COMMENT 'ÀÛ¹°»óÅÂ(F0001)[G:»ıÀå,B:°ú½À,C:°ÇÁ¶,W:ÀÀ±Ş,D:´ÙÀÌ]',
-  `CROP_CHECK_CD` varchar(2) DEFAULT NULL COMMENT 'ÀÛ¹°Ã¼Å©ÄÚµå(F0002)[T:¿Âµµ,H:½Àµµ,L:Á¶µµ,W:¹°³ôÀÌ,P:¿ë¾×Èñ¼®]',
-  `REAL_DATE_TIME` datetime DEFAULT NULL COMMENT '½Ç½Ã°£Ã¼Å©ÀÏ½Ã',
-  `CROP_FILE_ID` varchar(100) DEFAULT NULL COMMENT 'ÆÄÀÏ¾ÆÀÌµğ',
-  `USE_YN` varchar(1) DEFAULT NULL COMMENT '»ç¿ë¿©ºÎ',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µî·ÏÀÚ',
-  `REG_DTM` datetime DEFAULT NULL COMMENT 'µî·ÏÀÏ½Ã',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '¼öÁ¤ÀÚ',
-  `UPD_DTM` datetime DEFAULT NULL COMMENT '¼öÁ¤ÀÏ½Ã',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
+  `FARM_CD` varchar(10) NOT NULL COMMENT 'íŒœì½”ë“œ',
+  `CROP_ID` varchar(10) NOT NULL COMMENT 'ì‘ë¬¼ID',
+  `CROP_SEQ` decimal(20,0) NOT NULL DEFAULT 0 COMMENT 'ì‘ë¬¼ìˆœë²ˆ',
+  `CROP_NAME` varchar(200) DEFAULT NULL COMMENT 'ì‘ë¬¼ëª…',
+  `CROP_STTUS` varchar(2) DEFAULT 'G' COMMENT 'ì‘ë¬¼ìƒíƒœ(F0001)[G:ìƒì¥,B:ê³¼ìŠµ,C:ê±´ì¡°,W:ì‘ê¸‰,D:ë‹¤ì´]',
+  `CROP_CHECK_CD` varchar(2) DEFAULT NULL COMMENT 'ì‘ë¬¼ì²´í¬ì½”ë“œ(F0002)[T:ì˜¨ë„,H:ìŠµë„,L:ì¡°ë„,W:ë¬¼ë†’ì´,P:ìš©ì•¡í¬ì„]',
+  `REAL_DATE_TIME` datetime DEFAULT NULL COMMENT 'ì‹¤ì‹œê°„ì²´í¬ì¼ì‹œ',
+  `CROP_FILE_ID` varchar(100) DEFAULT NULL COMMENT 'íŒŒì¼ì•„ì´ë””',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ì‚¬ìš©ì—¬ë¶€',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'ë“±ë¡ì',
+  `REG_DTM` datetime DEFAULT NULL COMMENT 'ë“±ë¡ì¼ì‹œ',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ìˆ˜ì •ì',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT 'ìˆ˜ì •ì¼ì‹œ',
   PRIMARY KEY (`FARM_CD`,`CROP_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='½º¸¶Æ®ÆÊ°ü¸®';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ìŠ¤ë§ˆíŠ¸íŒœê´€ë¦¬';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.smart_farm_manage:~0 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.smart_farm_manage:~0 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 
--- Å×ÀÌºí jjplatform.stock_in_out_manage ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.stock_in_out_manage êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `stock_in_out_manage` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT '¼Ò¼ÓÈ¸»ç',
-  `STOCK_APP_ID` varchar(10) NOT NULL COMMENT 'ÁÖ½Ä¾Û¾ÆÀÌµğ',
-  `BANK_ID` varchar(10) NOT NULL COMMENT '°Å·¡ÀºÇà¾ÆÀÌµğ',
-  `IN_OUT_DATE` varchar(8) NOT NULL COMMENT 'ÀÔÃâ±İÀÏÀÚ',
-  `IN_AMT` bigint(10) DEFAULT NULL COMMENT 'ÀÔ±İ±İ¾×',
-  `OUT_AMT` bigint(10) DEFAULT NULL COMMENT 'Ãâ±İ±İ¾×',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µî·ÏÀÚ',
-  `REG_DTM` datetime DEFAULT NULL COMMENT 'µî·ÏÀÏ½Ã',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '¼öÁ¤ÀÚ',
-  `UPD_DTM` datetime DEFAULT NULL COMMENT '¼öÁ¤ÀÏ½Ã',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
+  `STOCK_APP_ID` varchar(10) NOT NULL COMMENT 'ì£¼ì‹ì•±ì•„ì´ë””',
+  `BANK_ID` varchar(10) NOT NULL COMMENT 'ê±°ë˜ì€í–‰ì•„ì´ë””',
+  `IN_OUT_DATE` varchar(8) NOT NULL COMMENT 'ì…ì¶œê¸ˆì¼ì',
+  `IN_AMT` bigint(10) DEFAULT NULL COMMENT 'ì…ê¸ˆê¸ˆì•¡',
+  `OUT_AMT` bigint(10) DEFAULT NULL COMMENT 'ì¶œê¸ˆê¸ˆì•¡',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'ë“±ë¡ì',
+  `REG_DTM` datetime DEFAULT NULL COMMENT 'ë“±ë¡ì¼ì‹œ',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ìˆ˜ì •ì',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT 'ìˆ˜ì •ì¼ì‹œ',
   PRIMARY KEY (`COMP_ID`,`STOCK_APP_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ÁÖ½ÄÀÔÃâ±İ°ü¸®';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ì£¼ì‹ì…ì¶œê¸ˆê´€ë¦¬';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.stock_in_out_manage:~1 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.stock_in_out_manage:~1 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 INSERT IGNORE INTO `stock_in_out_manage` (`COMP_ID`, `STOCK_APP_ID`, `BANK_ID`, `IN_OUT_DATE`, `IN_AMT`, `OUT_AMT`, `REG_ID`, `REG_DTM`, `UPD_ID`, `UPD_DTM`) VALUES
 	('00000', 'SHIN', '01', '20220726', 1000, 1000, 'admin', '2022-07-26 00:00:00', 'admin', '2022-07-26 00:00:00');
 
--- Å×ÀÌºí jjplatform.stock_manage ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.stock_manage êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `stock_manage` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT '¼Ò¼ÓÈ¸»ç',
-  `STOCK_APP_ID` varchar(10) NOT NULL COMMENT 'ÁÖ½Ä¾Û¾ÆÀÌµğ',
-  `STOCK_ID` varchar(50) NOT NULL COMMENT 'ÁÖ½Ä¾ÆÀÌµğ',
-  `SELL_BUY_CD` varchar(2) NOT NULL COMMENT '¸ÅÀÔ/¸ÅµµÄÚµå',
-  `SELL_BUY_DATE` varchar(8) NOT NULL COMMENT '¸ÅÀÔ/¸ÅµµÀÏÀÚ',
-  `SELL_BUY_QTY` bigint(10) DEFAULT NULL COMMENT '¸ÅÀÔ/¸Åµµ¼ö·®',
-  `SELL_BUY__AMT` bigint(10) DEFAULT NULL COMMENT '¸ÅÀÔ/¸Åµµ±İ¾×',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µî·ÏÀÚ',
-  `REG_DTM` datetime DEFAULT NULL COMMENT 'µî·ÏÀÏ½Ã',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '¼öÁ¤ÀÚ',
-  `UPD_DTM` datetime DEFAULT NULL COMMENT '¼öÁ¤ÀÏ½Ã',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
+  `STOCK_APP_ID` varchar(10) NOT NULL COMMENT 'ì£¼ì‹ì•±ì•„ì´ë””',
+  `STOCK_ID` varchar(50) NOT NULL COMMENT 'ì£¼ì‹ì•„ì´ë””',
+  `SELL_BUY_CD` varchar(2) NOT NULL COMMENT 'ë§¤ì…/ë§¤ë„ì½”ë“œ',
+  `SELL_BUY_DATE` varchar(8) NOT NULL COMMENT 'ë§¤ì…/ë§¤ë„ì¼ì',
+  `SELL_BUY_QTY` bigint(10) DEFAULT NULL COMMENT 'ë§¤ì…/ë§¤ë„ìˆ˜ëŸ‰',
+  `SELL_BUY__AMT` bigint(10) DEFAULT NULL COMMENT 'ë§¤ì…/ë§¤ë„ê¸ˆì•¡',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'ë“±ë¡ì',
+  `REG_DTM` datetime DEFAULT NULL COMMENT 'ë“±ë¡ì¼ì‹œ',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ìˆ˜ì •ì',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT 'ìˆ˜ì •ì¼ì‹œ',
   PRIMARY KEY (`COMP_ID`,`STOCK_APP_ID`,`STOCK_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ÁÖ½Ä°ü¸®';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ì£¼ì‹ê´€ë¦¬';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.stock_manage:~0 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.stock_manage:~0 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 
--- Å×ÀÌºí jjplatform.svc_manage ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.svc_manage êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `svc_manage` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT '¼Ò¼ÓÈ¸»ç',
-  `SVC_SEQ` decimal(38,0) NOT NULL COMMENT '¼­ºñ½º¼ø¹ø',
-  `SVC_ID` varchar(100) NOT NULL COMMENT '¼­ºñ½ºID',
-  `SVC_NM` varchar(200) DEFAULT NULL COMMENT '¼­ºñ½º¸í',
-  `PAK_PATH` varchar(200) DEFAULT NULL COMMENT 'ÆĞÅ°Áö¸í',
-  `USE_YN` varchar(1) DEFAULT NULL COMMENT '»ç¿ë¿©ºÎ',
-  `SVC_DAO` varchar(100) DEFAULT NULL COMMENT '¼­ºñ½ºDAO',
-  `SVC_XML` varchar(100) DEFAULT NULL COMMENT '¼­ºñ½ºXML',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µî·ÏÀÚ',
-  `REG_DTM` datetime DEFAULT NULL COMMENT 'µî·ÏÀÏ½Ã',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '¼öÁ¤ÀÚ',
-  `UPD_DTM` datetime DEFAULT NULL COMMENT '¼öÁ¤ÀÏ½Ã',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
+  `SVC_SEQ` decimal(38,0) NOT NULL COMMENT 'ì„œë¹„ìŠ¤ìˆœë²ˆ',
+  `SVC_ID` varchar(100) NOT NULL COMMENT 'ì„œë¹„ìŠ¤ID',
+  `SVC_NM` varchar(200) DEFAULT NULL COMMENT 'ì„œë¹„ìŠ¤ëª…',
+  `PAK_PATH` varchar(200) DEFAULT NULL COMMENT 'íŒ¨í‚¤ì§€ëª…',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT 'ì‚¬ìš©ì—¬ë¶€',
+  `SVC_DAO` varchar(100) DEFAULT NULL COMMENT 'ì„œë¹„ìŠ¤DAO',
+  `SVC_XML` varchar(100) DEFAULT NULL COMMENT 'ì„œë¹„ìŠ¤XML',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'ë“±ë¡ì',
+  `REG_DTM` datetime DEFAULT NULL COMMENT 'ë“±ë¡ì¼ì‹œ',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ìˆ˜ì •ì',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT 'ìˆ˜ì •ì¼ì‹œ',
   PRIMARY KEY (`COMP_ID`,`SVC_SEQ`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='¼­ºñ½ºµî·Ï°ü¸®';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ì„œë¹„ìŠ¤ë“±ë¡ê´€ë¦¬';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.svc_manage:~8 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.svc_manage:~8 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 INSERT IGNORE INTO `svc_manage` (`COMP_ID`, `SVC_SEQ`, `SVC_ID`, `SVC_NM`, `PAK_PATH`, `USE_YN`, `SVC_DAO`, `SVC_XML`, `REG_ID`, `REG_DTM`, `UPD_ID`, `UPD_DTM`) VALUES
-	('00000', 1, 'Svc001Service', '¼­ºñ½º°ü¸®', 'com.jjplatform.admin.svc.service', 'Y', 'Svc001Dao', 'svc001_SQL', 'admin', '2022-07-25 00:00:00', 'admin', '2024-03-13 00:00:00'),
-	('00000', 2, 'Mnu001Service', '¸Ş´º°ü¸®', 'com.jjplatform.admin.menu.service', 'Y', 'Mnu001Dao', 'mnu001_SQL', 'admin', '2022-07-25 00:00:00', 'admin', '2024-03-13 00:00:00'),
-	('00000', 4, 'Adm001Service', 'ÁÖ½ÄÀÔÃâ±İ°ü¸®', 'com.jjplatform.admin.adm.service', 'Y', 'Adm001Dao', 'adm001_SQL', 'admin', '2022-07-25 00:00:00', 'admin', '2024-03-13 00:00:00'),
-	('00000', 5, 'Adm002Service', 'ÁÖ½Ä°ü¸®', 'com.jjplatform.admin.adm.service', 'Y', 'Adm002Dao', 'adm002_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-13 00:00:00'),
-	('00000', 6, 'Usr001Service', '»ç¿ëÀÚ°ü¸®', 'com.jjplatform.admin.user.service', 'Y', 'Usr001Dao', 'usr001_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-13 00:00:00'),
-	('00000', 7, 'Com001Service', '°øÅëÄÚµå', 'com.jjplatform.admin.com.service', 'Y', 'Com001Dao', 'com001_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-13 00:00:00'),
-	('00000', 8, 'Boa001Service', '°Ô½ÃÆÇ', 'com.jjplatform.admin.board.service', 'Y', 'Boa001Dao', 'boa001_SQL', 'admin', '2023-07-05 00:00:00', 'admin', '2024-03-13 00:00:00'),
-	('00000', 9, 'Fam001Service', 'Ã¤¼ÒÆÊ', 'com.jjplatform.admin.farm.service', 'Y', 'Fam001Dao', 'fam001_SQL', 'admin', '2024-03-13 00:00:00', 'admin', '2024-03-13 00:00:00');
+	('00000', 1, 'Svc001Service', 'ì„œë¹„ìŠ¤ê´€ë¦¬', 'com.jjplatform.admin.svc.service', 'Y', 'Svc001Dao', 'svc001_SQL', 'admin', '2022-07-25 00:00:00', 'admin', '2024-03-13 00:00:00'),
+	('00000', 2, 'Mnu001Service', 'ë©”ë‰´ê´€ë¦¬', 'com.jjplatform.admin.menu.service', 'Y', 'Mnu001Dao', 'mnu001_SQL', 'admin', '2022-07-25 00:00:00', 'admin', '2024-03-13 00:00:00'),
+	('00000', 4, 'Adm001Service', 'ì£¼ì‹ì…ì¶œê¸ˆê´€ë¦¬', 'com.jjplatform.admin.adm.service', 'Y', 'Adm001Dao', 'adm001_SQL', 'admin', '2022-07-25 00:00:00', 'admin', '2024-03-13 00:00:00'),
+	('00000', 5, 'Adm002Service', 'ì£¼ì‹ê´€ë¦¬', 'com.jjplatform.admin.adm.service', 'Y', 'Adm002Dao', 'adm002_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-13 00:00:00'),
+	('00000', 6, 'Usr001Service', 'ì‚¬ìš©ìê´€ë¦¬', 'com.jjplatform.admin.user.service', 'Y', 'Usr001Dao', 'usr001_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-13 00:00:00'),
+	('00000', 7, 'Com001Service', 'ê³µí†µì½”ë“œ', 'com.jjplatform.admin.com.service', 'Y', 'Com001Dao', 'com001_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-13 00:00:00'),
+	('00000', 8, 'Boa001Service', 'ê²Œì‹œíŒ', 'com.jjplatform.admin.board.service', 'Y', 'Boa001Dao', 'boa001_SQL', 'admin', '2023-07-05 00:00:00', 'admin', '2024-03-13 00:00:00'),
+	('00000', 9, 'Fam001Service', 'ì±„ì†ŒíŒœ', 'com.jjplatform.admin.farm.service', 'Y', 'Fam001Dao', 'fam001_SQL', 'admin', '2024-03-13 00:00:00', 'admin', '2024-03-13 00:00:00');
 
--- Å×ÀÌºí jjplatform.user_info ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.user_info êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `user_info` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT '¼Ò¼ÓÈ¸»ç',
-  `USER_ID` varchar(100) NOT NULL COMMENT '»ç¿ëÀÚID',
-  `USER_PASS` varchar(500) NOT NULL COMMENT 'ÆĞ½º¿öµå',
-  `TEL_NO` varchar(12) NOT NULL COMMENT 'ÀüÈ­¹øÈ£',
-  `EMAIL` varchar(200) NOT NULL COMMENT 'ÀÌ¸ŞÀÏ',
-  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'µî·ÏÀÚ',
-  `REG_DTM` datetime DEFAULT NULL COMMENT 'µî·Ï½Ã°£',
-  `REG_IP` varchar(20) DEFAULT NULL COMMENT 'µî·ÏIP',
-  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '¼öÁ¤ÀÚID',
-  `UPD_DTM` datetime DEFAULT NULL COMMENT '¼öÁ¤ÀÏ',
-  `UPD_IP` varchar(20) DEFAULT NULL COMMENT '¼öÁ¤IP',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
+  `USER_ID` varchar(100) NOT NULL COMMENT 'ì‚¬ìš©ìID',
+  `USER_PASS` varchar(500) NOT NULL COMMENT 'íŒ¨ìŠ¤ì›Œë“œ',
+  `TEL_NO` varchar(12) NOT NULL COMMENT 'ì „í™”ë²ˆí˜¸',
+  `EMAIL` varchar(200) NOT NULL COMMENT 'ì´ë©”ì¼',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT 'ë“±ë¡ì',
+  `REG_DTM` datetime DEFAULT NULL COMMENT 'ë“±ë¡ì‹œê°„',
+  `REG_IP` varchar(20) DEFAULT NULL COMMENT 'ë“±ë¡IP',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT 'ìˆ˜ì •ìID',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT 'ìˆ˜ì •ì¼',
+  `UPD_IP` varchar(20) DEFAULT NULL COMMENT 'ìˆ˜ì •IP',
   PRIMARY KEY (`COMP_ID`,`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='»ç¿ëÀÚÁ¤º¸';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ì‚¬ìš©ìì •ë³´';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.user_info:~1 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.user_info:~1 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 INSERT IGNORE INTO `user_info` (`COMP_ID`, `USER_ID`, `USER_PASS`, `TEL_NO`, `EMAIL`, `REG_ID`, `REG_DTM`, `REG_IP`, `UPD_ID`, `UPD_DTM`, `UPD_IP`) VALUES
 	('00000', 'admin', '$2a$10$SSCZO3zH8ooEakriNbM.EOG26sIcZVG5N445ba3ugMnE0XSXmDehq', '01045459806 ', 'whwncjs95@gmail.com', 'admin', NULL, NULL, NULL, NULL, NULL);
 
--- Å×ÀÌºí jjplatform.user_role ±¸Á¶ ³»º¸³»±â
+-- í…Œì´ë¸” jjplatform.user_role êµ¬ì¡° ë‚´ë³´ë‚´ê¸°
 CREATE TABLE IF NOT EXISTS `user_role` (
-  `COMP_ID` varchar(5) NOT NULL COMMENT '¼Ò¼ÓÈ¸»ç',
-  `USER_ID` varchar(100) NOT NULL COMMENT '»ç¿ëÀÚID',
-  `USER_ROLE` varchar(100) DEFAULT NULL COMMENT '»ç¿ëÀÚ±ÇÇÑ',
+  `COMP_ID` varchar(5) NOT NULL COMMENT 'ì†Œì†íšŒì‚¬',
+  `USER_ID` varchar(100) NOT NULL COMMENT 'ì‚¬ìš©ìID',
+  `USER_ROLE` varchar(100) DEFAULT NULL COMMENT 'ì‚¬ìš©ìê¶Œí•œ',
   PRIMARY KEY (`COMP_ID`,`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='»ç¿ëÀÚ±ÇÇÑ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='ì‚¬ìš©ìê¶Œí•œ';
 
--- Å×ÀÌºí µ¥ÀÌÅÍ jjplatform.user_role:~1 rows (´ë·«Àû) ³»º¸³»±â
+-- í…Œì´ë¸” ë°ì´í„° jjplatform.user_role:~1 rows (ëŒ€ëµì ) ë‚´ë³´ë‚´ê¸°
 INSERT IGNORE INTO `user_role` (`COMP_ID`, `USER_ID`, `USER_ROLE`) VALUES
 	('00000', 'ADMIN', 'ROLE_ADMIN');
 
