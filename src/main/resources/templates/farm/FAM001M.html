@@ -4,67 +4,15 @@
       layout:decorate="~{layouts/layout}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>메뉴관리</title>
-  <style type="text/css">
-  	.table td {
-	    padding: 0.25rem;
-	}
-	tbody, thead tr { display: block; }
- 
-	tbody {
-	    height: 475px;
-	    overflow-y: auto;
-	    overflow-x: hidden;
-	}
-	thead th {
-		width: 5%;
-	    vertical-align: middle;
-    	text-align: center;
-	}
-	tbody td {
-		width: 5%;
-	    vertical-align: middle;
-    	text-align: center;
-	}
-	/* .th_small {
-		width: 3%;
-	}
-	.th_middle{
-		width: 6%;
-	}
-	.th_large {
-		width: 10%;
-	}
-	.td_small {
-		width: 2%;
-	}
-	.td_middle{
-		width: 6%;
-	}
-	.td_large {
-		width: 10%;
-	} */
-	.center_aling {
-		vertical-align: middle;
-    	text-align: center;
-	}
-	.left_aling {
-		vertical-align: middle;
-    	text-align: left;
-	}
-	.right_aling {
-		vertical-align: middle;
-    	text-align: right;
-	}
-  </style>
+  <title>채소 팜</title>
 </head>
 <div layout:fragment="content" th:remove="tag">
   <!-- page content -->
-  <div class="right_col" role="main" id="MENU001M" style="margin-top:0px;padding: 60px 20px 0;">
+  <div class="right_col" role="main" id="FAM001M" style="margin-top:0px;padding: 60px 20px 0;">
     <div class="">
       <div class="page-title">
         <div class="title_left">
-          <h3>메뉴관리</h3>
+          <h3>채소 팜</h3>
         </div>
       </div>
 
@@ -72,9 +20,9 @@
         <div class="x_content" style="padding: 0 3px 0px;">
           <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
             <div class="form-group row" style="margin-bottom: 0px;">
-              <label class="col-form-label col-md-3 col-sm-3" for="first-name">메뉴 ID / 명 <!-- <span class="required">*</span> --></label>
+              <label class="col-form-label col-md-3 col-sm-3" for="first-name">채소 명 <!-- <span class="required">*</span> --></label>
               <div class="col-md-9 col-sm-9 ">
-                <input type="text" id="searchMenuId" required="required" class="form-control"  v-model="searchMenuId">
+                <input type="text" id="searchVegetFarmId" required="required" class="form-control"  v-model="searchVegetFarmId">
               </div>
             </div>
           </div>
@@ -117,14 +65,14 @@
                 <div class="col-sm-12">
                   <div class="card-box table-responsive">
                   	<div class="col-sm-5">
-	                  <div id="datatable-checkbox_info">총건수 : {{menuList.length}} 건</div>
+	                  <div id="datatable-checkbox_info">총건수 : {{farmList.length}} 건</div>
 	                </div>
                     <table id="menuMng" class="table table-striped table-bordered" style="width:100%;">
                       <thead>
                         <tr>
-						  <th class="th_small">No.</th>
-                          <th class="th_small"></th>
-                          <th class="th_small"><input type="checkbox" id="check-all" v-model="checkVal"></th>
+						  <th class="th_small" style="width:2%;">No.</th>
+                          <th class="th_small" style="width:2%;">상태</th>
+                          <th class="th_small" style="width:2%;"><input type="checkbox" id="check-all" v-model="checkVal"></th>
                           <th class="th_large">소속아이디</th>
                           <th class="th_large">메뉴아이디</th>
                           <th class="th_large">메뉴명</th>
@@ -138,10 +86,10 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(row, index) in menuList">
-                          <td class="td_small" style="vertical-align: middle;">{{ param.curPage + index + 1 }}</td>
-                          <td class="td_small">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
-                          <td class="td_small" style="vertical-align: middle;"><input type="checkbox" id="check" v-model="checkVal[index]" true-value="Y" false-value="N"></td>
+                        <tr v-for="(row, index) in farmList">
+                          <td class="td_small" style="vertical-align: middle;width:2.5%;">{{ param.curPage + index + 1 }}</td>
+                          <td class="td_small" style="width:2.22%;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
+                          <td class="td_small" style="vertical-align: middle;width:2.2%;"><input type="checkbox" id="check" v-model="checkVal[index]" true-value="Y" false-value="N"></td>
                       	  <td class="td_large"><input type="text" id="compId" v-model="row.compId" class="form-control center_aling" @blur="watch(index)"/></td>
                           <td class="td_large"><input type="text" id="menuId" v-model="row.menuId" class="form-control center_aling" @blur="watch(index)"/></td>
                           <td class="td_large left_aling"><input type="text" id="menuNm" v-model="row.menuNm" class="form-control" @blur="watch(index)"/></td>
@@ -182,28 +130,15 @@
   </div>
   <script>
   const MENU001M = new Vue ({
-      el: "#MENU001M",
+      el: "#FAM001M",
       data: {
-        menuList: [
-         /*  {menuId: "USR000M", menuNm: "사용자", menuLvl: 1, useYn: "Y", updId: "user", updDtm: ""
-            , subMenu: [
-                  {menuId: "USR001M", menuNm: "사용자관리", menuLvl: 2, useYn: "Y", updId: "user", updDtm: ""}
-                , {menuId: "USR002M", menuNm: "사용자권한관리", menuLvl: 2, useYn: "Y", updId: "user", updDtm: ""}
-              ]
-          },
-          {menuId: "SYS000M", menuNm: "시스템", menuLvl: 1, useYn: "Y", updId: "user", updDtm: ""
-            , subMenu: [
-                  {menuId: "MNU001M", menuNm: "메뉴관리", menuLvl: 2, useYn: "Y", updId: "user", updDtm: ""}
-                , {menuId: "MNU002M", menuNm: "메뉴권한관리", menuLvl: 2, useYn: "Y", updId: "user", updDtm: ""}
-              ]
-          } */
-        ],
-        menuListCopy: [],
+        farmList: [],
+        farmListCopy: [],
         checkVal: [],
         result: [],
-        mnuId: "MNU001M",
+        mnuId: "FAM001M",
         menuId: "",
-        searchMenuId: "",
+        searchVegetFarmId: "",
         searchUseYn: "",
         useYn: [
         	 {value: "전체", code: ""}
@@ -217,7 +152,7 @@
       },
       mounted() {
       	this.param.menuId = this.mnuId;
-		this.param.searchMenuId = this.searchMenuId;
+		this.param.searchVegetFarmId = this.searchVegetFarmId;
 	    this.param.searchUseYn = this.searchUseYn;
 	    this.param.pageSize = pagination.common.pageSize;
 	    this.param.curPage = pagination.common.curPage;
@@ -230,38 +165,38 @@
 	    		this.getSearch();
 	    	},
 	        getSearch: function() {
-	        	if(this.menuList.length > 0) this.menuList.splice(0);
-	        	this.menuList = [];
+	        	if(this.farmList.length > 0) this.farmList.splice(0);
+	        	this.farmList = [];
 	        	
-	        	this.param.searchMenuId = this.searchMenuId;
+	        	this.param.searchVegetFarmId = this.searchVegetFarmId;
 	    	    this.param.searchUseYn = this.searchUseYn;
 	    	    this.param.pageSize = pagination.common.pageSize;
 	    	    this.param.curPage = pagination.common.curPage;
 	    	    
 	          	console.log("111111111 > " + this.param);
-				axios.post('/comm/selectMenuList', this.param, {
+				axios.post('/comm/selectVegetFarmList', this.param, {
 					headers: { "Content-Type": "application/json"}
 		            }).then((res) => { 
 		            	$(".odd").html("");
-		                this.menuList = res.data.result; 
-		                console.log("222222 > " + this.menuList+" : "+this.checkVal);
-		                if(this.menuList.length > 0){
-			                pagination.common.totalCount = this.menuList[0].totCnt;
+		                this.farmList = res.data.result; 
+		                console.log("222222 > " + this.farmList+" : "+this.checkVal);
+		                if(this.farmList.length > 0){
+			                pagination.common.totalCount = this.farmList[0].totCnt;
 			                pagination.pagingNavi(pagination.common, this);
 		                }
 		                
-		                const newObj = _.cloneDeep(this.menuList);
-		                this.menuListCopy = newObj; 
+		                const newObj = _.cloneDeep(this.farmList);
+		                this.farmListCopy = newObj; 
 		                this.checkVal = [];
-		                //console.log("33333333333333333 > " + this.menuListCopy[1].menuNm+" : "+checkVal);
+		                //console.log("33333333333333333 > " + this.farmListCopy[1].menuNm+" : "+checkVal);
 		            }).catch((ex) => { 
 		                console.log("에러", ex); 
 		        });
 	        },
     	  	addRow: function() {
-	        	console.log("111111111 > " + this.menuList.length + " : " +this.checkVal);
+	        	console.log("111111111 > " + this.farmList.length + " : " +this.checkVal);
 	
-	        	this.menuList.push(
+	        	this.farmList.push(
 	        			{ menuSeq: "", menuId: "", menuNm: "", useYn: "", menuLvl1: "", menuLvl2: "", menuLvl3: "", updId: "", updDtm: "", rowStatus: "C" }
 	        	)
 	        },
@@ -270,19 +205,19 @@
 	        	console.log("33333333333 > " +this.checkVal);
 	        	for(var i=0; i < this.checkVal.length; i++) {
 	       		  	console.log('array index: ' + this.checkVal[i]);
-	       			this.menuList.splice(this.checkVal[i], 1);
+	       			this.farmList.splice(this.checkVal[i], 1);
 	       		}
 	        },
 	        setSave: function() {
 	        	//if(this.checkVal.length === 0) {alert("저장할 대상을 선택해주세요."); return false;}
-	        	//this.menuList = [];
-	          	console.log("111111111 > " + this.menuList.length + " : " +this.menuList.filter(menu => menu.rowStatus === "C") + " : " +this.checkVal);
+	        	//this.farmList = [];
+	          	console.log("111111111 > " + this.farmList.length + " : " +this.farmList.filter(menu => menu.rowStatus === "C") + " : " +this.checkVal);
 	          	const data = {
-	          			list: this.menuList.filter(menu => menu.rowStatus === "C" || menu.rowStatus === "U")
+	          			list: this.farmList.filter(menu => menu.rowStatus === "C" || menu.rowStatus === "U")
 	          		  , menuId: this.mnuId
 	          	}
 	          	console.log(data);
-				axios.post("/comm/saveMenu", data, {
+				axios.post("/comm/saveVegetFarm", data, {
 					headers: { "Content-Type": "application/json"}
 		        }).then((res) => { 
 		                console.log("222222 > " + res);
@@ -292,37 +227,35 @@
 		        });
 	    	},
 	        changePageSize: function(val){
-	        	 console.log("11 >> " +val+" : "+this.menuList[0]);
-	        	if(pagination.onChange(val, this.menuList[0].menuSeq)){
+	        	 console.log("11 >> " +val+" : "+this.farmList[0]);
+	        	if(pagination.onChange(val, this.farmList[0].menuSeq)){
 	        		this.getSearch();
 	        	}
 	    	 },
 	    	 watch: function(idx){
-	    		const frtVal = this.menuListCopy;
-	   			const changeVal = this.menuList;
+	    		const frtVal = this.farmListCopy;
+	   			const changeVal = this.farmList;
 	   			console.log("111111111111111111 >> "+idx+" : "+frtVal[idx].menuLvl2+" : "+changeVal[idx].menuLvl2);
            	//for(var t=0; t<changeVal.length; t++){
            		if(changeVal[idx].rowStatus != "C" 
            				&& frtVal[idx].menuSeq === changeVal[idx].menuSeq){
            			//console.log(idx+" : "+frtVal[idx].menuNm+" : "+changeVal[idx].menuNm+" : "+frtVal[idx].menuSeq === changeVal[idx].menuSeq);
            			if(frtVal[idx].compId != changeVal[idx].compId){
-           				this.menuList[idx].rowStatus = "U";
+           				this.farmList[idx].rowStatus = "U";
 	            	}else if(frtVal[idx].menuId != changeVal[idx].menuId){
-           				this.menuList[idx].rowStatus = "U";
+           				this.farmList[idx].rowStatus = "U";
 	            	}else if(frtVal[idx].menuNm != changeVal[idx].menuNm){
-           				this.menuList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].upprMenuId != changeVal[idx].upprMenuId){
-           				this.menuList[idx].rowStatus = "U";
+           				this.farmList[idx].rowStatus = "U";
 	            	}else if(frtVal[idx].useYn != changeVal[idx].useYn){
-           				this.menuList[idx].rowStatus = "U";
+           				this.farmList[idx].rowStatus = "U";
 	            	}else if(frtVal[idx].menuLvl1 != changeVal[idx].menuLvl1){
-           				this.menuList[idx].rowStatus = "U";
+           				this.farmList[idx].rowStatus = "U";
 	            	}else if(frtVal[idx].menuLvl2 != changeVal[idx].menuLvl2){
-           				this.menuList[idx].rowStatus = "U";
+           				this.farmList[idx].rowStatus = "U";
 	            	}else if(frtVal[idx].menuLvl3 != changeVal[idx].menuLvl3){
-           				this.menuList[idx].rowStatus = "U";
+           				this.farmList[idx].rowStatus = "U";
 	            	}else{
-	            			this.menuList[idx].rowStatus = (changeVal[idx].rowStatus == "R") ? "" : changeVal[idx].rowStatus;
+	            			this.farmList[idx].rowStatus = "";
 	            	}
            		}
 //	    	}

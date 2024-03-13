@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jjplatform.admin.service.Svc001Service;
-
 @RestController
 public class ItmController {
 	private final Logger log = LoggerFactory.getLogger(ItmController.class);

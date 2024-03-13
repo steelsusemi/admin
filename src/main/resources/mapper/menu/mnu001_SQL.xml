@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mnu001Dao">
+	<!-- 메뉴조회 -->
+    <select id="selectMenuList" parameterType="map" resultType="LowerCamelHashMap">
+    	/* mnu001Dao.selectMenuList: 메뉴 조회 */
+    	WITH RECURSIVE CTE AS (
+			SELECT COMP_ID
+		 		 , UPPR_MENU_ID
+		       	 , MENU_SEQ
+		       	 , MENU_ID
+		       	 , MENU_NM
+		       	 , CASE WHEN USE_YN != 'Y' THEN 'N' ELSE USE_YN END AS USE_YN
+		       	 , CASE WHEN MENU_LVL1 IS NULL OR MENU_LVL1 != 'Y' THEN 'N' ELSE MENU_LVL1 END AS MENU_LVL1
+		       	 , CASE WHEN MENU_LVL2 IS NULL OR MENU_LVL2 != 'Y' THEN 'N' ELSE MENU_LVL2 END AS MENU_LVL2
+		       	 , CASE WHEN MENU_LVL3 IS NULL OR MENU_LVL3 != 'Y' THEN 'N' ELSE MENU_LVL3 END AS MENU_LVL3
+		       	 , MENU_AUTH
+		       	 , REG_ID
+		         , DATE_FORMAT(REG_DTM, '%Y-%m-%d %T') AS REG_DTM
+		       	 , UPD_ID
+		       	 , DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T') AS UPD_DTM
+		       	 , 'R' AS ROW_STATUS
+		       	 , CAST(MENU_SEQ AS CHAR) AS LVL_SEQ
+		      FROM MENU_MANAGE
+		     WHERE IFNULL(UPPR_MENU_ID, '') = ''
+		       AND COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+		     UNION ALL
+		    SELECT A.COMP_ID
+		 		 , A.UPPR_MENU_ID
+		       	 , A.MENU_SEQ
+		       	 , A.MENU_ID
+		       	 , A.MENU_NM
+		       	 , CASE WHEN A.USE_YN != 'Y' THEN 'N' ELSE A.USE_YN END AS USE_YN
+		       	 , CASE WHEN A.MENU_LVL1 IS NULL OR A.MENU_LVL1 != 'Y' THEN 'N' ELSE A.MENU_LVL1 END AS MENU_LVL1
+		       	 , CASE WHEN A.MENU_LVL2 IS NULL OR A.MENU_LVL2 != 'Y' THEN 'N' ELSE A.MENU_LVL2 END AS MENU_LVL2
+		       	 , CASE WHEN A.MENU_LVL3 IS NULL OR A.MENU_LVL3 != 'Y' THEN 'N' ELSE A.MENU_LVL3 END AS MENU_LVL3
+		       	 , A.MENU_AUTH
+		       	 , A.REG_ID
+		         , DATE_FORMAT(A.REG_DTM, '%Y-%m-%d %T') AS REG_DTM
+		       	 , A.UPD_ID
+		       	 , DATE_FORMAT(A.UPD_DTM, '%Y-%m-%d %T') AS UPD_DTM
+		       	 , 'R' AS ROW_STATUS
+		       	 , CONCAT(CAST(B.MENU_SEQ AS CHAR),'_',CAST(A.MENU_SEQ AS CHAR)) AS LVL_SEQ
+		      FROM MENU_MANAGE A
+		     INNER JOIN CTE B ON A.COMP_ID = B.COMP_ID AND A.UPPR_MENU_ID = B.MENU_ID
+		     WHERE A.COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+		       AND IFNULL(A.UPPR_MENU_ID, '') != ''
+		)
+		SELECT *
+		     , COUNT(*) OVER() AS TOT_CNT
+		 	 <!-- , ROW_NUMBER() OVER(ORDER BY MENU_SEQ ASC) AS RNUM -->
+		  FROM CTE
+		 <where>
+		   AND COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+	       <if test="searchMenuId != null and searchMenuId != ''">
+	       AND (MENU_ID = #{searchMenuId} OR MENU_NM LIKE CONCAT('%',#{searchMenuId}, '%'))
+	       </if>
+	       <if test="searchUseYn != null and searchUseYn != ''">
+	       AND USE_YN = #{searchUseYn}
+	       </if>
+         </where>
+         ORDER BY COMP_ID, LVL_SEQ LIMIT #{curPage}, #{pageSize}
+    </select>
+    
+    <!-- 순번 조회 -->
+    <select id="selectMenuSeq"  parameterType="map" resultType="int">
+    	/* mnu001Dao.selectMenuSeq: 순번 조회 */
+    	SELECT IFNULL(MAX(MENU_SEQ), 0) + 1 
+	      FROM MENU_MANAGE  ALIAS_FOR_SUBQUERY
+	     WHERE COMP_ID = #{compId}
+	       AND UPPR_MENU_ID = #{upprMenuId}
+    </select>
+    
+    <!-- 메뉴등록 -->
+    <insert id="saveMenu" parameterType="map">
+    	/* mnu001Dao.saveMenu: 메뉴등록*/
+    	<!-- <foreach collection="list" item="item" separator=";"> -->
+		     INSERT 
+		       INTO MENU_MANAGE
+	    	 (      COMP_ID			/* 소속회사 */
+	    	      , UPPR_MENU_ID 	/* 상위메뉴 */
+				  , MENU_SEQ 	 	/* 메뉴순번 */
+				  , MENU_ID 	 	/* 메뉴ID */
+				  , MENU_NM 	 	/* 메뉴명 */
+				  , USE_YN 			/* 사용여부 */
+				  , MENU_LVL1 		/* 메뉴레벨1 */
+				  , MENU_LVL2 		/* 메뉴레벨2 */
+				  , MENU_LVL3 		/* 메뉴레벨3 */
+				  , MENU_AUTH 		/* 메뉴권한 */
+	    	 	  <include refid="commonDao.createColSql"/>
+	    	 ) 
+	    	 VALUES 
+	    	 <foreach collection="list" item="item" index="idx" separator=",">   
+	    	 (    	#{item.compId}
+	    		  , #{item.upprMenuId} 
+	    	 	  , CASE WHEN IFNULL(#{item.menuSeq},'') != '' THEN #{item.menuSeq}
+	    	 	  		 ELSE (
+				    	 	  	SELECT IFNULL(MAX(MENU_SEQ), 0) + (#{idx} + 1) 
+							      FROM MENU_MANAGE  ALIAS_FOR_SUBQUERY
+							     WHERE COMP_ID = #{item.compId}
+							       <!-- AND UPPR_MENU_ID = IFNULL(#{item.upprMenuId},'') -->
+				    	 	  	)
+				     END
+	    	 	  , #{item.menuId}
+	    	 	  , #{item.menuNm}
+	    	 	  , CASE WHEN #{item.useYn} IS NULL OR #{item.useYn} = '' THEN 'N' ELSE #{item.useYn} END
+	    	 	  , CASE WHEN #{item.menuLvl1} IS NULL OR #{item.menuLvl1} = '' THEN 'N' ELSE #{item.menuLvl1} END
+	    	 	  , CASE WHEN #{item.menuLvl2} IS NULL OR #{item.menuLvl2} = '' THEN 'N' ELSE #{item.menuLvl2} END
+	    	 	  , CASE WHEN #{item.menuLvl3} IS NULL OR #{item.menuLvl3} = '' THEN 'N' ELSE #{item.menuLvl3} END
+	    	 	  , IFNULL(#{item.menuAuth},'')
+	    	 	  <include refid="commonDao.createParamSql"/>
+	    	 )
+	    	 </foreach>
+	    	 ON DUPLICATE KEY UPDATE  
+	    	         COMP_ID = VALUES(COMP_ID)
+	    	       , UPPR_MENU_ID = VALUES(UPPR_MENU_ID)
+	    	       , MENU_ID = VALUES(MENU_ID)
+	    	       , MENU_NM = VALUES(MENU_NM)
+	    	       , USE_YN = VALUES(USE_YN)
+	    	       , MENU_LVL1 = VALUES(MENU_LVL1)
+		       	   , MENU_LVL2 = VALUES(MENU_LVL2)
+		       	   , MENU_LVL3 = VALUES(MENU_LVL3)
+		       	   , MENU_AUTH = VALUES(MENU_AUTH)
+	    	       <include refid="commonDao.updateParamSql"/>
+    	<!--  </foreach> -->
+    </insert>
+
+</mapper>

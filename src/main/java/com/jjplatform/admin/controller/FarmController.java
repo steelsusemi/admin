@@ -9,27 +9,34 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jjplatform.admin.menu.service.Mnu001Service;
+import com.jjplatform.admin.farm.service.Fam001Service;
+import com.jjplatform.admin.svc.service.Svc001Service;
 
 @RestController
-public class MenuController {
-	private final Logger log = LoggerFactory.getLogger(MenuController.class);
+public class FarmController {
+	private final Logger log = LoggerFactory.getLogger(FarmController.class);
 
 	@Autowired
-	private Mnu001Service menu001Service;
+	private Fam001Service fam001Service;
 	
     @SuppressWarnings({ "rawtypes", "unchecked" })
-	@PostMapping("/menu/menuList")
-    public ResponseEntity<?> getComController(@RequestBody Map param) throws Exception {
+	@PostMapping("/farm/{m1}")
+    public ResponseEntity<?> getComController(@RequestBody Map param, @PathVariable(value = "m1") String m1) throws Exception {
     	 
+//    	Class<?> svcClass = Class.forName("com.jjplatform.admin.service.impl.Svc001ServiceImpl");
+//    	Constructor<?> cons = svcClass.getConstructor();
     	List<Map> resultList = new ArrayList();
-    	log.info("111111111111111111 >> " + resultList);
 		try {
-			resultList = menu001Service.selectMenuList(param);
+//			Object svcInstance = cons.newInstance();
+//			Method method = svcClass.getMethod("svcList", new Class[] {Map.class});
+//	    	log.info("path >> " +m1 + " : "+ param + " : "+ svcClass+ " : "+ svcInstance+ " : "+ method);
+//	    	resultList = (List<Map>) method.invoke(svcInstance, param);
+			resultList = fam001Service.selectVegetFarmList(param);
 	    	log.info("resultList >> " + resultList);
 //		} catch (InvocationTargetException e) {
 //		    // Answer:
@@ -41,8 +48,8 @@ public class MenuController {
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
-   	@PostMapping("/menu/menuSave")
-    public ResponseEntity<?> svcSave(@RequestBody List<Map> paramList) throws Exception {
+   	@PostMapping("/farm/saveVegetFarm")
+    public ResponseEntity<?> saveVegetFarm(@RequestBody List<Map> paramList) throws Exception {
 		log.info("paramList >> " + paramList);
 	//       	Class<?> svcClass = Class.forName("com.jjplatform.admin.service.impl.Svc001ServiceImpl");
 	//       	Constructor<?> cons = svcClass.getConstructor();
@@ -52,7 +59,7 @@ public class MenuController {
 	//   			Method method = svcClass.getMethod("svcList", new Class[] {Map.class});
 	//   	    	log.info("path >> " +m1 + " : "+ param + " : "+ svcClass+ " : "+ svcInstance+ " : "+ method);
 	//   	    	resultList = (List<Map>) method.invoke(svcInstance, param);
-	   			int svcSave = menu001Service.saveMenu(paramList);
+	   			int farmSave = fam001Service.saveVegetFarm(paramList);
 	//   		} catch (InvocationTargetException e) {
 	//   		    // Answer:
 	//   		    e.getCause().printStackTrace();

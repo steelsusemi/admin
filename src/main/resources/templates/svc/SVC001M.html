@@ -95,9 +95,9 @@
                   <table id="svcMng" class="table table-striped table-bordered" style="width:100%;text-align: center;">
                     <thead>
                       <tr>
+						<th class="th_small">No.</th>
                       	<th class="th_small"></th>
                       	<th class="th_small"><input type="checkbox" id="check-all"></th>
-                      	<th class="th_small">No.</th>
                         <th>서비스아이디</th>
                         <th>서비스명</th>
                         <th class="th_large">패키지경로</th>
@@ -110,9 +110,9 @@
                     </thead>
                     <tbody>
                       <tr v-for="(row, index) in svcList">
+						<td class="th_small" style="vertical-align: middle;">{{ row.svcSeq }}</td>
                       	<td class="th_small" style="vertical-align: middle;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
                       	<td class="th_small" style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
-                      	<td class="th_small" style="vertical-align: middle;">{{ row.svcSeq }}</td>
                         <!-- <input type="checkbox" id="check-all" v-model="checkVal" :value="index"> -->
                         <td><input type="text" id="svcId" v-model="row.svcId" class="form-control" @blur="watch(index)"/></td>
                         <td><input type="text" id="svcNm" v-model="row.svcNm" class="form-control" @blur="watch(index)"/></td>
@@ -266,6 +266,8 @@
             			if(frtVal[idx].svcId != changeVal[idx].svcId){
             				this.svcList[idx].rowStatus = "U";
 	            		}else if(frtVal[idx].svcNm != changeVal[idx].svcNm){
+            				this.svcList[idx].rowStatus = "U";
+	            		}else if(frtVal[idx].pakPath != changeVal[idx].pakPath){
             				this.svcList[idx].rowStatus = "U";
 	            		}else if(frtVal[idx].useYn != changeVal[idx].useYn){
             				this.svcList[idx].rowStatus = "U";

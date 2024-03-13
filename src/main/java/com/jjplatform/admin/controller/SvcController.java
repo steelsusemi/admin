@@ -1,8 +1,5 @@
 package com.jjplatform.admin.controller;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +7,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jjplatform.admin.config.ApplicationContextProvider;
-import com.jjplatform.admin.service.Svc001Service;
-import com.jjplatform.admin.service.impl.Svc001ServiceImpl;
+import com.jjplatform.admin.svc.service.Svc001Service;
 
 @RestController
 public class SvcController {

@@ -27,10 +27,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.jjplatform.admin.comm.service.CommonService;
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
 import com.jjplatform.admin.config.ApplicationContextProvider;
 import com.jjplatform.admin.contents.ValiableContents;
-import com.jjplatform.admin.service.CommonService;
 import com.jjplatform.admin.vo.UserVo;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -61,6 +61,8 @@ public class CommonController {
     		v1 = "main";
     	}else if(path.contains("ADM")) {
     		v1 = "admg";
+    	}else if(path.contains("FAM")) {
+    		v1 = "farm";
     	}else {
     		v1 = path.substring(0, path.length() - 4);
     	}

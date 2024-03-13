@@ -1,3 +1,57 @@
+.table td {
+    padding: 0.25rem;
+}
+tbody, thead tr { display: block; }
+
+tbody {
+    height: 475px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+thead th {
+	width: 5%;
+    vertical-align: middle;
+	text-align: center;
+}
+tbody td {
+	width: 5%;
+    vertical-align: middle;
+	text-align: center;
+}
+/*
+.th_small {
+	width: 3%;
+}
+.td_small {
+	width: 2%;
+}
+	
+.th_middle{
+	width: 6%;
+}
+.th_large {
+	width: 10%;
+}
+	
+.td_middle{
+	width: 6%;
+}
+.td_large {
+	width: 10%;
+} */
+.center_aling {
+	vertical-align: middle;
+	text-align: center;
+}
+.left_aling {
+	vertical-align: middle;
+	text-align: left;
+}
+.right_aling {
+	vertical-align: middle;
+	text-align: right;
+}
+	
 h1 {
     color: #78ab46;
     text-align: center;
