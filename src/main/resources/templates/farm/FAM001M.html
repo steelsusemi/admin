@@ -72,15 +72,14 @@
                         <tr>
 						  <th class="th_small" style="width:2%;">No.</th>
                           <th class="th_small" style="width:2%;">상태</th>
-                          <th class="th_small" style="width:2%;"><input type="checkbox" id="check-all" v-model="checkVal"></th>
-                          <th class="th_large">소속아이디</th>
-                          <th class="th_large">메뉴아이디</th>
-                          <th class="th_large">메뉴명</th>
-                          <th class="th_large">상위메뉴아이디</th>
+                          <th class="th_small" style="width:2%;"><input type="checkbox" v-model="allChecked" @click="checkedAll($event.target.checked)"></th>
+                          <th class="th_large">팜코드</th>
+                          <th class="th_large">작물아이디</th>
+                          <th class="th_large">작물명</th>
+                          <th class="th_large">작물상태</th>
+                          <th class="th_middle">작물체크코드</th>
+                          <th class="th_middle">실시간체크일시</th>
                           <th class="th_middle">사용여부</th>
-                          <th class="th_middle">레벨1</th>
-                          <th class="th_middle">레벨2</th>
-                          <th class="th_middle">레벨3</th>
                           <th class="th_large">등록자</th>
                           <th class="th_large">등록일시</th>
                         </tr>
@@ -89,15 +88,16 @@
                         <tr v-for="(row, index) in farmList">
                           <td class="td_small" style="vertical-align: middle;width:2.5%;">{{ param.curPage + index + 1 }}</td>
                           <td class="td_small" style="width:2.22%;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
-                          <td class="td_small" style="vertical-align: middle;width:2.2%;"><input type="checkbox" id="check" v-model="checkVal[index]" true-value="Y" false-value="N"></td>
-                      	  <td class="td_large"><input type="text" id="compId" v-model="row.compId" class="form-control center_aling" @blur="watch(index)"/></td>
-                          <td class="td_large"><input type="text" id="menuId" v-model="row.menuId" class="form-control center_aling" @blur="watch(index)"/></td>
-                          <td class="td_large left_aling"><input type="text" id="menuNm" v-model="row.menuNm" class="form-control" @blur="watch(index)"/></td>
-                          <td class="td_large"><input type="text" id="upprMenuId" v-model="row.upprMenuId" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_small" style="vertical-align: middle;width:2.2%;">
+							  <input type="checkbox" :id="'check_' + row.cropSeq" :value="row.cropSeq" v-model="row.selected" @change="selected($event)">
+						  </td>
+                      	  <td class="td_large"><input type="text" id="farmCd" v-model="row.farmCd" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large"><input type="text" id="cropId" v-model="row.cropId" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large left_aling"><input type="text" id="cropNm" v-model="row.cropNm" class="form-control" @blur="watch(index)"/></td>
+                          <td class="td_large"><input type="text" id="cropSttus" v-model="row.cropSttus" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large"><input type="text" id="cropCheckCd" v-model="row.cropCheckCd" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large"><input type="text" id="realDateTime" v-model="row.realDateTime" class="form-control center_aling" @blur="watch(index)"/></td>
                           <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="useYn" v-model="row.useYn"  @change="watch(index)" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl1" v-model="row.menuLvl1"  @change="watch(index)" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl2" v-model="row.menuLvl2"  @change="watch(index)" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl3" v-model="row.menuLvl3"  @change="watch(index)" true-value="Y" false-value="N"/></td>
                           <td class="td_large" style="vertical-align: middle;">{{ row.updId }}</td>
                           <td class="td_large" style="vertical-align: middle;">{{ row.updDtm }}</td>
                         </tr>
@@ -135,6 +135,7 @@
         farmList: [],
         farmListCopy: [],
         checkVal: [],
+        allChecked : false,
         result: [],
         mnuId: "FAM001M",
         menuId: "",
@@ -158,6 +159,22 @@
 	    this.param.curPage = pagination.common.curPage;
       },
       methods: {
+		  	checkedAll(checked) {
+	            this.allChecked = checked
+	            for (let i in this.farmList) {
+	                this.farmList[i].selected = this.allChecked;
+	            }
+	        },
+	        selected (e) {
+	            for (let i in this.farmList) {
+	                if(! this.farmList[i].selected) {
+	                    this.allChecked = false;
+	                    return;
+	                } else {
+	                    this.allChecked = true;
+	                }
+	            }
+	        },
     		//  조회 버튼
 	    	selectList: function() {
 	    		pagination.common.curPage = 0;   // mariadb = 0, mssql = 1

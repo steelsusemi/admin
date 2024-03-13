@@ -92,12 +92,12 @@
                   <div class="col-sm-5">
                     <div id="datatable-checkbox_info">총건수 : {{svcList.length}} 건</div>
                   </div>
-                  <table id="svcMng" class="table table-striped table-bordered" style="width:100%;text-align: center;">
+                  <table id="famMng" class="table table-striped table-bordered bulk_action" style="width:100%;text-align: center;">
                     <thead>
                       <tr>
 						<th class="th_small">No.</th>
                       	<th class="th_small"></th>
-                      	<th class="th_small"><input type="checkbox" id="check-all"></th>
+                      	<th class="th_small"><input type="checkbox" v-model="allChecked" @click="checkedAll($event.target.checked)"></th>
                         <th>서비스아이디</th>
                         <th>서비스명</th>
                         <th class="th_large">패키지경로</th>
@@ -112,7 +112,9 @@
                       <tr v-for="(row, index) in svcList">
 						<td class="th_small" style="vertical-align: middle;">{{ row.svcSeq }}</td>
                       	<td class="th_small" style="vertical-align: middle;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
-                      	<td class="th_small" style="vertical-align: middle;"><input type="checkbox" id="check-all" v-model="checkVal" :value="index"></td>
+                      	<td class="th_small" style="vertical-align: middle;">
+							<input type="checkbox" :id="'check_' + row.svcSeq" :value="row.svcSeq" v-model="row.selected" @change="selected($event)">
+						</td>
                         <!-- <input type="checkbox" id="check-all" v-model="checkVal" :value="index"> -->
                         <td><input type="text" id="svcId" v-model="row.svcId" class="form-control" @blur="watch(index)"/></td>
                         <td><input type="text" id="svcNm" v-model="row.svcNm" class="form-control" @blur="watch(index)"/></td>
@@ -155,22 +157,10 @@
     const SVC001M = new Vue({
       el: "#SVC001M",
       data: {
-        svcList: [
-          /* { svcId: "Mnu001Service", svcNm: "메뉴관리서비스", useYn: "Y", svcDao: "Mnu001DAO", svcXml: "Mnu001", updId: "user", updDtm: "" },
-          { svcId: "Usr001Service", svcNm: "사용자관리서비스", useYn: "Y", svcDao: "Usr001DAO", svcXml: "Usr001", updId: "user", updDtm: "" },
-          { svcId: "Usr002Service", svcNm: "사용자권한관리서비스", useYn: "Y", svcDao: "Usr002DAO", svcXml: "Usr002", updId: "user", updDtm: "" },
-          { svcId: "Svc001Service", svcNm: "서비스등록서비스", useYn: "Y", svcDao: "Svc001DAO", svcXml: "Svc001", updId: "user", updDtm: "" },
-          { svcId: "Mnu001Service", svcNm: "메뉴관리서비스", useYn: "Y", svcDao: "Mnu001DAO", svcXml: "Mnu001", updId: "user", updDtm: "" },
-          { svcId: "Usr001Service", svcNm: "사용자관리서비스", useYn: "Y", svcDao: "Usr001DAO", svcXml: "Usr001", updId: "user", updDtm: "" },
-          { svcId: "Usr002Service", svcNm: "사용자권한관리서비스", useYn: "Y", svcDao: "Usr002DAO", svcXml: "Usr002", updId: "user", updDtm: "" },
-          { svcId: "Svc001Service", svcNm: "서비스등록서비스", useYn: "Y", svcDao: "Svc001DAO", svcXml: "Svc001", updId: "user", updDtm: "" },
-          { svcId: "Mnu001Service", svcNm: "메뉴관리서비스", useYn: "Y", svcDao: "Mnu001DAO", svcXml: "Mnu001", updId: "user", updDtm: "" },
-          { svcId: "Usr001Service", svcNm: "사용자관리서비스", useYn: "Y", svcDao: "Usr001DAO", svcXml: "Usr001", updId: "user", updDtm: "" },
-          { svcId: "Usr002Service", svcNm: "사용자권한관리서비스", useYn: "Y", svcDao: "Usr002DAO", svcXml: "Usr002", updId: "user", updDtm: "" },
-          { svcId: "Svc001Service", svcNm: "서비스등록서비스", useYn: "Y", svcDao: "Svc001DAO", svcXml: "Svc001", updId: "user", updDtm: "" } */
-        ],
+        svcList: [],
         svcListCopy: [],
         checkVal: [],
+        allChecked : false,
         result: [],
         mnuId: "SVC001M",
         searchSvcId: "",
@@ -187,6 +177,22 @@
       computed: {
       },
       methods: {
+		  	checkedAll(checked) {
+	            this.allChecked = checked
+	            for (let i in this.svcList) {
+	                this.svcList[i].selected = this.allChecked;
+	            }
+	        },
+	        selected (e) {
+	            for (let i in this.svcList) {
+	                if(! this.svcList[i].selected) {
+	                    this.allChecked = false;
+	                    return;
+	                } else {
+	                    this.allChecked = true;
+	                }
+	            }
+	        },
 	    	//  조회 버튼
 	    	selectList: function() {
 	    		pagination.common.curPage = 0;   // mariadb = 0, mssql = 1
