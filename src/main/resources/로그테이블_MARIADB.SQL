@@ -55,6 +55,45 @@ CREATE TABLE IF NOT EXISTS `board_reply` (
 
 -- 테이블 데이터 jjplatform.board_reply:~0 rows (대략적) 내보내기
 
+-- 테이블 jjplatform.comm_cd_dtl 구조 내보내기
+CREATE TABLE IF NOT EXISTS `comm_cd_dtl` (
+  `LANG_FLG` varchar(10) NOT NULL COMMENT '언어구분',
+  `GRP_CD` varchar(10) NOT NULL COMMENT '그룹코드',
+  `COMM_CD` varchar(10) NOT NULL COMMENT '공통코드',
+  `COMM_NM` varchar(10) NOT NULL COMMENT '공통코드명',
+  `SORT_SEQ_NO` bigint(9) NOT NULL COMMENT '공통코드정렬',
+  `COMM_CD_DESC` varchar(100) DEFAULT NULL COMMENT '공통코드설명',
+  `USE_YN` varchar(1) DEFAULT 'Y' COMMENT '사용여부',
+  `CD_VAL_1` varchar(50) NOT NULL COMMENT '빈값1',
+  `CD_VAL_2` varchar(50) NOT NULL COMMENT '빈값2',
+  `CD_VAL_3` varchar(50) NOT NULL COMMENT '빈값3',
+  `CD_VAL_4` varchar(50) NOT NULL COMMENT '빈값4',
+  `CD_VAL_5` varchar(50) NOT NULL COMMENT '빈값5',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT '등록자',
+  `REG_DTM` datetime DEFAULT NULL COMMENT '등록일시',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT '수정일시',
+  PRIMARY KEY (`LANG_FLG`,`GRP_CD`,`COMM_CD`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='공통코드상세';
+
+-- 테이블 데이터 jjplatform.comm_cd_dtl:~0 rows (대략적) 내보내기
+
+-- 테이블 jjplatform.comm_cd_manage 구조 내보내기
+CREATE TABLE IF NOT EXISTS `comm_cd_manage` (
+  `LANG_FLG` varchar(10) NOT NULL COMMENT '언어구분',
+  `GRP_CD` varchar(10) NOT NULL COMMENT '그룹코드',
+  `GRP_NM` varchar(10) NOT NULL COMMENT '그룹명',
+  `GRP_DESC` varchar(100) DEFAULT NULL COMMENT '그룹설명',
+  `USE_YN` varchar(1) DEFAULT NULL COMMENT '사용여부',
+  `REG_ID` varchar(100) DEFAULT NULL COMMENT '등록자',
+  `REG_DTM` datetime DEFAULT NULL COMMENT '등록일시',
+  `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
+  `UPD_DTM` datetime DEFAULT NULL COMMENT '수정일시',
+  PRIMARY KEY (`LANG_FLG`,`GRP_CD`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='공통코드관리';
+
+-- 테이블 데이터 jjplatform.comm_cd_manage:~0 rows (대략적) 내보내기
+
 -- 테이블 jjplatform.file_manage 구조 내보내기
 CREATE TABLE IF NOT EXISTS `file_manage` (
   `FILE_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '파일아이디',

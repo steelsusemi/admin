@@ -31,6 +31,7 @@ import com.jjplatform.admin.comm.service.CommonService;
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
 import com.jjplatform.admin.config.ApplicationContextProvider;
 import com.jjplatform.admin.contents.ValiableContents;
+import com.jjplatform.admin.menu.service.Mnu001Service;
 import com.jjplatform.admin.vo.UserVo;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,30 +46,37 @@ public class CommonController {
 	@Autowired
 	private CommonService commonService;
 	
+	@Autowired
+	private Mnu001Service mnu001Service;
+	
     @GetMapping("/move/{v1}")
     public String commonMenuMove(HttpServletRequest request, HttpServletResponse respose, Authentication authentication, @PathVariable(value = "v1") String path) throws IOException {
     	log.info("###################[ 페이지이동 ]###################");
     	log.info("commonMenuMove => " + path);
-    	String v1 = "";
-    	path = path.toUpperCase();
+//    	String v1 = "";
+//    	path = path.toUpperCase();
+//    	if(path.contains("MNU")) {
+//    		v1 = "sys";
+//    	}else if(path.contains("USR")) {
+//    		v1 = "user";
+//    	}else if(path.contains("MAIN")) {
+//    		this.setSession(request, authentication);
+//    		v1 = "main";
+//    	}else if(path.contains("ADM")) {
+//    		v1 = "admg";
+//    	}else if(path.contains("FAM")) {
+//    		v1 = "farm";
+//    	}else {
+//    		v1 = path.substring(0, path.length() - 4);
+//    	}
     	
-    	if(path.contains("MNU")) {
-    		v1 = "sys";
-    	}else if(path.contains("USR")) {
-    		v1 = "user";
-    	}else if(path.contains("MAIN")) {
-    		this.setSession(request, authentication);
-    		v1 = "main";
-    	}else if(path.contains("ADM")) {
-    		v1 = "admg";
-    	}else if(path.contains("FAM")) {
-    		v1 = "farm";
-    	}else {
-    		v1 = path.substring(0, path.length() - 4);
-    	}
+//    	log.info("path >> " +path + " : "+ v1.toLowerCase());
+//    	return v1.toLowerCase() + "/" + path.toLowerCase();
     	
-    	log.info("path >> " +path + " : "+ v1.toLowerCase());
-    	return v1.toLowerCase() + "/" + path.toLowerCase();
+    	if(path.contains("MAIN")) this.setSession(request, authentication);
+    	String menuId = mnu001Service.selectMenuId(path).toLowerCase();
+    	log.info("menuId >> " +menuId + " : "+ path.toLowerCase());
+    	return menuId + "/" + path.toLowerCase();
     }
     
     /**
@@ -154,7 +162,8 @@ public class CommonController {
     	return new ResponseEntity<>(gson.fromJson(jsonObject, Map.class), HttpStatus.OK);
     }
     
-    private void setSession(HttpServletRequest request, Authentication authentication) {
+    @SuppressWarnings("unused")
+	private void setSession(HttpServletRequest request, Authentication authentication) {
     	log.info("###################[ Main Page 이동 ]###################");
 //	if(true) {
 //		throw new CustomException(ErrorCode.TEMPORARY_SERVER_ERROR);

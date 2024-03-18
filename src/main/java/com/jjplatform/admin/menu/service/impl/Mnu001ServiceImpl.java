@@ -25,6 +25,11 @@ public class Mnu001ServiceImpl implements Mnu001Service {
 		return mnu001Dao.selectMenuList(param);
 	}
 	
+	@Override
+	public String selectMenuId(String menuId) {
+		return mnu001Dao.selectMenuId(menuId);
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public int saveMenu(List<Map> paramList) throws Exception {

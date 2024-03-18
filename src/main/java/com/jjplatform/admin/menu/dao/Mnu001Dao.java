@@ -20,7 +20,11 @@ public class Mnu001Dao extends CommonMapper {
 	public List<Map> selectMenuList(Map param) throws Exception {
         return selectList(NAME_SPACE + "selectMenuList", param);
     }
-
+    
+    public String selectMenuId(String menuId) {
+    	return (String) selectOne(NAME_SPACE + "selectMenuId", menuId);
+	}
+    
 	public int saveMenu(Map param) {
 		return insert(NAME_SPACE + "saveMenu", param);
 	}

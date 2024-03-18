@@ -63,6 +63,16 @@
          ORDER BY COMP_ID, LVL_SEQ LIMIT #{curPage}, #{pageSize}
     </select>
     
+    <!-- 메뉴ID 조회 -->
+    <select id="selectMenuId"  parameterType="string" resultType="string">
+    	/* mnu001Dao.selectMenuId: 메뉴ID 조회  */
+	    SELECT REPLACE(REPLACE(SVC.PAK_PATH, 'com.jjplatform.admin.',''), '.service', '')
+	      FROM MENU_MANAGE MENU
+	      LEFT OUTER JOIN SVC_MANAGE SVC ON MENU.COMP_ID = SVC.COMP_ID AND LEFT(UPPER(MENU.MENU_ID), 6) = LEFT(UPPER(SVC.SVC_ID), 6)
+	     WHERE MENU.COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+	       AND MENU.MENU_ID = #{menuId}
+    </select>
+    
     <!-- 순번 조회 -->
     <select id="selectMenuSeq"  parameterType="map" resultType="int">
     	/* mnu001Dao.selectMenuSeq: 순번 조회 */
