@@ -82,7 +82,7 @@ const pagination = new Vue({
       onChange: function(val, firstSeq){
 		console.log("val > " + val+" : " + firstSeq+" : " + this.common.totalCount+" : " + (firstSeq / val)+" : " + (pagination.common.pageSize > val ? 1 : -1));
     	this.common.currentPage = Math.ceil((firstSeq / val));
-		this.common.curPage = val * (this.common.currentPage - 1);	// mariadb
+		this.common.curPage = val * ((this.common.currentPage == 0) ? 0 : this.common.currentPage - 1);	// mariadb
 		console.log("val > " + val+" : " + firstSeq+" : " + (firstSeq / val)+" : " + Math.ceil((firstSeq / val)));
 		this.common.pageSize = val;
 		return true;

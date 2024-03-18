@@ -21,26 +21,33 @@
 			 , A.ROW_STATUS
 		  FROM (
 		       SELECT COUNT(*) OVER() AS TOT_CNT
-			 		, ROW_NUMBER() OVER(ORDER BY GRP_CD ASC) AS RNUM
-			 		, COMP_ID	/* 소속회사 */
-			 		, LANG_FLG	/* 언어구분 */
-					, GRP_CD	/* 그룹코드 */
-					, GRP_NM	/* 그룹명 */
-					, GRP_DESC	/* 그룹설명 */
-					, USE_YN	/* 사용여부 */
-			       	, REG_ID
-			        , DATE_FORMAT(REG_DTM, '%Y-%m-%d %T.%s') AS REG_DTM
-			       	, UPD_ID
-			       	, DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T.%s') AS UPD_DTM
+			 		, ROW_NUMBER() OVER(ORDER BY MNG.GRP_CD ASC) AS RNUM
+			 		, MNG.COMP_ID	/* 소속회사 */
+			 		, MNG.LANG_FLG	/* 언어구분 */
+					, MNG.GRP_CD	/* 그룹코드 */
+					, MNG.GRP_NM	/* 그룹명 */
+					, MNG.GRP_DESC	/* 그룹설명 */
+					, MNG.USE_YN	/* 사용여부 */
+			       	, MNG.REG_ID
+			        , DATE_FORMAT(MNG.REG_DTM, '%Y-%m-%d %T.%s') AS REG_DTM
+			       	, MNG.UPD_ID
+			       	, DATE_FORMAT(MNG.UPD_DTM, '%Y-%m-%d %T.%s') AS UPD_DTM
 			       	, 'R' AS ROW_STATUS
-		         FROM COMM_CD_MANAGE 	/* 공통코드마스터 */
+		         FROM COMM_CD_MANAGE MNG /* 공통코드마스터 */
+		        INNER JOIN COMM_CD_DTL DTL /* 공통코드상세 */ ON MNG.COMP_ID = DTL.COMP_ID AND MNG.LANG_FLG = DTL.LANG_FLG AND MNG.GRP_CD = DTL.GRP_CD
 		         <where>
-				  AND COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
-			       	 <if test="cropId != null and cropId != ''">
-			      AND (GRP_CD = #{searchComId} OR GRP_NM LIKE CONCAT('%',#{searchComId}, '%'))
+				  AND MNG.COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+				   	 <if test="searchlangFlg != null and searchlangFlg != ''">
+			      AND MNG.LANG_FLG = #{searchlangFlg})
+			         </if>
+			         <if test="searchGrdCd != null and searchGrdCd != ''">
+			      AND (MNG.GRP_CD = #{searchGrdCd} OR MNG.GRP_NM LIKE CONCAT('%',#{searchGrdCd}, '%'))
+			         </if>
+			       	 <if test="searchComCd != null and searchComCd != ''">
+			      AND (MNG.COMM_CD = #{searchComCd} OR MNG.COMM_NM LIKE CONCAT('%',#{searchComCd}, '%'))
 			         </if>
 			         <if test="useYn != null and useYn != ''">
-			      AND USE_YN = #{useYn})
+			      AND MNG.USE_YN = #{useYn})
 			         </if>
 		         </where>
         	 <!-- ORDER BY SVC_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY -->
@@ -95,11 +102,14 @@
 		         FROM SMART_FARM_DTL	/* 공통코드상세 */
 		         <where>
 				  AND COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
-			       	 <if test="cropId != null and cropId != ''">
-			      AND (COMM_CD = #{searchSvcId} OR COMM_NM LIKE CONCAT('%',#{searchSvcId}, '%'))
+				     <if test="commCd != null and commCd != ''">
+			      AND GRP_CD = #{grpCd})
 			         </if>
-			         <if test="useYn != null and useYn != ''">
-			      AND USE_YN = #{useYn})
+			         <if test="commCd != null and commCd != ''">
+			      AND COMM_CD = #{commCd})
+			         </if>
+			         <if test="langFlg != null and langFlg != ''">
+			      AND LANG_FLG = #{langFlg})
 			         </if>
 		         </where>
         	 <!-- ORDER BY SVC_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY -->

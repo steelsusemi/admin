@@ -14,6 +14,13 @@
         <div class="title_left">
           <h3>공통코드 관리</h3>
         </div>
+        <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;margin-right: 70px;"></div>
+        <div class="col-md-3 col-sm-12 right_aling;" style="margin-bottom: 0px;">
+	        <div class="text-right">
+	          <button type="button" class="btn btn-secondary" @click="selectList">조회</button>
+	          <button type="button" class="btn btn-secondary" @click="setSave">저장</button>
+	         </div> 
+         </div>
       </div>
 
       <div class="x_panel">
@@ -28,11 +35,19 @@
               </div>
             </div>
           </div>
+		  <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
+            <div class="form-group row" style="margin-bottom: 0px;">
+              <label class="col-form-label col-md-3 col-sm-3" for="first-name">그룹코드 / 명 <!-- <span class="required">*</span> --></label>
+              <div class="col-md-9 col-sm-9 ">
+                <input type="text" id="searchGrpCd" required="required" class="form-control"  v-model="searchGrpCd">
+              </div>
+            </div>
+          </div>
           <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
             <div class="form-group row" style="margin-bottom: 0px;">
               <label class="col-form-label col-md-3 col-sm-3" for="first-name">공통코드 / 명 <!-- <span class="required">*</span> --></label>
               <div class="col-md-9 col-sm-9 ">
-                <input type="text" id="searchComId" required="required" class="form-control"  v-model="searchComId">
+                <input type="text" id="searchComCd" required="required" class="form-control"  v-model="searchComCd">
               </div>
             </div>
           </div>
@@ -46,13 +61,6 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;"></div>
-          <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
-            <div class="text-right">
-              <button type="button" class="btn btn-secondary" @click="selectList">조회</button>
-              <button type="button" class="btn btn-secondary" @click="setSave">저장</button>
-            </div> 
-          </div>
         </div>
       </div>
 
@@ -60,7 +68,7 @@
       <div class="col-md-12 col-sm-12 " style="padding-right: 5px;padding-left: 5px;">
         <div class="x_panel">
           <div class="x_title" style="border-bottom: 0px;">
-            <h2>조회</h2>
+            <h2>그룹코드 내역 {{comList.length}} 건</h2>
             <ul class="nav navbar-right panel_toolbox">
               <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
               <li><a class="close-link"></a></li>-->
@@ -83,33 +91,109 @@
 						  <th class="th_small" style="width:2%;">No.</th>
                           <th class="th_small" style="width:2%;">상태</th>
                           <th class="th_small" style="width:2%;"><input type="checkbox" v-model="allChecked" @click="checkedAll($event.target.checked)"></th>
-                          <th class="th_large">소속아이디</th>
-                          <th class="th_large">메뉴아이디</th>
-                          <th class="th_large">메뉴명</th>
-                          <th class="th_large">상위메뉴아이디</th>
+                          <th class="th_middle">언어</th>
+                          <th class="th_large">그룹코드</th>
+                          <th class="th_large">그룹명</th>
+                          <th class="th_large">그룹설명</th>
                           <th class="th_middle">사용여부</th>
-                          <th class="th_middle">레벨1</th>
-                          <th class="th_middle">레벨2</th>
-                          <th class="th_middle">레벨3</th>
                           <th class="th_large">등록자</th>
                           <th class="th_large">등록일시</th>
+                          <th class="th_large">수정자</th>
+                          <th class="th_large">수정일시</th>
                         </tr>
                       </thead>
-                      <tbody style="width: 100px;">
+                      <tbody style="height: 150px;">
                         <tr v-for="(row, index) in comList">
                           <td class="td_small" style="vertical-align: middle;width:2.5%;">{{ param.curPage + index + 1 }}</td>
                           <td class="td_small" style="width:2.22%;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
                           <td class="td_small" style="vertical-align: middle;width:2.2%;">
 							  <input type="checkbox" :id="'check_' + row.cropSeq" :value="row.cropSeq" v-model="row.selected" @change="selected($event)">
 						  </td>
-                      	  <td class="td_large"><input type="text" id="compId" v-model="row.compId" class="form-control center_aling" @blur="watch(index)"/></td>
-                          <td class="td_large"><input type="text" id="comId" v-model="row.comId" class="form-control center_aling" @blur="watch(index)"/></td>
-                          <td class="td_large left_aling"><input type="text" id="comNm" v-model="row.comNm" class="form-control" @blur="watch(index)"/></td>
-                          <td class="td_large"><input type="text" id="upprComId" v-model="row.upprComId" class="form-control center_aling" @blur="watch(index)"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="useYn" v-model="row.useYn"  @change="watch(index)" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="comLvl1" v-model="row.comLvl1"  @change="watch(index)" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="comLvl2" v-model="row.comLvl2"  @change="watch(index)" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="comLvl3" v-model="row.comLvl3"  @change="watch(index)" true-value="Y" false-value="N"/></td>
+						  <td class="td_middle"><input type="text" id="langFlg" v-model="row.langFlg" class="form-control center_aling" @blur="watch(index)"/></td>
+                      	  <td class="td_large"><input type="text" id="grpCd" v-model="row.grpCd" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large left_aling"><input type="text" id="grpNm" v-model="row.grpNm" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large left_aling"><input type="text" id="grpDesc" v-model="row.grpDesc" class="form-control" @blur="watch(index)"/></td>
+                          <td class="td_large" style="vertical-align: middle;">{{ row.regId }}</td>
+                          <td class="td_large" style="vertical-align: middle;">{{ row.regDtm }}</td>
+                          <td class="td_large" style="vertical-align: middle;">{{ row.updId }}</td>
+                          <td class="td_large" style="vertical-align: middle;">{{ row.updDtm }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!--<div class="row">
+                <div class="col-sm-5">
+					<div class="dataTables_length" style="margin-top: -3px;">
+						<label>Show 
+							<select aria-controls="datatable" class="form-control input-sm" style="width: auto;display: inherit;height: auto;" 
+								@change="changePageSize(selectVal)" v-model="selectVal">
+								<option :value="5">5</option>
+								<option :value="10">10</option>
+								<option :value="25">25</option>
+								<option :value="50">50</option>
+								<option :value="100">100</option>
+							</select>
+						</label>
+					</div> 
+				</div>
+                <div class="col-sm-7" ref="paging"></div>
+              </div>-->
+            </div>
+        </div>
+      </div>
+      
+      <div class="col-md-12 col-sm-12 " style="padding-right: 5px;padding-left: 5px;">
+        <div class="x_panel">
+          <div class="x_title" style="border-bottom: 0px;">
+            <h2>공통코드 상세내역  {{comDtlList.length}} 건</h2>
+            <ul class="nav navbar-right panel_toolbox">
+              <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              <li><a class="close-link"></a></li>-->
+              <li><button type="button" class="btn btn-secondary" @click="addDtlRow">+</button></li>
+              <li><button type="button" class="btn btn-secondary" @click="deleteDtlRow">-</button></li>
+              <li><button type="button" class="btn btn-secondary" @click="initDtl">초기화</button></li>
+            </ul>
+           <!-- <div class="clearfix"></div>-->
+          </div>
+          <div class="x_content">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="card-box table-responsive">
+                  	<!--<div class="col-sm-5">
+	                  <div id="datatable-checkbox_info">총건수 : {{comList.length}} 건</div>
+	                </div>-->
+                    <table id="comMng" class="table table-striped table-bordered" style="width:100%;">
+                      <thead>
+                        <tr>
+						  <th class="th_small" style="width:2%;">No.</th>
+                          <th class="th_small" style="width:2%;">상태</th>
+                          <th class="th_small" style="width:2%;"><input type="checkbox" v-model="allChecked" @click="checkedAll($event.target.checked)"></th>
+                          <th class="th_middle">언어</th>
+                          <th class="th_large">그룹코드</th>
+                          <th class="th_large">그룹명</th>
+                          <th class="th_large">그룹설명</th>
+                          <th class="th_middle">사용여부</th>
+                          <th class="th_large">등록자</th>
+                          <th class="th_large">등록일시</th>
+                          <th class="th_large">수정자</th>
+                          <th class="th_large">수정일시</th>
+                        </tr>
+                      </thead>
+                      <tbody style="height: 200px;">
+                        <tr v-for="(row, index) in comList">
+                          <td class="td_small" style="vertical-align: middle;width:2.5%;">{{ param.curPage + index + 1 }}</td>
+                          <td class="td_small" style="width:2.22%;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
+                          <td class="td_small" style="vertical-align: middle;width:2.2%;">
+							  <input type="checkbox" :id="'check_' + row.cropSeq" :value="row.cropSeq" v-model="row.selected" @change="selected($event)">
+						  </td>
+						  <td class="td_middle"><input type="text" id="langFlg" v-model="row.langFlg" class="form-control center_aling" @blur="watch(index)"/></td>
+                      	  <td class="td_large"><input type="text" id="grpCd" v-model="row.grpCd" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large left_aling"><input type="text" id="grpNm" v-model="row.grpNm" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large left_aling"><input type="text" id="grpDesc" v-model="row.grpDesc" class="form-control" @blur="watch(index)"/></td>
+                          <td class="td_large" style="vertical-align: middle;">{{ row.regId }}</td>
+                          <td class="td_large" style="vertical-align: middle;">{{ row.regDtm }}</td>
                           <td class="td_large" style="vertical-align: middle;">{{ row.updId }}</td>
                           <td class="td_large" style="vertical-align: middle;">{{ row.updDtm }}</td>
                         </tr>
@@ -146,12 +230,15 @@
       data: {
         comList: [],
         comListCopy: [],
+        comDtlList: [],
+        comDtlListCopy: [],
         checkVal: [],
         result: [],
         allChecked : false,
         mnuId: "COM001M",
         menuId: "",
-        searchComId: "",
+        searchGrpCd: "",
+        searchComCd: "",
         searchUseYn: "",
         searchLang: "",
         useYn: [
@@ -165,13 +252,14 @@
         	,{value: "영어", code: "EN"}
         ],
         param: {},
-        selectVal: "10"
+        selectVal: "10",
+        selectDtlVal: "10"
       },
       computed: {
       },
       mounted() {
       	this.param.menuId = this.mnuId;
-		this.param.searchComId = this.searchComId;
+		this.param.searchComCd = this.searchComCd;
 	    this.param.searchUseYn = this.searchUseYn;
 	    this.param.searchLang = this.searchLang;
 	    this.param.pageSize = pagination.common.pageSize;
@@ -204,7 +292,7 @@
 	        	if(this.comList.length > 0) this.comList.splice(0);
 	        	this.comList = [];
 	        	
-	        	this.param.searchComId = this.searchComId;
+	        	this.param.searchComCd = this.searchComCd;
 	    	    this.param.searchUseYn = this.searchUseYn;
 	    	    this.param.pageSize = pagination.common.pageSize;
 	    	    this.param.curPage = pagination.common.curPage;
@@ -231,9 +319,8 @@
 	        },
     	  	addRow: function() {
 	        	console.log("111111111 > " + this.comList.length + " : " +this.checkVal);
-	
 	        	this.comList.push(
-	        			{ comSeq: "", comId: "", comNm: "", useYn: "", comLvl1: "", comLvl2: "", comLvl3: "", updId: "", updDtm: "", rowStatus: "C" }
+	        			{ comSeq: "", comCd: "", comNm: "", comLvl1: "", comLvl2: "", comLvl3: "",useYn: "",  updId: "", updDtm: "", rowStatus: "C" }
 	        	)
 	        },
 	        deleteRow: function() {
@@ -250,7 +337,7 @@
 	          	console.log("111111111 > " + this.comList.length + " : " +this.comList.filter(com => com.rowStatus === "C") + " : " +this.checkVal);
 	          	const data = {
 	          			list: this.comList.filter(com => com.rowStatus === "C" || com.rowStatus === "U")
-	          		  , comId: this.mnuId
+	          		  , comCd: this.mnuId
 	          	}
 	          	console.log(data);
 				axios.post("/comm/saveCom", data, {
@@ -264,7 +351,7 @@
 	    	},
 	        changePageSize: function(val){
 	        	 console.log("11 >> " +val+" : "+this.comList[0]);
-	        	if(pagination.onChange(val, this.comList[0].comSeq)){
+	        	if(pagination.onChange(val, (this.comList[0] == null || this.comList[0] == undefined) ? 0 : this.comList[0].comSeq)){
 	        		this.getSearch();
 	        	}
 	    	 },
@@ -278,7 +365,7 @@
            			//console.log(idx+" : "+frtVal[idx].comNm+" : "+changeVal[idx].comNm+" : "+frtVal[idx].comSeq === changeVal[idx].comSeq);
            			if(frtVal[idx].compId != changeVal[idx].compId){
            				this.comList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].comId != changeVal[idx].comId){
+	            	}else if(frtVal[idx].comCd != changeVal[idx].comCd){
            				this.comList[idx].rowStatus = "U";
 	            	}else if(frtVal[idx].comNm != changeVal[idx].comNm){
            				this.comList[idx].rowStatus = "U";
