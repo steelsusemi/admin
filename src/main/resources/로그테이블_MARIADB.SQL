@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `board_reply` (
 
 -- 테이블 jjplatform.comm_cd_dtl 구조 내보내기
 CREATE TABLE IF NOT EXISTS `comm_cd_dtl` (
+  `COMP_ID` varchar(5) NOT NULL COMMENT '소속회사',
   `LANG_FLG` varchar(10) NOT NULL COMMENT '언어구분',
   `GRP_CD` varchar(10) NOT NULL COMMENT '그룹코드',
   `COMM_CD` varchar(10) NOT NULL COMMENT '공통코드',
@@ -73,13 +74,14 @@ CREATE TABLE IF NOT EXISTS `comm_cd_dtl` (
   `REG_DTM` datetime DEFAULT NULL COMMENT '등록일시',
   `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
   `UPD_DTM` datetime DEFAULT NULL COMMENT '수정일시',
-  PRIMARY KEY (`LANG_FLG`,`GRP_CD`,`COMM_CD`)
+  PRIMARY KEY (`COMP_ID`,`LANG_FLG`,`GRP_CD`,`COMM_CD`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='공통코드상세';
 
 -- 테이블 데이터 jjplatform.comm_cd_dtl:~0 rows (대략적) 내보내기
 
 -- 테이블 jjplatform.comm_cd_manage 구조 내보내기
 CREATE TABLE IF NOT EXISTS `comm_cd_manage` (
+  `COMP_ID` varchar(5) NOT NULL COMMENT '소속회사',
   `LANG_FLG` varchar(10) NOT NULL COMMENT '언어구분',
   `GRP_CD` varchar(10) NOT NULL COMMENT '그룹코드',
   `GRP_NM` varchar(10) NOT NULL COMMENT '그룹명',
@@ -89,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `comm_cd_manage` (
   `REG_DTM` datetime DEFAULT NULL COMMENT '등록일시',
   `UPD_ID` varchar(100) DEFAULT NULL COMMENT '수정자',
   `UPD_DTM` datetime DEFAULT NULL COMMENT '수정일시',
-  PRIMARY KEY (`LANG_FLG`,`GRP_CD`)
+  PRIMARY KEY (`COMP_ID`,`LANG_FLG`,`GRP_CD`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='공통코드관리';
 
 -- 테이블 데이터 jjplatform.comm_cd_manage:~0 rows (대략적) 내보내기
@@ -181,7 +183,7 @@ INSERT IGNORE INTO `menu_manage` (`COMP_ID`, `UPPR_MENU_ID`, `MENU_SEQ`, `MENU_I
 	('00000', '', 2, 'SVC000M', '서비스', 'Y', 'Y', NULL, NULL, 'S', NULL, NULL, NULL, NULL),
 	('00000', 'SYS000M', 2, 'USR001M', '사용자관리', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19 00:00:00', 'admin', '2022-07-19 00:00:00'),
 	('00000', NULL, 3, 'ADM000M', '관리자만씀', 'Y', 'Y', 'N', 'N', '', 'admin', '2022-07-25 00:00:00', 'admin', '2022-07-25 00:00:00'),
-	('00000', 'SYS000M', 3, 'COM000M', '공통코드', 'Y', 'N', 'Y', 'N', '', 'admin', '2022-07-19 00:00:00', 'admin', '2022-07-19 00:00:00'),
+	('00000', 'SYS000M', 3, 'COM001M', '공통코드', 'Y', 'N', 'Y', 'N', '', 'admin', '2024-03-15 13:40:15', 'admin', '2024-03-15 13:40:15'),
 	('00000', NULL, 4, 'BOA000M', '게시판', 'Y', 'Y', 'N', 'N', '', 'admin', '2023-05-10 00:00:00', 'admin', '2023-05-10 00:00:00'),
 	('00000', 'BOA000M', 5, 'BOA001M', '게시판', 'Y', 'N', 'Y', 'N', '', 'admin', '2023-05-10 00:00:00', 'admin', '2023-07-05 00:00:00'),
 	('00000', NULL, 6, 'FAM000M', '스마트팜', 'Y', 'Y', 'N', 'N', '', 'admin', '2024-03-12 00:00:00', 'admin', '2024-03-12 00:00:00'),
@@ -196,6 +198,7 @@ CREATE TABLE IF NOT EXISTS `smart_farm_manage` (
   `CROP_NAME` varchar(200) DEFAULT NULL COMMENT '작물명',
   `CROP_STTUS` varchar(2) DEFAULT 'G' COMMENT '작물상태(F0001)[G:생장,B:과습,C:건조,W:응급,D:다이]',
   `CROP_CHECK_CD` varchar(2) DEFAULT NULL COMMENT '작물체크코드(F0002)[T:온도,H:습도,L:조도,W:물높이,P:용액희석]',
+  `CROP_CONF_VAL` varchar(100) DEFAULT NULL COMMENT '작물체크코드 값 설정',
   `REAL_DATE_TIME` datetime DEFAULT NULL COMMENT '실시간체크일시',
   `CROP_FILE_ID` varchar(100) DEFAULT NULL COMMENT '파일아이디',
   `USE_YN` varchar(1) DEFAULT NULL COMMENT '사용여부',
@@ -265,11 +268,11 @@ CREATE TABLE IF NOT EXISTS `svc_manage` (
 -- 테이블 데이터 jjplatform.svc_manage:~8 rows (대략적) 내보내기
 INSERT IGNORE INTO `svc_manage` (`COMP_ID`, `SVC_SEQ`, `SVC_ID`, `SVC_NM`, `PAK_PATH`, `USE_YN`, `SVC_DAO`, `SVC_XML`, `REG_ID`, `REG_DTM`, `UPD_ID`, `UPD_DTM`) VALUES
 	('00000', 1, 'Svc001Service', '서비스관리', 'com.jjplatform.admin.svc.service', 'Y', 'Svc001Dao', 'svc001_SQL', 'admin', '2022-07-25 00:00:00', 'admin', '2024-03-13 00:00:00'),
-	('00000', 2, 'Mnu001Service', '메뉴관리', 'com.jjplatform.admin.menu.service', 'Y', 'Mnu001Dao', 'mnu001_SQL', 'admin', '2022-07-25 00:00:00', 'admin', '2024-03-13 00:00:00'),
+	('00000', 2, 'Mnu001Service', '메뉴관리', 'com.jjplatform.admin.sys.service', 'Y', 'Mnu001Dao', 'mnu001_SQL', 'admin', '2022-07-25 00:00:00', 'admin', '2024-03-18 14:43:51'),
 	('00000', 4, 'Adm001Service', '주식입출금관리', 'com.jjplatform.admin.adm.service', 'Y', 'Adm001Dao', 'adm001_SQL', 'admin', '2022-07-25 00:00:00', 'admin', '2024-03-13 00:00:00'),
 	('00000', 5, 'Adm002Service', '주식관리', 'com.jjplatform.admin.adm.service', 'Y', 'Adm002Dao', 'adm002_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-13 00:00:00'),
-	('00000', 6, 'Usr001Service', '사용자관리', 'com.jjplatform.admin.user.service', 'Y', 'Usr001Dao', 'usr001_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-13 00:00:00'),
-	('00000', 7, 'Com001Service', '공통코드', 'com.jjplatform.admin.com.service', 'Y', 'Com001Dao', 'com001_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-13 00:00:00'),
+	('00000', 6, 'Usr001Service', '사용자관리', 'com.jjplatform.admin.sys.service', 'Y', 'Usr001Dao', 'usr001_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-18 14:49:27'),
+	('00000', 7, 'Com001Service', '공통코드', 'com.jjplatform.admin.sys.service', 'Y', 'Com001Dao', 'com001_SQL', 'admin', '2022-07-26 00:00:00', 'admin', '2024-03-18 14:39:00'),
 	('00000', 8, 'Boa001Service', '게시판', 'com.jjplatform.admin.board.service', 'Y', 'Boa001Dao', 'boa001_SQL', 'admin', '2023-07-05 00:00:00', 'admin', '2024-03-13 00:00:00'),
 	('00000', 9, 'Fam001Service', '채소팜', 'com.jjplatform.admin.farm.service', 'Y', 'Fam001Dao', 'fam001_SQL', 'admin', '2024-03-13 00:00:00', 'admin', '2024-03-13 00:00:00');
 
@@ -301,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   PRIMARY KEY (`COMP_ID`,`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='사용자권한';
 
--- 테이블 데이터 jjplatform.user_role:~1 rows (대략적) 내보내기
+-- 테이블 데이터 jjplatform.user_role:~0 rows (대략적) 내보내기
 INSERT IGNORE INTO `user_role` (`COMP_ID`, `USER_ID`, `USER_ROLE`) VALUES
 	('00000', 'ADMIN', 'ROLE_ADMIN');
 
