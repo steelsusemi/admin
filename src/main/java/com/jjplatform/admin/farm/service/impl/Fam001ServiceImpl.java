@@ -22,7 +22,7 @@ public class Fam001ServiceImpl implements Fam001Service {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Map> selectVegetFarmList(Map param) throws Exception {
-//		log.info("1111111111111 >> " + param);
+		log.info("selectVegetFarmList >>>>>>>>>>>> " + param);
 //		List<Map> aa = new ArrayList<Map>();
 //		aa.add(param);
 //		return aa;

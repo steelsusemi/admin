@@ -1,4 +1,4 @@
-package com.jjplatform.admin.user.service;
+package com.jjplatform.admin.sys.service;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 

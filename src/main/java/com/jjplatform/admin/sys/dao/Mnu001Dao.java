@@ -1,4 +1,4 @@
-package com.jjplatform.admin.menu.dao;
+package com.jjplatform.admin.sys.dao;
 
 import java.util.List;
 import java.util.Map;

@@ -11,7 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
-import com.jjplatform.admin.user.service.impl.CustomUserDetailsServiceImpl;
+import com.jjplatform.admin.sys.service.impl.CustomUserDetailsServiceImpl;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	private static Logger log = LoggerFactory.getLogger(CustomAuthenticationProvider.class);

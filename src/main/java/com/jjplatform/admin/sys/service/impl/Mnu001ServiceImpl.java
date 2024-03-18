@@ -1,4 +1,4 @@
-package com.jjplatform.admin.menu.service.impl;
+package com.jjplatform.admin.sys.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jjplatform.admin.menu.dao.Mnu001Dao;
-import com.jjplatform.admin.menu.service.Mnu001Service;
+import com.jjplatform.admin.sys.dao.Mnu001Dao;
+import com.jjplatform.admin.sys.service.Mnu001Service;
 
 @Service("mnu001Service")
 public class Mnu001ServiceImpl implements Mnu001Service {

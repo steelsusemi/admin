@@ -1,4 +1,4 @@
-package com.jjplatform.admin.user.service.impl;
+package com.jjplatform.admin.sys.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
-import com.jjplatform.admin.user.dao.UserAuthDao;
+import com.jjplatform.admin.sys.dao.UserAuthDao;
 import com.jjplatform.admin.vo.UserVo;
 
 @Service("customUserDetailsServiceImpl")

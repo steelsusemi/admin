@@ -1,4 +1,4 @@
-package com.jjplatform.admin.menu.service;
+package com.jjplatform.admin.sys.service;
 
 import java.util.List;
 import java.util.Map;

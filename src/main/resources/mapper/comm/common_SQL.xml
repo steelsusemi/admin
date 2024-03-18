@@ -23,7 +23,7 @@
 	
 	<!-- 좌측 메뉴조회 -->
     <select id="selectLeftMenuList" parameterType="map" resultType="LowerCamelHashMap">
-    	/* commonDao.selectLeftMenuList: 좌측 메뉴조회 */
+    	/* com001Dao.selectLeftMenuList: 좌측 메뉴조회 */
     	SELECT COMP_ID
     		 , MENU_SEQ
     	     , UPPR_MENU_ID
@@ -46,7 +46,7 @@
     
     <!-- 등록된 서비스아이디 조회 -->
     <select id="selectServiceNm" parameterType="map" resultType="String">
-    	/* commonDao.selectServiceNm: 등록된 서비스아이디 조회 */
+    	/* com001Dao.selectServiceNm: 등록된 서비스아이디 조회 */
     	SELECT CONCAT(LOWER(LEFT(SVC_ID, 1)),SUBSTR(SVC_ID, 2, LENGTH(SVC_ID) - 1))
           FROM SVC_MANAGE
        <where>

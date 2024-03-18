@@ -1,4 +1,4 @@
-package com.jjplatform.admin.user.dao;
+package com.jjplatform.admin.sys.dao;
 
 import org.springframework.stereotype.Repository;
 

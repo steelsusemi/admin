@@ -18,8 +18,8 @@ import com.jjplatform.admin.farm.service.Fam001Service;
 import com.jjplatform.admin.svc.service.Svc001Service;
 
 @RestController
-public class FarmController {
-	private final Logger log = LoggerFactory.getLogger(FarmController.class);
+public class FamController {
+	private final Logger log = LoggerFactory.getLogger(FamController.class);
 
 	@Autowired
 	private Fam001Service fam001Service;

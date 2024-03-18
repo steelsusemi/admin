@@ -5,76 +5,34 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>메뉴관리</title>
-  <style type="text/css">
-  	.table td {
-	    padding: 0.25rem;
-	}
-	tbody, thead tr { display: block; }
- 
-	tbody {
-	    height: 475px;
-	    overflow-y: auto;
-	    overflow-x: hidden;
-	}
-	thead th {
-		width: 5%;
-	    vertical-align: middle;
-    	text-align: center;
-	}
-	tbody td {
-		width: 5%;
-	    vertical-align: middle;
-    	text-align: center;
-	}
-	/* .th_small {
-		width: 3%;
-	}
-	.th_middle{
-		width: 6%;
-	}
-	.th_large {
-		width: 10%;
-	}
-	.td_small {
-		width: 2%;
-	}
-	.td_middle{
-		width: 6%;
-	}
-	.td_large {
-		width: 10%;
-	} */
-	.center_aling {
-		vertical-align: middle;
-    	text-align: center;
-	}
-	.left_aling {
-		vertical-align: middle;
-    	text-align: left;
-	}
-	.right_aling {
-		vertical-align: middle;
-    	text-align: right;
-	}
-  </style>
 </head>
 <div layout:fragment="content" th:remove="tag">
   <!-- page content -->
-  <div class="right_col" role="main" id="MENU001M" style="margin-top:0px;padding: 60px 20px 0;">
+  <div class="right_col" role="main" id="COM001M" style="margin-top:0px;padding: 60px 20px 0;">
     <div class="">
       <div class="page-title">
         <div class="title_left">
-          <h3>메뉴관리</h3>
+          <h3>공통코드 관리</h3>
         </div>
       </div>
 
       <div class="x_panel">
         <div class="x_content" style="padding: 0 3px 0px;">
+		  <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
+            <div class="form-group row" style="margin-bottom: 0px;">
+              <label class="col-form-label col-md-3 col-sm-3 label-align" for="second-name">언어선택</label>
+              <div class="col-md-9 col-sm-9">
+              	<select id="searchLang" class="form-control src_small" v-model="searchLang">
+					<option v-for="select in langList" :value="select.code">{{ select.value }}</option>
+				</select>
+              </div>
+            </div>
+          </div>
           <div class="col-md-3 col-sm-12" style="margin-bottom: 0px;">
             <div class="form-group row" style="margin-bottom: 0px;">
-              <label class="col-form-label col-md-3 col-sm-3" for="first-name">메뉴 ID / 명 <!-- <span class="required">*</span> --></label>
+              <label class="col-form-label col-md-3 col-sm-3" for="first-name">공통코드 / 명 <!-- <span class="required">*</span> --></label>
               <div class="col-md-9 col-sm-9 ">
-                <input type="text" id="searchMenuId" required="required" class="form-control"  v-model="searchMenuId">
+                <input type="text" id="searchComId" required="required" class="form-control"  v-model="searchComId">
               </div>
             </div>
           </div>
@@ -82,7 +40,7 @@
             <div class="form-group row" style="margin-bottom: 0px;">
               <label class="col-form-label col-md-3 col-sm-3 label-align" for="second-name">사용여부</label>
               <div class="col-md-9 col-sm-9">
-              	<select id="searchUseYn" class="form-control" v-model="searchUseYn">
+              	<select id="searchUseYn" class="form-control src_small" v-model="searchUseYn">
 					<option v-for="select in useYn" :value="select.code">{{ select.value }}</option>
 				</select>
               </div>
@@ -101,30 +59,30 @@
 
       <div class="col-md-12 col-sm-12 " style="padding-right: 5px;padding-left: 5px;">
         <div class="x_panel">
-          <div class="x_title">
+          <div class="x_title" style="border-bottom: 0px;">
             <h2>조회</h2>
             <ul class="nav navbar-right panel_toolbox">
-              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-              <li><a class="close-link"></a></li>
+              <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              <li><a class="close-link"></a></li>-->
               <li><button type="button" class="btn btn-secondary" @click="addRow">+</button></li>
               <li><button type="button" class="btn btn-secondary" @click="deleteRow">-</button></li>
               <li><button type="button" class="btn btn-secondary" @click="init">초기화</button></li>
             </ul>
-            <div class="clearfix"></div>
+           <!-- <div class="clearfix"></div>-->
           </div>
           <div class="x_content">
               <div class="row">
                 <div class="col-sm-12">
                   <div class="card-box table-responsive">
-                  	<div class="col-sm-5">
-	                  <div id="datatable-checkbox_info">총건수 : {{menuList.length}} 건</div>
-	                </div>
-                    <table id="menuMng" class="table table-striped table-bordered" style="width:100%;">
+                  	<!--<div class="col-sm-5">
+	                  <div id="datatable-checkbox_info">총건수 : {{comList.length}} 건</div>
+	                </div>-->
+                    <table id="comMng" class="table table-striped table-bordered" style="width:100%;">
                       <thead>
                         <tr>
-						  <th class="th_small">No.</th>
-                          <th class="th_small"></th>
-                          <th class="th_small"><input type="checkbox" id="check-all" v-model="checkVal"></th>
+						  <th class="th_small" style="width:2%;">No.</th>
+                          <th class="th_small" style="width:2%;">상태</th>
+                          <th class="th_small" style="width:2%;"><input type="checkbox" v-model="allChecked" @click="checkedAll($event.target.checked)"></th>
                           <th class="th_large">소속아이디</th>
                           <th class="th_large">메뉴아이디</th>
                           <th class="th_large">메뉴명</th>
@@ -137,19 +95,21 @@
                           <th class="th_large">등록일시</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr v-for="(row, index) in menuList">
-                          <td class="td_small" style="vertical-align: middle;">{{ param.curPage + index + 1 }}</td>
-                          <td class="td_small">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
-                          <td class="td_small" style="vertical-align: middle;"><input type="checkbox" id="check" v-model="checkVal[index]" true-value="Y" false-value="N"></td>
+                      <tbody style="width: 100px;">
+                        <tr v-for="(row, index) in comList">
+                          <td class="td_small" style="vertical-align: middle;width:2.5%;">{{ param.curPage + index + 1 }}</td>
+                          <td class="td_small" style="width:2.22%;">{{ row.rowStatus == 'R' || row.rowStatus == '' ? '' : row.rowStatus }}</td>
+                          <td class="td_small" style="vertical-align: middle;width:2.2%;">
+							  <input type="checkbox" :id="'check_' + row.cropSeq" :value="row.cropSeq" v-model="row.selected" @change="selected($event)">
+						  </td>
                       	  <td class="td_large"><input type="text" id="compId" v-model="row.compId" class="form-control center_aling" @blur="watch(index)"/></td>
-                          <td class="td_large"><input type="text" id="menuId" v-model="row.menuId" class="form-control center_aling" @blur="watch(index)"/></td>
-                          <td class="td_large left_aling"><input type="text" id="menuNm" v-model="row.menuNm" class="form-control" @blur="watch(index)"/></td>
-                          <td class="td_large"><input type="text" id="upprMenuId" v-model="row.upprMenuId" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large"><input type="text" id="comId" v-model="row.comId" class="form-control center_aling" @blur="watch(index)"/></td>
+                          <td class="td_large left_aling"><input type="text" id="comNm" v-model="row.comNm" class="form-control" @blur="watch(index)"/></td>
+                          <td class="td_large"><input type="text" id="upprComId" v-model="row.upprComId" class="form-control center_aling" @blur="watch(index)"/></td>
                           <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="useYn" v-model="row.useYn"  @change="watch(index)" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl1" v-model="row.menuLvl1"  @change="watch(index)" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl2" v-model="row.menuLvl2"  @change="watch(index)" true-value="Y" false-value="N"/></td>
-                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="menuLvl3" v-model="row.menuLvl3"  @change="watch(index)" true-value="Y" false-value="N"/></td>
+                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="comLvl1" v-model="row.comLvl1"  @change="watch(index)" true-value="Y" false-value="N"/></td>
+                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="comLvl2" v-model="row.comLvl2"  @change="watch(index)" true-value="Y" false-value="N"/></td>
+                          <td class="td_middle" style="vertical-align: middle;"><input type="checkbox" id="comLvl3" v-model="row.comLvl3"  @change="watch(index)" true-value="Y" false-value="N"/></td>
                           <td class="td_large" style="vertical-align: middle;">{{ row.updId }}</td>
                           <td class="td_large" style="vertical-align: middle;">{{ row.updDtm }}</td>
                         </tr>
@@ -181,34 +141,28 @@
     </div>
   </div>
   <script>
-  const MENU001M = new Vue ({
-      el: "#MENU001M",
+  const COM001M = new Vue ({
+      el: "#COM001M",
       data: {
-        menuList: [
-         /*  {menuId: "USR000M", menuNm: "사용자", menuLvl: 1, useYn: "Y", updId: "user", updDtm: ""
-            , subMenu: [
-                  {menuId: "USR001M", menuNm: "사용자관리", menuLvl: 2, useYn: "Y", updId: "user", updDtm: ""}
-                , {menuId: "USR002M", menuNm: "사용자권한관리", menuLvl: 2, useYn: "Y", updId: "user", updDtm: ""}
-              ]
-          },
-          {menuId: "SYS000M", menuNm: "시스템", menuLvl: 1, useYn: "Y", updId: "user", updDtm: ""
-            , subMenu: [
-                  {menuId: "MNU001M", menuNm: "메뉴관리", menuLvl: 2, useYn: "Y", updId: "user", updDtm: ""}
-                , {menuId: "MNU002M", menuNm: "메뉴권한관리", menuLvl: 2, useYn: "Y", updId: "user", updDtm: ""}
-              ]
-          } */
-        ],
-        menuListCopy: [],
+        comList: [],
+        comListCopy: [],
         checkVal: [],
         result: [],
-        mnuId: "MNU001M",
+        allChecked : false,
+        mnuId: "COM001M",
         menuId: "",
-        searchMenuId: "",
+        searchComId: "",
         searchUseYn: "",
+        searchLang: "",
         useYn: [
         	 {value: "전체", code: ""}
         	,{value: "사용", code: "Y"}
         	,{value: "미사용", code: "N"}
+        ],
+        langList: [
+        	 {value: "전체", code: ""}
+        	,{value: "한국어", code: "KO"}
+        	,{value: "영어", code: "EN"}
         ],
         param: {},
         selectVal: "10"
@@ -217,12 +171,29 @@
       },
       mounted() {
       	this.param.menuId = this.mnuId;
-		this.param.searchMenuId = this.searchMenuId;
+		this.param.searchComId = this.searchComId;
 	    this.param.searchUseYn = this.searchUseYn;
+	    this.param.searchLang = this.searchLang;
 	    this.param.pageSize = pagination.common.pageSize;
 	    this.param.curPage = pagination.common.curPage;
       },
       methods: {
+		  	checkedAll(checked) {
+	            this.allChecked = checked
+	            for (let i in this.comList) {
+	                this.comList[i].selected = this.allChecked;
+	            }
+	        },
+	        selected (e) {
+	            for (let i in this.comList) {
+	                if(! this.comList[i].selected) {
+	                    this.allChecked = false;
+	                    return;
+	                } else {
+	                    this.allChecked = true;
+	                }
+	            }
+	        },
     		//  조회 버튼
 	    	selectList: function() {
 	    		pagination.common.curPage = 0;   // mariadb = 0, mssql = 1
@@ -230,39 +201,39 @@
 	    		this.getSearch();
 	    	},
 	        getSearch: function() {
-	        	if(this.menuList.length > 0) this.menuList.splice(0);
-	        	this.menuList = [];
+	        	if(this.comList.length > 0) this.comList.splice(0);
+	        	this.comList = [];
 	        	
-	        	this.param.searchMenuId = this.searchMenuId;
+	        	this.param.searchComId = this.searchComId;
 	    	    this.param.searchUseYn = this.searchUseYn;
 	    	    this.param.pageSize = pagination.common.pageSize;
 	    	    this.param.curPage = pagination.common.curPage;
 	    	    
 	          	console.log("111111111 > " + this.param);
-				axios.post('/comm/selectMenuList', this.param, {
+				axios.post('/comm/selectComMstList', this.param, {
 					headers: { "Content-Type": "application/json"}
 		            }).then((res) => { 
 		            	$(".odd").html("");
-		                this.menuList = res.data.result; 
-		                console.log("222222 > " + this.menuList+" : "+this.checkVal);
-		                if(this.menuList.length > 0){
-			                pagination.common.totalCount = this.menuList[0].totCnt;
+		                this.comList = res.data.result; 
+		                console.log("222222 > " + this.comList+" : "+this.checkVal);
+		                if(this.comList.length > 0){
+			                pagination.common.totalCount = this.comList[0].totCnt;
 			                pagination.pagingNavi(pagination.common, this);
 		                }
 		                
-		                const newObj = _.cloneDeep(this.menuList);
-		                this.menuListCopy = newObj; 
+		                const newObj = _.cloneDeep(this.comList);
+		                this.comListCopy = newObj; 
 		                this.checkVal = [];
-		                //console.log("33333333333333333 > " + this.menuListCopy[1].menuNm+" : "+checkVal);
+		                //console.log("33333333333333333 > " + this.comListCopy[1].comNm+" : "+checkVal);
 		            }).catch((ex) => { 
 		                console.log("에러", ex); 
 		        });
 	        },
     	  	addRow: function() {
-	        	console.log("111111111 > " + this.menuList.length + " : " +this.checkVal);
+	        	console.log("111111111 > " + this.comList.length + " : " +this.checkVal);
 	
-	        	this.menuList.push(
-	        			{ menuSeq: "", menuId: "", menuNm: "", useYn: "", menuLvl1: "", menuLvl2: "", menuLvl3: "", updId: "", updDtm: "", rowStatus: "C" }
+	        	this.comList.push(
+	        			{ comSeq: "", comId: "", comNm: "", useYn: "", comLvl1: "", comLvl2: "", comLvl3: "", updId: "", updDtm: "", rowStatus: "C" }
 	        	)
 	        },
 	        deleteRow: function() {
@@ -270,19 +241,19 @@
 	        	console.log("33333333333 > " +this.checkVal);
 	        	for(var i=0; i < this.checkVal.length; i++) {
 	       		  	console.log('array index: ' + this.checkVal[i]);
-	       			this.menuList.splice(this.checkVal[i], 1);
+	       			this.comList.splice(this.checkVal[i], 1);
 	       		}
 	        },
 	        setSave: function() {
 	        	//if(this.checkVal.length === 0) {alert("저장할 대상을 선택해주세요."); return false;}
-	        	//this.menuList = [];
-	          	console.log("111111111 > " + this.menuList.length + " : " +this.menuList.filter(menu => menu.rowStatus === "C") + " : " +this.checkVal);
+	        	//this.comList = [];
+	          	console.log("111111111 > " + this.comList.length + " : " +this.comList.filter(com => com.rowStatus === "C") + " : " +this.checkVal);
 	          	const data = {
-	          			list: this.menuList.filter(menu => menu.rowStatus === "C" || menu.rowStatus === "U")
-	          		  , menuId: this.mnuId
+	          			list: this.comList.filter(com => com.rowStatus === "C" || com.rowStatus === "U")
+	          		  , comId: this.mnuId
 	          	}
 	          	console.log(data);
-				axios.post("/comm/saveMenu", data, {
+				axios.post("/comm/saveCom", data, {
 					headers: { "Content-Type": "application/json"}
 		        }).then((res) => { 
 		                console.log("222222 > " + res);
@@ -292,37 +263,37 @@
 		        });
 	    	},
 	        changePageSize: function(val){
-	        	 console.log("11 >> " +val+" : "+this.menuList[0]);
-	        	if(pagination.onChange(val, this.menuList[0].menuSeq)){
+	        	 console.log("11 >> " +val+" : "+this.comList[0]);
+	        	if(pagination.onChange(val, this.comList[0].comSeq)){
 	        		this.getSearch();
 	        	}
 	    	 },
 	    	 watch: function(idx){
-	    		const frtVal = this.menuListCopy;
-	   			const changeVal = this.menuList;
-	   			console.log("111111111111111111 >> "+idx+" : "+frtVal[idx].menuLvl2+" : "+changeVal[idx].menuLvl2);
+	    		const frtVal = this.comListCopy;
+	   			const changeVal = this.comList;
+	   			console.log("111111111111111111 >> "+idx+" : "+frtVal[idx].comLvl2+" : "+changeVal[idx].comLvl2);
            	//for(var t=0; t<changeVal.length; t++){
            		if(changeVal[idx].rowStatus != "C" 
-           				&& frtVal[idx].menuSeq === changeVal[idx].menuSeq){
-           			//console.log(idx+" : "+frtVal[idx].menuNm+" : "+changeVal[idx].menuNm+" : "+frtVal[idx].menuSeq === changeVal[idx].menuSeq);
+           				&& frtVal[idx].comSeq === changeVal[idx].comSeq){
+           			//console.log(idx+" : "+frtVal[idx].comNm+" : "+changeVal[idx].comNm+" : "+frtVal[idx].comSeq === changeVal[idx].comSeq);
            			if(frtVal[idx].compId != changeVal[idx].compId){
-           				this.menuList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].menuId != changeVal[idx].menuId){
-           				this.menuList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].menuNm != changeVal[idx].menuNm){
-           				this.menuList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].upprMenuId != changeVal[idx].upprMenuId){
-           				this.menuList[idx].rowStatus = "U";
+           				this.comList[idx].rowStatus = "U";
+	            	}else if(frtVal[idx].comId != changeVal[idx].comId){
+           				this.comList[idx].rowStatus = "U";
+	            	}else if(frtVal[idx].comNm != changeVal[idx].comNm){
+           				this.comList[idx].rowStatus = "U";
+	            	}else if(frtVal[idx].upprComId != changeVal[idx].upprComId){
+           				this.comList[idx].rowStatus = "U";
 	            	}else if(frtVal[idx].useYn != changeVal[idx].useYn){
-           				this.menuList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].menuLvl1 != changeVal[idx].menuLvl1){
-           				this.menuList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].menuLvl2 != changeVal[idx].menuLvl2){
-           				this.menuList[idx].rowStatus = "U";
-	            	}else if(frtVal[idx].menuLvl3 != changeVal[idx].menuLvl3){
-           				this.menuList[idx].rowStatus = "U";
+           				this.comList[idx].rowStatus = "U";
+	            	}else if(frtVal[idx].comLvl1 != changeVal[idx].comLvl1){
+           				this.comList[idx].rowStatus = "U";
+	            	}else if(frtVal[idx].comLvl2 != changeVal[idx].comLvl2){
+           				this.comList[idx].rowStatus = "U";
+	            	}else if(frtVal[idx].comLvl3 != changeVal[idx].comLvl3){
+           				this.comList[idx].rowStatus = "U";
 	            	}else{
-	            			this.menuList[idx].rowStatus = (changeVal[idx].rowStatus == "R") ? "" : changeVal[idx].rowStatus;
+	            			this.comList[idx].rowStatus = (changeVal[idx].rowStatus == "R") ? "" : changeVal[idx].rowStatus;
 	            	}
            		}
 //	    	}

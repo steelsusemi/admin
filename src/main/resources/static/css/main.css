@@ -18,6 +18,17 @@ tbody td {
     vertical-align: middle;
 	text-align: center;
 }
+
+.src_small {
+	width: 50%;
+}
+
+.sub_title{
+    border-bottom: 2px solid #E6E9ED;
+    padding: 1px 5px 6px;
+    margin-bottom: 10px;
+}
+
 /*
 .th_small {
 	width: 3%;

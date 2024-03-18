@@ -31,7 +31,7 @@ import com.jjplatform.admin.comm.service.CommonService;
 import com.jjplatform.admin.comm.vo.CustomUserDetails;
 import com.jjplatform.admin.config.ApplicationContextProvider;
 import com.jjplatform.admin.contents.ValiableContents;
-import com.jjplatform.admin.menu.service.Mnu001Service;
+import com.jjplatform.admin.sys.service.Mnu001Service;
 import com.jjplatform.admin.vo.UserVo;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -67,7 +67,7 @@ public class CommonController {
 //    	}else if(path.contains("FAM")) {
 //    		v1 = "farm";
 //    	}else {
-//    		v1 = path.substring(0, path.length() - 4);
+//    		v1 = path.substring(0, path.length() - 4);t
 //    	}
     	
 //    	log.info("path >> " +path + " : "+ v1.toLowerCase());
