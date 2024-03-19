@@ -30,4 +30,9 @@ public class Com001Dao extends CommonMapper {
 	public int saveComList(List<Map> param) throws Exception {
 		return (int) insert(NAME_SPACE + "saveComList", param);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public int saveComDtlList(List<Map> param) throws Exception {
+		return (int) insert(NAME_SPACE + "saveComDtlList", param);
+	}
 }

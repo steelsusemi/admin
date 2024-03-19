@@ -15,5 +15,5 @@ import com.ulisesbocchio.jasyptspringboot.environment.StandardEncryptableEnviron
 public class ValiableContents {
 	private static Logger log = LoggerFactory.getLogger(ValiableContents.class);
 	
-	public static String[] MAP_LIST = {"BOA001M"};
+	public static String[] MAP_LIST = {"BOA001M", "COM001M"};
 }

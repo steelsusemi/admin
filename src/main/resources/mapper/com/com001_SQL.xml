@@ -34,7 +34,7 @@
 			       	, DATE_FORMAT(MNG.UPD_DTM, '%Y-%m-%d %T.%s') AS UPD_DTM
 			       	, 'R' AS ROW_STATUS
 		         FROM COMM_CD_MANAGE MNG /* 공통코드마스터 */
-		        INNER JOIN COMM_CD_DTL DTL /* 공통코드상세 */ ON MNG.COMP_ID = DTL.COMP_ID AND MNG.LANG_FLG = DTL.LANG_FLG AND MNG.GRP_CD = DTL.GRP_CD
+		         LEFT OUTER JOIN COMM_CD_DTL DTL /* 공통코드상세 */ ON MNG.COMP_ID = DTL.COMP_ID AND MNG.LANG_FLG = DTL.LANG_FLG AND MNG.GRP_CD = DTL.GRP_CD
 		         <where>
 				  AND MNG.COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
 				   	 <if test="searchlangFlg != null and searchlangFlg != ''">
@@ -50,6 +50,7 @@
 			      AND MNG.USE_YN = #{useYn})
 			         </if>
 		         </where>
+		        GROUP BY MNG.COMP_ID, MNG.LANG_FLG, MNG.GRP_CD
         	 <!-- ORDER BY SVC_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY -->
 		   ) A
 		   ORDER BY A.RNUM ASC limit #{curPage}, #{pageSize}
@@ -65,7 +66,7 @@
 	 		 , A.GRP_CD				/* 그룹코드 */
 			 , A.COMM_CD			/* 공통코드 */
 		     , A.COMM_NM			/* 공통코드명 */
-		     , A.SORT_SEQ_NO		/* 공통코드정렬 */
+		     , A.COMM_SEQ_NO		/* 공통코드정렬 */
 		     , A.COMM_CD_DESC		/* 공통코드설명 */
 		     , A.CD_VAL_1			/* 빈값1 */
 		     , A.CD_VAL_2			/* 빈값2 */
@@ -80,13 +81,13 @@
 			 , A.ROW_STATUS
 		  FROM (
 		       SELECT COUNT(*) OVER() AS TOT_CNT
-			 		, ROW_NUMBER() OVER(ORDER BY SORT_SEQ_NO ASC) AS RNUM
+			 		, ROW_NUMBER() OVER(ORDER BY COMM_SEQ_NO ASC) AS RNUM
 			 		, COMP_ID			/* 소속회사 */
 			 		, LANG_FLG			/* 언어구분 */
 			 		, GRP_CD			/* 그룹코드 */
 					, COMM_CD			/* 공통코드 */
 				    , COMM_NM			/* 공통코드명 */
-				    , SORT_SEQ_NO		/* 공통코드정렬 */
+				    , COMM_SEQ_NO		/* 공통코드정렬 */
 				    , COMM_CD_DESC		/* 공통코드설명 */
 				    , CD_VAL_1			/* 빈값1 */
 				    , CD_VAL_2			/* 빈값2 */
@@ -99,78 +100,111 @@
 			       	, UPD_ID
 			       	, DATE_FORMAT(UPD_DTM, '%Y-%m-%d %T.%s') AS UPD_DTM
 			       	, 'R' AS ROW_STATUS
-		         FROM SMART_FARM_DTL	/* 공통코드상세 */
+		         FROM COMM_CD_DTL	/* 공통코드상세 */
 		         <where>
 				  AND COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
-				     <if test="commCd != null and commCd != ''">
-			      AND GRP_CD = #{grpCd})
-			         </if>
-			         <if test="commCd != null and commCd != ''">
-			      AND COMM_CD = #{commCd})
-			         </if>
-			         <if test="langFlg != null and langFlg != ''">
-			      AND LANG_FLG = #{langFlg})
-			         </if>
+			      AND GRP_CD = #{grpCd}
+			      AND LANG_FLG = #{langFlg}
+			      AND USE_YN = 'Y'
 		         </where>
-        	 <!-- ORDER BY SVC_SEQ ASC OFFSET #{pageSize} * (#{curPage} - 1) ROWS FETCH NEXT #{pageSize} ROWS ONLY -->
 		   ) A
 		   ORDER BY A.RNUM ASC limit #{curPage}, #{pageSize}
     </select>
     
-    <!-- 순번 조회 -->
-    <select id="selectCommCodeSeq" resultType="int">
-    	/* com001Dao.selectCommCodeSeq: 순번 조회 */
-    	<!-- SELECT IFNULL(MAX(SVC_SEQ), 0) + 1
-    		   FROM SVC_MANAGE  ALIAS_FOR_SUBQUERY  -->
-    	SELECT ISNULL(MAX(CROP_SEQ), 0) + 1 
-	      FROM SMART_FARM_MANAGE	/* 스마트팜관리 */
-    </select>
-    
-    <!-- 공통코드 등록 -->
-    <insert id="saveCommCode" parameterType="map">
-    	/* com001Dao.saveCommCode: 공통코드 등록 */
+    <!-- 공통코드 마스터 등록 -->
+    <insert id="saveComList" parameterType="map">
+    	/* com001Dao.saveComList: 공통코드 마스터 등록 */
 	     INSERT 
-	       INTO SMART_FARM_MANAGE	/* 스마트팜관리 */
-    	 (    , COMP_ID			/* 소속회사 */
-    	 	  , CROP_SEQ		/* 작물순번												*/
-    	      , FARM_CD			/* 팜코드													*/
-			  , CROP_ID			/* 작물ID													*/
-			  , CROP_NAME		/* 작물명													*/
-			  , CROP_STTUS		/* 작물상태(F0001)[G:생장,B:과습,C:건조,W:응급,D:다이]			*/
-			  , CROP_CHECK_CD	/* 작물체크코드(F0002)[T:온도,H:습도,L:조도,W:물높이,P:용액희석]	*/
-			  , REAL_DATE_TIME	/* 실시간체크일시											*/
-			  , CROP_FILE_ID	/* 파일아이디												*/
+	       INTO COMM_CD_MANAGE  /* 공통코드마스터 */
+    	 (      COMP_ID			/* 소속회사 */
+	 		  , LANG_FLG		/* 언어구분 */
+			  , GRP_CD			/* 그룹코드 */
+			  , GRP_NM			/* 그룹명 */
+			  , GRP_DESC		/* 그룹설명 */
+			  , USE_YN			/* 사용여부 */
     	 	 <include refid="commonDao.createColSql"/>
     	 ) 
     	 VALUES 
     	 <foreach collection="list" item="item" index="idx" separator=",">   
     	 (    	 
-    	 	    ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
-    	 	  , CASE WHEN IFNULL(#{item.cropSeq},'') != '' THEN #{item.cropSeq}
-    	 	  		 ELSE (
-			    	 		SELECT IFNULL(MAX(CROP_SEQ), 0) + (#{idx} + 1) 
-						      FROM SMART_FARM_MANAGE  ALIAS_FOR_SUBQUERY	/* 스마트팜관리 */
-						     WHERE COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
-			    	 	  )
-				 END
-    	 	  , #{item.farmCd}			/* 팜코드													*/
-			  , #{item.cropId}			/* 작물ID													*/
-			  , #{item.cropName}		/* 작물명													*/
-			  , #{item.cropSttus}		/* 작물상태(F0001)[G:생장,B:과습,C:건조,W:응급,D:다이]			*/
-			  , #{item.cropCheckCd}		/* 작물체크코드(F0002)[T:온도,H:습도,L:조도,W:물높이,P:용액희석]	*/
-			  , #{item.realDateTime}	/* 실시간체크일시											*/
-			  , #{item.cropFileId}		/* 파일아이디												*/
+    	 	    ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}	/* 소속회사 */
+			  , #{item.langFlg}		/* 언어구분 */ 
+			  , #{item.grpCd}		/* 그룹코드 */ 
+			  , #{item.grpNm}		/* 그룹명 */  
+			  , #{item.grpDesc}		/* 그룹설명 */ 
+			  , #{item.useYn}		/* 사용여부 */ 
     	 	 <include refid="commonDao.createParamSql"/>
     	 )
     	 </foreach>
     	 ON DUPLICATE KEY UPDATE  
-    	         FARM_CD = VALUES(FARM_CD)				/* 팜코드													*/
-			   , CROP_ID = VALUES(CROP_ID)				/* 작물ID													*/
-			   , CROP_NAME = VALUES(CROP_NAME)			/* 작물명													*/
-			   , CROP_STTUS = VALUES(CROP_STTUS)		/* 작물상태(F0001)[G:생장,B:과습,C:건조,W:응급,D:다이]			*/
-			   , CROP_CHECK_CD = VALUES(CROP_CHECK_CD)	/* 작물체크코드(F0002)[T:온도,H:습도,L:조도,W:물높이,P:용액희석]	*/
-			   , REAL_DATE_TIME = VALUES(REAL_DATE_TIME)/* 실시간체크일시											*/
-			   , CROP_FILE_ID = VALUES(CROP_FILE_ID)	/* 파일아이디												*/
+    	         LANG_FLG = VALUES(LANG_FLG)	/* 언어구분 */
+			   , GRP_NM = VALUES(GRP_NM)		/* 그룹명 */
+			   , GRP_DESC = VALUES(GRP_DESC)	/* 그룹설명 */
+			   , USE_YN = VALUES(USE_YN)		/* 사용여부 */
+    	       <include refid="commonDao.updateParamSql"/>
+    </insert>
+    
+    <!-- 공통코드상세 순번 조회 -->
+    <select id="selectCommCodeSeq" resultType="int">
+    	/* com001Dao.selectCommCodeSeq: 공통코드상세 순번 조회 */
+    	<!-- SELECT IFNULL(MAX(SVC_SEQ), 0) + 1
+    		   FROM SVC_MANAGE  ALIAS_FOR_SUBQUERY  -->
+    	SELECT ISNULL(MAX(COMM_SEQ_NO), 0) + 1 
+	      FROM COMM_CD_DTL	/* 공통코드상세 */
+    </select>
+    
+    <!-- 공통코드상세 등록 -->
+    <insert id="saveComDtlList" parameterType="map">
+    	/* com001Dao.saveComDtlList: 공통코드상세 등록 */
+	     INSERT 
+	       INTO COMM_CD_DTL 	/* 공통코드상세 */
+    	 (      COMP_ID			/* 소속회사 */
+	 		  , LANG_FLG		/* 언어구분 */
+	 		  , GRP_CD			/* 그룹코드 */
+			  , COMM_CD			/* 공통코드 */
+		      , COMM_NM			/* 공통코드명 */
+		      , COMM_SEQ_NO		/* 공통코드정렬 */
+		      , COMM_CD_DESC    /* 공통코드설명 */
+		      , CD_VAL_1	    /* 빈값1 */
+		      , CD_VAL_2	    /* 빈값2 */
+		      , CD_VAL_3	    /* 빈값3 */
+		      , CD_VAL_4	    /* 빈값4 */
+		      , CD_VAL_5	    /* 빈값5 */
+    	 	 <include refid="commonDao.createColSql"/>
+    	 ) 
+    	 VALUES 
+    	 <foreach collection="list" item="item" index="idx" separator=",">   
+    	 (    	 
+    	 	    ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}	/* 소속회사 */
+			  , #{item.langFlg}		/* 언어구분 */ 
+			  , #{item.grpCd}		/* 그룹코드 */ 
+			  , #{item.commCd}			/* 공통코드 */
+			  , #{item.commNm}			/* 공통코드명 */
+    	 	  , CASE WHEN IFNULL(#{item.commSeqNo},'') != '' THEN #{item.commSeqNo}
+    	 	  		 ELSE (
+			    	 		SELECT IFNULL(MAX(COMM_SEQ_NO), 0) + (#{idx} + 1) 
+						      FROM COMM_CD_DTL  ALIAS_FOR_SUBQUERY	/* 공통코드상세 */
+						     WHERE COMP_ID = ${@com.jjplatform.admin.util.CommonUtils@getCommVal('COMP')}
+			    	 	  )
+				 END
+			  , #{item.commCdDesc}		/* 공통코드설명 */
+			  , #{item.cdVal1}			/* 빈값1 */
+			  , #{item.cdVal2}			/* 빈값2 */
+			  , #{item.cdVal3}			/* 빈값3 */
+			  , #{item.cdVal4}			/* 빈값4 */
+			  , #{item.cdVal5}			/* 빈값5 */									
+    	 	 <include refid="commonDao.createParamSql"/>
+    	 )
+    	 </foreach>
+    	 ON DUPLICATE KEY UPDATE  
+    	         COMM_NM = VALUES(COMM_NM)				/* 공통코드명 */
+			   , COMM_CD_DESC = VALUES(COMM_CD_DESC)	/* 공통코드설명ID */
+			   , CD_VAL_1 = VALUES(CD_VAL_1)			/* 빈값1 */
+			   , CD_VAL_2 = VALUES(CD_VAL_2)			/* 빈값2 */
+			   , CD_VAL_3 = VALUES(CD_VAL_3)			/* 빈값3 */
+			   , CD_VAL_4 = VALUES(CD_VAL_4)			/* 빈값4 */
+			   , CD_VAL_5 = VALUES(CD_VAL_5)			/* 빈값5 */
+			   , USE_YN = VALUES(USE_YN)				/* 사용여부 */
     	       <include refid="commonDao.updateParamSql"/>
     </insert>
 

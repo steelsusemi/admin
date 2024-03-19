@@ -136,10 +136,11 @@
         </dependency> -->
         
         <!-- https://mvnrepository.com/artifact/org.springframework/springloaded -->
-		<!-- <dependency>
+		<!--<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>springloaded</artifactId>
-		</dependency> -->
+		    <version>1.2.8.RELEASE</version>
+		</dependency>-->
 		
 		<!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
 		<dependency>

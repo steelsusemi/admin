@@ -100,9 +100,9 @@ public class CommonController {
     	log.info("actNm => " + actNm.indexOf("select")+ " : " + actNm+ " : " + serviceNm);
 		try {
 			Object tClass = ApplicationContextProvider.getContext().getBean(serviceNm);
-			if(actNm.indexOf("select") != -1) {
+			if(actNm.indexOf("select") >= 0) {
 	    		rtnMap.put("result", (List<Map>) tClass.getClass().getMethod(actNm, Map.class).invoke(tClass, param));
-	    	}else if(actNm.indexOf("save") != -1) {
+	    	}else if(actNm.indexOf("save") >= 0) {
 	    		boolean exceptCheck = Arrays.asList(ValiableContents.MAP_LIST).contains(menuId);
 	    		log.info("exceptCheck > "+exceptCheck);
 	    		rtnMap.put("result", (int) tClass.getClass().getMethod(actNm, (exceptCheck) ? Map.class : List.class).invoke(tClass, (exceptCheck) ? param : param.get("list")));

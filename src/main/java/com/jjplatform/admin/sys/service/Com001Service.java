@@ -10,6 +10,9 @@ public interface Com001Service {
 	
 	public List<Map> selectComDtlList(Map param) throws Exception;
 
+	public int saveComList(Map param) throws Exception;
+	
 	public int saveComList(List<Map> paramList) throws Exception;
-
+	
+	public int saveComDtlList(List<Map> paramList) throws Exception;
 }
