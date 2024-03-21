@@ -277,13 +277,22 @@
 			
 		},
 		mounted() {
-		  	this.param.menuId = this.mnuId;
-		  	this.param.searchGrpCd = this.searchGrpCd;
-			this.param.searchComCd = this.searchComCd;
-		    this.param.searchUseYn = this.searchUseYn;
-		    this.param.searchLang = this.searchLang;
-		    this.param.pageSize = pagination.common.pageSize;
-		    this.param.curPage = pagination.common.curPage;
+		  	// this.param.menuId = this.mnuId;
+		  	// this.param.searchGrpCd = this.searchGrpCd;
+			// this.param.searchComCd = this.searchComCd;
+		    // this.param.searchUseYn = this.searchUseYn;
+		    // this.param.searchLang = this.searchLang;
+		    // this.param.pageSize = pagination.common.pageSize;
+		    // this.param.curPage = pagination.common.curPage;
+		    this.param = {
+					  menuId: this.mnuId
+					, searchGrpCd: this.searchGrpCd
+	        		, searchComCd: this.searchComCd
+	    	    	, tsearchUseYn: this.searchUseYn
+	    	    	, searchLang: this.searchLang
+	    	    	, pageSize: pagination.common.pageSize
+	    	    	, curPage: pagination.common.curPage
+			};
   		},
   		methods: {
 				checkedAll(checked,flag) {
@@ -306,18 +315,19 @@
 	    		//  조회 버튼
 		    	selectList: function() {
 		    		pagination.common.curPage = 0;   // mariadb = 0, mssql = 1
-		    		this.param.curPage = pagination.common.curPage;
 		    		this.getSearch();
 		    	},
 		        getSearch: function() {
 		        	if(this.comList.length > 0) this.comList.splice(0);
 		        	this.comList = [];
-		        	
-		        	this.param.searchGrpCd = this.searchGrpCd;
-		        	this.param.searchComCd = this.searchComCd;
-		    	    this.param.searchUseYn = this.searchUseYn;
-		    	    this.param.pageSize = pagination.common.pageSize;
-		    	    this.param.curPage = pagination.common.curPage;
+		        	console.log(this.param);
+		        	this.param = {
+							  searchGrpCd: this.searchGrpCd
+			        		, searchComCd: this.searchComCd
+			    	    	, tsearchUseYn: this.searchUseYn
+			    	    	, pageSize: pagination.common.pageSize
+			    	    	, curPage: pagination.common.curPage
+					}
 		    	    
 		    	    // post 호출
 			        common.getPostExcute("/comm/selectComMstList", this.param)
@@ -337,8 +347,7 @@
 		                
 		                // 상세조회 
 		                COM001M.getDtlSearch(this.comList[0]);
-			          }).catch(e => {
-			              console.log("######## 에러[fail] ######## ");
+			          }).catch(ex => {
 			              console.log("에러", ex);
 			          });
 				},
@@ -346,16 +355,15 @@
 					console.log("getDtlSearch >> "+this.comList[0]);
 					console.log(row);
 		        	this.comDtlList = [];
-		        	this.param.langFlg = row.langFlg;
-		        	this.param.grpCd = row.grpCd;
-		        	this.param.ComCd = row.ComCd;
+		        	this.param = row;
+		        	//this.param.grpCd = row.grpCd;
+		        	//this.param.ComCd = row.ComCd;
 		    	    this.param.pageSize = pagination.common.pageSize;
 		    	    this.param.curPage = pagination.common.curPage;
 		    	    
-		          	console.log("getDtlSearch > " + this.param);
-					axios.post('/comm/selectComDtlList', this.param, {
-						headers: { "Content-Type": "application/json"}
-			            }).then((res) => { 
+					// post 호출
+			        common.getPostExcute("/comm/selectComDtlList", this.param)
+						.then((res) => { 
 			            	$(".odd").html("");
 			                this.comDtlList = res.data.result; 
 			                console.log("222222 > " + this.comDtlList+" : "+this.checkVal);

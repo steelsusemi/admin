@@ -90,7 +90,7 @@ public class CommonController {
     public ResponseEntity<?> commonList(@RequestBody Map param, @PathVariable(value = "actNm") String actNm) {
     	log.info("###################[ 공통 Api 호출 처리 ]###################");
     	String menuId = (String) param.get("menuId");
-    	log.info("menuId => " + menuId + " : " + actNm);
+    	log.info("menuId => " + menuId + " : " + actNm + " : " + param);
     	
     	String serviceNm = "";
     	if("leftMenu".equals(menuId)) serviceNm = "commonService";
