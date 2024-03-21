@@ -77,7 +77,7 @@ const pagination = new Vue({
       	/*innerHtml += "</div>";*/
       	
       	// 페이지 생성
-      	this.elId.$refs.paging.innerHTML = innerHtml;
+      	if(Object.keys(this.elId.$refs).length > 0) this.elId.$refs.paging.innerHTML = innerHtml;
       },
       onChange: function(val, firstSeq){
 		console.log("val > " + val+" : " + firstSeq+" : " + this.common.totalCount+" : " + (firstSeq / val)+" : " + (pagination.common.pageSize > val ? 1 : -1));

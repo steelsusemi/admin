@@ -241,89 +241,92 @@
       </div>
     </div>
   </div>
+  
   <script>
-  const COM001M = new Vue ({
-      el: "#COM001M",
-      data: {
-        comList: [],
-        comListCopy: [],
-        comDtlList: [],
-        comDtlListCopy: [],
-        checkVal: [],
-        result: [],
-        allChecked : false,
-        mnuId: "COM001M",
-        menuId: "",
-        searchGrpCd: "",
-        searchComCd: "",
-        searchUseYn: "",
-        searchLang: "",
-        useYn: [
-        	 {value: "전체", code: ""}
-        	,{value: "사용", code: "Y"}
-        	,{value: "미사용", code: "N"}
-        ],
-        langList: [
-        	 {value: "전체", code: ""}
-        	,{value: "한국어", code: "KO"}
-        	,{value: "영어", code: "EN"}
-        ],
-        param: {},
-        selectVal: "10",
-        selectDtlVal: "10"
-      },
-      computed: {
-      },
-      mounted() {
-      	this.param.menuId = this.mnuId;
-      	this.param.searchGrpCd = this.searchGrpCd;
-		this.param.searchComCd = this.searchComCd;
-	    this.param.searchUseYn = this.searchUseYn;
-	    this.param.searchLang = this.searchLang;
-	    this.param.pageSize = pagination.common.pageSize;
-	    this.param.curPage = pagination.common.curPage;
-      },
-      methods: {
-		  	checkedAll(checked,flag) {
-				console.log("111 > "+flag);
-	            this.allChecked = checked
-	            for (let i in this.comList) {
-	                this.comList[i].selected = this.allChecked;
-	            }
-	        },
-	        selected (e) {
-	            for (let i in this.comList) {
-	                if(! this.comList[i].selected) {
-	                    this.allChecked = false;
-	                    return;
-	                } else {
-	                    this.allChecked = true;
-	                }
-	            }
-	        },
-    		//  조회 버튼
-	    	selectList: function() {
-	    		pagination.common.curPage = 0;   // mariadb = 0, mssql = 1
-	    		this.param.curPage = pagination.common.curPage;
-	    		this.getSearch();
-	    	},
-	        getSearch: function() {
-	        	if(this.comList.length > 0) this.comList.splice(0);
-	        	this.comList = [];
-	        	
-	        	this.param.searchGrpCd = this.searchGrpCd;
-	        	this.param.searchComCd = this.searchComCd;
-	    	    this.param.searchUseYn = this.searchUseYn;
-	    	    this.param.pageSize = pagination.common.pageSize;
-	    	    this.param.curPage = pagination.common.curPage;
-	    	    
-				axios.post('/comm/selectComMstList', this.param, {
-					headers: { "Content-Type": "application/json"}
-		            }).then((res) => { 
-		            	$(".odd").html("");
-		                this.comList = res.data.result; 
-		                console.log("222222 > " + this.comList+" : "+this.checkVal);
-		                if(this.comList.length > 0){
+	const COM001M = new Vue ({
+		el: "#COM001M",	
+		data: {
+    			  comList: []
+			    , comListCopy: []
+			    , comDtlList: []
+			    , comDtlListCopy: []
+			    , checkVal: []
+			    , result: []
+			    , allChecked : false
+			    , mnuId: "COM001M"
+			    , menuId: ""
+			    , searchGrpCd: ""
+			    , searchComCd: ""
+			    , searchUseYn: ""
+			    , searchLang: ""
+			    , useYn: [
+			    	 {value: "전체", code: ""}
+			    	,{value: "사용", code: "Y"}
+			    	,{value: "미사용", code: "N"}
+    			  ]
+			    , langList: [
+			    	 {value: "전체", code: ""}
+			    	,{value: "한국어", code: "KO"}
+			    	,{value: "영어", code: "EN"}
+			    ]
+			    , param: {}
+			    , selectVal: "10"
+			    , selectDtlVal: "10"
+		},
+		computed: {
+			
+		},
+		mounted() {
+		  	this.param.menuId = this.mnuId;
+		  	this.param.searchGrpCd = this.searchGrpCd;
+			this.param.searchComCd = this.searchComCd;
+		    this.param.searchUseYn = this.searchUseYn;
+		    this.param.searchLang = this.searchLang;
+		    this.param.pageSize = pagination.common.pageSize;
+		    this.param.curPage = pagination.common.curPage;
+  		},
+  		methods: {
+				checkedAll(checked,flag) {
+					console.log("111 > "+flag);
+		            this.allChecked = checked
+		            for (let i in this.comList) {
+		                this.comList[i].selected = this.allChecked;
+		            }
+		        },
+		        selected (e) {
+		            for (let i in this.comList) {
+		                if(! this.comList[i].selected) {
+		                    this.allChecked = false;
+		                    return;
+		                } else {
+		                    this.allChecked = true;
+		                }
+		            }
+		        },
+	    		//  조회 버튼
+		    	selectList: function() {
+		    		pagination.common.curPage = 0;   // mariadb = 0, mssql = 1
+		    		this.param.curPage = pagination.common.curPage;
+		    		this.getSearch();
+		    	},
+		        getSearch: function() {
+		        	if(this.comList.length > 0) this.comList.splice(0);
+		        	this.comList = [];
+		        	
+		        	this.param.searchGrpCd = this.searchGrpCd;
+		        	this.param.searchComCd = this.searchComCd;
+		    	    this.param.searchUseYn = this.searchUseYn;
+		    	    this.param.pageSize = pagination.common.pageSize;
+		    	    this.param.curPage = pagination.common.curPage;
+		    	    
+		    	    // post 호출
+			        common.getPostExcute("/comm/selectComMstList", this.param)
+		        		.then((rtnData) => {
+						  $(".odd").html("");
+		            	  this.comList = rtnData.data.result;
+			              console.log(this.comList);
+			              
+			              if(this.comList.length > 0){
 			                pagination.common.totalCount = this.comList[0].totCnt;
 			                pagination.pagingNavi(pagination.common, this);
 		                }
@@ -333,125 +336,128 @@
 		                this.checkVal = [];
 		                
 		                // 상세조회 
-		                this.getDtlSearch(res.data.result[0]);
-		            }).catch((ex) => { 
-		                console.log("에러", ex); 
-		        });
-	        },
-	        getDtlSearch: function(row) {
-	        	this.comDtlList = [];
-	        	this.param.langFlg = row.langFlg;
-	        	this.param.grpCd = row.grpCd;
-	        	this.param.ComCd = row.ComCd;
-	    	    this.param.pageSize = pagination.common.pageSize;
-	    	    this.param.curPage = pagination.common.curPage;
-	    	    
-	          	console.log("getDtlSearch > " + this.param);
-				axios.post('/comm/selectComDtlList', this.param, {
-					headers: { "Content-Type": "application/json"}
-		            }).then((res) => { 
-		            	$(".odd").html("");
-		                this.comDtlList = res.data.result; 
-		                console.log("222222 > " + this.comDtlList+" : "+this.checkVal);
-		                if(this.comDtlList.length > 0){
-			                pagination.common.totalCount = this.comDtlList[0].totCnt;
-			                pagination.pagingNavi(pagination.common, this);
-		                }
-		                
-		                this.comDtlListCopy = _.cloneDeep(this.comDtlList); 
-		                this.checkVal = [];
-		            }).catch((ex) => { 
-		                console.log("에러", ex); 
-		        });
-	        },
-    	  	addRow: function(flag, val) {
-	        	console.log("addRow > "+flag+" : " + this.comList.length + " : " +this.checkVal + " : " +this.comList[this.comList.length-1].langFlg + " : " +this.comList[this.comList.length-1].grpCd);
-	        	targetList = (flag == null || flag == "" || flag == undefined) ? this.comList : this.comDtlList;
-	        	targetList.push((flag == null || flag == "" || flag == undefined) ? {rowStatus: "C", useYn: "Y" } 
-	        																		: {rowStatus: "C", langFlg: this.comList[this.comList.length-1].langFlg, grpCd: this.comList[this.comList.length-1].grpCd, useYn: "Y" });
-	        },
-	        deleteRow: function(flag) {
-	        	if(this.checkVal.length === 0) alert("삭제할 행을 선택해주세요.");
-	        	console.log("deleteRow > "+flag+" : "  +this.checkVal);
-	        	for(var i=0; i < this.checkVal.length; i++) {
-	       		  	console.log('array index: ' + this.checkVal[i]);
-	       			this.comList.splice(this.checkVal[i], 1);
-	       		}
-	        },
-	        setSave: function() {
-	        	//if(this.checkVal.length === 0) {alert("저장할 대상을 선택해주세요."); return false;}
-	        	//this.comList = [];
-	          	console.log("setSave > " + this.comList.length + " : " +this.comList.filter(com => com.rowStatus === "C") + " : " +this.checkVal);
-	          	const data = {
-	          			list: this.comList.filter(com => com.rowStatus === "C" || com.rowStatus === "U")
-	          		  , dtlList: this.comDtlList.filter(com => com.rowStatus === "C" || com.rowStatus === "U")
-	          		  , menuId: this.mnuId
-	          	}
-	          	console.log(data);
-				axios.post("/comm/saveComList", data, {
-					headers: { "Content-Type": "application/json"}
-		        }).then((res) => { 
-		                console.log("setSave res > " + res);
-		                this.selectList();
-		        }).catch((ex) => { 
-		                console.log("에러", ex); 
-		        });
-	    	},
-	        changePageSize: function(val){
-	        	 console.log("changePageSize >> " +val+" : "+this.comList[0]);
-	        	if(pagination.onChange(val, (this.comList[0] == null || this.comList[0] == undefined) ? 0 : this.comList[0].comSeq)){
-	        		this.getSearch();
-	        	}
-	    	 },
-	    	 watch: function(idx, flag){
-	    		const frtVal = (flag == null || flag == "" || flag == undefined) ? this.comListCopy : this.comDtlListCopy;
-	   			const changeVal = (flag == null || flag == "" || flag == undefined) ? this.comList : this.comDtlList;
-	   			<!--console.log("watch >> "+idx+" : "+flag+" : "+frtVal[idx].grpDesc+" : "+changeVal[idx].grpDesc);-->
-	   			console.log(changeVal);
-           		if(changeVal[idx].rowStatus != "C") { 
-					// 공통코드 마스터
-           			if(flag == undefined && frtVal[idx].grpCd === changeVal[idx].grpCd) {
-	           			if(frtVal[idx].langFlag != changeVal[idx].langFlag){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].grpNm != changeVal[idx].grpNm){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].grpDesc != changeVal[idx].grpDesc){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].useYn != changeVal[idx].useYn){
-	           				changeVal[idx].rowStatus = "U";
+		                COM001M.getDtlSearch(this.comList[0]);
+			          }).catch(e => {
+			              console.log("######## 에러[fail] ######## ");
+			              console.log("에러", ex);
+			          });
+				},
+		        getDtlSearch: function(row) {
+					console.log("getDtlSearch >> "+this.comList[0]);
+					console.log(row);
+		        	this.comDtlList = [];
+		        	this.param.langFlg = row.langFlg;
+		        	this.param.grpCd = row.grpCd;
+		        	this.param.ComCd = row.ComCd;
+		    	    this.param.pageSize = pagination.common.pageSize;
+		    	    this.param.curPage = pagination.common.curPage;
+		    	    
+		          	console.log("getDtlSearch > " + this.param);
+					axios.post('/comm/selectComDtlList', this.param, {
+						headers: { "Content-Type": "application/json"}
+			            }).then((res) => { 
+			            	$(".odd").html("");
+			                this.comDtlList = res.data.result; 
+			                console.log("222222 > " + this.comDtlList+" : "+this.checkVal);
+			                if(this.comDtlList.length > 0){
+				                pagination.common.totalCount = this.comDtlList[0].totCnt;
+				                pagination.pagingNavi(pagination.common, this);
+			                }
+			                
+			                this.comDtlListCopy = _.cloneDeep(this.comDtlList); 
+			                this.checkVal = [];
+			            }).catch((ex) => { 
+			                console.log("에러", ex); 
+			        });
+		        },
+	    	  	addRow: function(flag, val) {
+		        	console.log("addRow > "+flag+" : " + this.comList.length + " : " +this.checkVal + " : " +this.comList[this.comList.length-1].langFlg + " : " +this.comList[this.comList.length-1].grpCd);
+		        	targetList = (flag == null || flag == "" || flag == undefined) ? this.comList : this.comDtlList;
+		        	targetList.push((flag == null || flag == "" || flag == undefined) ? {rowStatus: "C", useYn: "Y" } 
+		        																		: {rowStatus: "C", langFlg: this.comList[this.comList.length-1].langFlg, grpCd: this.comList[this.comList.length-1].grpCd, useYn: "Y" });
+		        },
+		        deleteRow: function(flag) {
+		        	if(this.checkVal.length === 0) alert("삭제할 행을 선택해주세요.");
+		        	console.log("deleteRow > "+flag+" : "  +this.checkVal);
+		        	for(var i=0; i < this.checkVal.length; i++) {
+		       		  	console.log('array index: ' + this.checkVal[i]);
+		       			this.comList.splice(this.checkVal[i], 1);
+		       		}
+		        },
+		        setSave: function() {
+		        	//if(this.checkVal.length === 0) {alert("저장할 대상을 선택해주세요."); return false;}
+		        	//this.comList = [];
+		          	console.log("setSave > " + this.comList.length + " : " +this.comList.filter(com => com.rowStatus === "C") + " : " +this.checkVal);
+		          	const data = {
+		          			list: this.comList.filter(com => com.rowStatus === "C" || com.rowStatus === "U")
+		          		  , dtlList: this.comDtlList.filter(com => com.rowStatus === "C" || com.rowStatus === "U")
+		          		  , menuId: this.mnuId
+		          	}
+		          	console.log(data);
+					axios.post("/comm/saveComList", data, {
+						headers: { "Content-Type": "application/json"}
+			        }).then((res) => { 
+			                console.log("setSave res > " + res);
+			                this.selectList();
+			        }).catch((ex) => { 
+			                console.log("에러", ex); 
+			        });
+		    	},
+		        changePageSize: function(val){
+		        	 console.log("changePageSize >> " +val+" : "+this.comList[0]);
+		        	if(pagination.onChange(val, (this.comList[0] == null || this.comList[0] == undefined) ? 0 : this.comList[0].comSeq)){
+		        		this.getSearch();
+		        	}
+		    	 },
+				watch: function(idx, flag){
+		    		const frtVal = (flag == null || flag == "" || flag == undefined) ? this.comListCopy : this.comDtlListCopy;
+		   			const changeVal = (flag == null || flag == "" || flag == undefined) ? this.comList : this.comDtlList;
+		   			// console.log("watch >> "+idx+" : "+flag+" : "+frtVal[idx].grpDesc+" : "+changeVal[idx].grpDesc);
+		   			console.log(changeVal);
+	           		if(changeVal[idx].rowStatus != "C") { 
+						// 공통코드 마스터
+	           			if(flag == undefined && frtVal[idx].grpCd === changeVal[idx].grpCd) {
+		           			if(frtVal[idx].langFlag != changeVal[idx].langFlag){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].grpNm != changeVal[idx].grpNm){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].grpDesc != changeVal[idx].grpDesc){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].useYn != changeVal[idx].useYn){
+		           				changeVal[idx].rowStatus = "U";
+			            	}
 		            	}
-	            	}
-	            	// 공통코드 상세
-	            	else if("DTL".indexOf(flag) >= 0 && frtVal[idx].commCd === changeVal[idx].commCd){
-						if(frtVal[idx].langFlag != changeVal[idx].langFlag){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].commNm != changeVal[idx].commNm){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].commCdDesc != changeVal[idx].commCdDesc){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].useYn != changeVal[idx].useYn){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].cdVal1 != changeVal[idx].cdVal1){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].cdVal2 != changeVal[idx].cdVal2){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].cdVal3 != changeVal[idx].cdVal3){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].cdVal4 != changeVal[idx].cdVal4){
-	           				changeVal[idx].rowStatus = "U";
-		            	}else if(frtVal[idx].cdVal5 != changeVal[idx].cdVal5){
-	           				changeVal[idx].rowStatus = "U";
+		            	// 공통코드 상세
+		            	else if("DTL".indexOf(flag) >= 0 && frtVal[idx].commCd === changeVal[idx].commCd){
+							if(frtVal[idx].langFlag != changeVal[idx].langFlag){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].commNm != changeVal[idx].commNm){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].commCdDesc != changeVal[idx].commCdDesc){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].useYn != changeVal[idx].useYn){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].cdVal1 != changeVal[idx].cdVal1){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].cdVal2 != changeVal[idx].cdVal2){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].cdVal3 != changeVal[idx].cdVal3){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].cdVal4 != changeVal[idx].cdVal4){
+		           				changeVal[idx].rowStatus = "U";
+			            	}else if(frtVal[idx].cdVal5 != changeVal[idx].cdVal5){
+		           				changeVal[idx].rowStatus = "U";
+			            	}
+						}else{
+		            		changeVal[idx].rowStatus = (changeVal[idx].rowStatus == "R") ? "" : changeVal[idx].rowStatus;
 		            	}
-					}else{
-	            		changeVal[idx].rowStatus = (changeVal[idx].rowStatus == "R") ? "" : changeVal[idx].rowStatus;
-	            	}
-           		}
-      		},
-	    	init: function(){
-				location.reload(true);
-	    	}
-      	}     
-      });
+	           		}
+	      		},
+		    	init: function(){
+					location.reload(true);
+		    	}
+		}     
+	});
   </script>
 </div>
 </html>
